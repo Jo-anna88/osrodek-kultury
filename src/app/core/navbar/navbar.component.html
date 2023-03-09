@@ -2,10 +2,10 @@
   <img src = "assets/images/logo-demo.jpg" alt = "Cultural Centre - Wieliszew">
   <nav>
     <ul>
-      <li><a href="#">About Us</a></li>
-      <li><a href="#">Events</a></li>
-      <li><a href="#">Classes / Groups</a></li>
-      <li><a href="#">Contact</a></li>
+      <li *ngFor = "let item of items">
+        <a routerLink="/about"
+           routerLinkActive="active"> {{item}} </a>
+      </li>
     </ul>
   </nav>
   <button mat-fab>
