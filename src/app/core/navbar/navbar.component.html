@@ -1,9 +1,9 @@
 <div class = "container">
-  <img src = "assets/images/logo-demo.jpg" alt = "Cultural Centre - Wieliszew">
+  <img src = "assets/images/logo-demo.jpg" alt = "Cultural Centre - Wieliszew" routerLink="home">
   <nav>
     <ul>
       <li *ngFor = "let item of items">
-        <a routerLink="/about"
+        <a routerLink="{{item | lowercase}}"
            routerLinkActive="active"> {{item}} </a>
       </li>
     </ul>

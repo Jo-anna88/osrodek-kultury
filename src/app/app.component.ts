@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {mockNavbarItems} from "./core/navbar/mock-navbar-items";
 
 @Component({
   selector: 'app-root',
@@ -9,10 +8,8 @@ import {mockNavbarItems} from "./core/navbar/mock-navbar-items";
 })
 export class AppComponent {
   title = 'osrodek-kultury';
-  navbarItems : string[] = mockNavbarItems;
 
   constructor(private modalService: NgbModal) {
-    console.log(this.navbarItems);
   }
 
   public open(modal: any): void {

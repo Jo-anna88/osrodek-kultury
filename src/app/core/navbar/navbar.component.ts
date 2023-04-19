@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
+import {mockNavbarItems} from "./mock-navbar-items";
 
 @Component({
   selector: 'app-navbar',
@@ -6,5 +7,5 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  @Input() items: string[] = [];
+  items: string[] = mockNavbarItems;
 }
