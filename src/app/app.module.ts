@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 
 import { CoreModule} from "./core/core.module";
 import { AboutModule } from "./modules/about/about.module";
+import { HomeModule } from "./modules/home/home.module";
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { AboutModule } from "./modules/about/about.module";
     MatButtonModule,
     CoreModule,
     AboutModule,
+    HomeModule,
     AppRoutingModule // it should be the last imported module (because there are routing files in other modules)
   ],
   providers: [],
