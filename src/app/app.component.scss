@@ -1,10 +1,26 @@
 .app-container {
-  min-height: 100vh;
-}
-.navbar {
-  width: 100%;
-  padding: 0;
-}
-app-navbar {
-  width: inherit;
+  min-height: 100vh;  // 100% of viewport height (without this setting, app-container was not on the whole site
+                      // --> footer was not at the bottom of viewport)
+  .navbar {
+    width: 100vw; // without this setting there was a margin on the right side
+    height: 15vh;
+    line-height: 1.5rem;
+    padding: 0;
+    //position: sticky;
+    //top: 0px;
+    app-navbar {
+      width: inherit;
+      height: inherit;
+    }
+  }
+  .content {
+    width: 100vw;
+    height: 75vh;
+    padding: 0;
+  }
+  .footer {
+    width: 100vw;
+    height: 10vh;
+    padding: 0;
+  }
 }

@@ -1,0 +1,16 @@
+@import 'src/styles';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-family: $font-primary;
+  padding: 1.5rem;
+  margin: 0;
+  min-width: 100%;
+  height: 100%;
+}
+img {
+  width: 40%;
+}

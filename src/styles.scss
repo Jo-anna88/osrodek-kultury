@@ -5,8 +5,12 @@ $primary-blue: #334075;
 $primary-rose: #BA264A;
 $primary-white: #F0EEE2; //lub: F0F0E2
 $primary-yellow: #CE8D3D;
+// buttons' shadow
+$shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+// fonts:
+$font-primary: "Bauhaus 93", sans-serif;
 
-//html, body { height: 100%; }
+// html, body { height: 100%; }
 * {
   margin: 0;
   padding: 0;
@@ -14,6 +18,19 @@ $primary-yellow: #CE8D3D;
 }
 
 body {
-  min-height: 100vh; //vh - viewport height
+  min-height: 100vh; // vh - viewport height
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+%button-shared { // e.g. login button
+  background-color: $primary-rose;
+  border: 1px black;
+  border-radius: 5rem;
+}
+
+.button-primary {
+  @extend %button-shared;
+  padding: 0.5rem 3rem;
+  color: $primary-white;
+  box-shadow: $shadow;
 }
