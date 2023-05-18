@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {FooterComponent} from "./footer/footer.component";
-import {NavbarComponent} from "./navbar/navbar.component";
+import {HeaderComponent} from "./header/header.component";
 import {MatButtonModule} from "@angular/material/button";
 import {LowerCasePipe, NgForOf} from "@angular/common";
 import {RouterLink, RouterLinkActive} from "@angular/router";
@@ -8,7 +8,7 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 @NgModule({
     declarations: [
         FooterComponent,
-        NavbarComponent
+        HeaderComponent
     ],
   imports: [
     MatButtonModule,
@@ -19,7 +19,7 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
   ],
     exports: [
         FooterComponent,
-        NavbarComponent
+        HeaderComponent
     ]
 })
 export class CoreModule{}
