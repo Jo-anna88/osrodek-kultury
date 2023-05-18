@@ -1,6 +1,6 @@
 @import 'src/styles';
 
-.header-navigation-container {
+.header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,7 +11,7 @@
   height: 100%;
 }
 
-nav {
+.header-navigation {
   width: 60%;
   height: 80%; // lub dać konkretną ilość pikseli, żeby się nie przeliczało za każdym razem
   border: solid 2px $primary-yellow;
@@ -23,17 +23,14 @@ ul {
   justify-content: space-around;
   align-items: center;
 }
-li {
-  list-style: none;
-}
 a {
   font-family: $font-primary;
-  font-size: 1.25em;
+  font-size: 1.25em; //or: font-size: larger (20px)
   color: $primary-blue;
   text-decoration: none;
 }
 
-img {
+.logo {
   height: 100%;
   cursor: pointer;
 }

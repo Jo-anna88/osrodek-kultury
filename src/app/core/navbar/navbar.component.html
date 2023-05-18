@@ -1,6 +1,6 @@
-<div class = "header-navigation-container">
-  <img src = "assets/images/logo-demo.jpg" alt = "Cultural Centre - Wieliszew" routerLink="home">
-  <nav>
+<header class = "header-container">
+  <img class="logo" src = "assets/images/logo-demo.jpg" alt = "Cultural Centre - Wieliszew" routerLink="home">
+  <nav class = "header-navigation">
     <ul>
       <li *ngFor = "let item of items">
         <a routerLink="{{item | lowercase}}"
@@ -11,4 +11,4 @@
   <button mat-fab class="button-login">
     <i class="bi bi-box-arrow-in-right"></i>
   </button>
-</div>
+</header>

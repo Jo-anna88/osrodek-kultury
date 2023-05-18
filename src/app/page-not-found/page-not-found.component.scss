@@ -5,12 +5,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  font-family: $font-primary;
+  //gap: 1rem;
   padding: 1.5rem;
   margin: 0;
   min-width: 100%;
   height: 100%;
+  h2 {
+    font-family: $font-primary;
+  }
 }
-img {
-  width: 40%;
+.img-404 {
+  height: 75%;
 }

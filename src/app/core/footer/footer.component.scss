@@ -1,0 +1,63 @@
+@import 'src/styles';
+
+ul {
+  display: flex;
+  padding-left:0;
+  margin-bottom: 0;
+}
+li {
+  padding: 0 1rem;
+  a {cursor:pointer}
+  &:hover {color: $primary-rose}
+  &:last-child {padding-right: 0}
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-size: 0.75em; // or: smaller;
+  justify-content: space-evenly;
+  padding: 0 1rem;
+}
+
+//  .contact-us-section {
+//    display: inherit;
+//    flex-flow: column wrap; // shorthand for the flex-direction and flex-wrap
+//    .fields {
+//      display: inherit;
+//      justify-content: center;
+//    }
+//  }
+  //#name, #email {width: 45%}
+  //#subject, #message {width: 90%}
+
+.contact-section {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.5rem;
+  li:first-child {padding-left: 0};
+  i {padding-right: 1rem}
+}
+
+.copyright-section {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  li {
+    border-left: solid 1px;
+    border-color: $font-color;
+  }
+  //li {
+  //  list-style-type: '|';
+  //  padding-inline: 1ch; // "1ch" = rozmiar szerokości cyfry "0"
+  //}
+}
+
+.footer-contact-links {
+  i {
+    font-size: 1rem;
+    color: black;
+    &:hover {color: $primary-rose}
+  }
+}
