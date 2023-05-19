@@ -1,5 +1,27 @@
 <div class="container">
   <section class="google-map">
-    <iframe [src]="url" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe class="iframe-map" [src]="url" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </section>
+
+  <div class="right-side">
+    <section class="address-section">
+      <h2>{{contactInfo.name}}</h2>
+      <p>{{contactInfo.address}}</p>
+      <p>{{contactInfo.phone}}</p>
+      <p>{{contactInfo.mail}}</p>
+    </section>
+
+    <section class="contact-us-section">
+      <h2>CONTACT US</h2>
+      <form class="form">
+        <div class="fields">
+          <input id="name" type="text" name="name" placeholder="Name">
+          <input id="email" type="text" name="email" placeholder="Email">
+          <input id="subject" type="text" name="subject" placeholder="Subject">
+          <textarea id="message" name="message" placeholder="Notes"></textarea>
+        </div>
+        <input type="submit" value="Send Message">
+      </form>
+    </section>
+  </div>
 </div>

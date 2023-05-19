@@ -2,19 +2,6 @@
 
   <section class="contact-section">
 
-    <!--    <section class="contact-us-section">-->
-    <!--      <h3>CONTACT US</h3>-->
-    <!--      <form>-->
-    <!--        <div class="fields">-->
-    <!--          <input id="name" type="text" name="name" placeholder="Name">-->
-    <!--          <input id="email" type="text" name="email" placeholder="Email">-->
-    <!--          <input id="subject" type="text" name="subject" placeholder="Subject">-->
-    <!--          <textarea id="message" name="message" placeholder="Notes"></textarea>-->
-    <!--        </div>-->
-    <!--        <input type="submit" value="Send Message">-->
-    <!--      </form>-->
-    <!--    </section>-->
-
     <section class="contact-info-section">
       <h3>CONTACT INFO</h3>
       <div>
@@ -22,19 +9,19 @@
           <li>
             <a [routerLink]="">
               <i class="bi bi-envelope"></i>
-              biuro@ccw.com
+              {{contactInfo.mail}}
             </a>
           </li>
           <li>
             <a [routerLink]="">
               <i class="bi bi-phone"></i>
-              +48 100 200 300
+              {{contactInfo.phone}}
             </a>
           </li>
           <li>
             <a [routerLink]="">
               <i class="bi bi-pin-map"></i>
-              CULTURAL CENTRE WIELISZEW, ul. Kulturalna 1, 05-135 Wieliszew
+              {{contactInfo.name}}, {{contactInfo.address}}
             </a>
           </li>
         </ul>
