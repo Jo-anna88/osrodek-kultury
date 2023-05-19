@@ -25,7 +25,7 @@
   width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   .address-section {
     display: inherit;
     flex-flow: column wrap;
@@ -46,13 +46,22 @@
         justify-content: space-evenly;
         padding-bottom: 1.5rem;
       }
-      #name, #email, #subject, #message {border-width: 0 0 1px 0; height: 3rem}
+      #name, #email, #subject, #message {
+        border-width: 0 0 1px 0;
+        border-bottom-color: $primary-blue;
+        height: 3rem;
+        &:focus {
+          outline: none;
+          border-width: 0 0 2px 0;
+          border-bottom-color: $primary-yellow}
+      }
       #name, #email {width: 35%}
       #subject, #message {width: 80%}
       #message {
+        padding-top: 0.75rem;
         resize: none;
         //overflow-y: scroll;
-        height: 5rem;
+        height: 6rem;
       }
     }
   }
