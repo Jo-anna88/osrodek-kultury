@@ -13,4 +13,7 @@ export class ContactComponent {
   constructor(private sanitizer: DomSanitizer) {
     this.url = this.sanitizer.bypassSecurityTrustResourceUrl(googleMapUrl);
   }
+  sendMessage() {
+    console.log("button clicked")
+  }
 }
