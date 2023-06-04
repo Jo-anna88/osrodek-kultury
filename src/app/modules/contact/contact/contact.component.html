@@ -13,14 +13,54 @@
 
     <section class="contact-us-section">
       <h2>CONTACT US</h2>
-      <form class="form">
-        <div class="fields">
-          <input id="name" type="text" name="name" placeholder="Name">
-          <input id="email" type="text" name="email" placeholder="Email">
-          <input id="subject" type="text" name="subject" placeholder="Subject">
-          <textarea id="message" name="message" placeholder="Notes"></textarea>
+      <form #contactForm="ngForm" class="form">
+        <div class="form-group">
+<!--          'id' attribute is for CSS, 'name' is for the server -->
+          <div id="name">
+            <input class="form-control" type="text" name="name" placeholder="Name" [(ngModel)]="contactMessage.name"
+                   required minlength="3" #name="ngModel">
+            <div [hidden]="name.valid || name.pristine">
+              <small class="text-danger" *ngIf="name.errors?.['minlength']">Please provide a name that is at least 3 characters long</small>
+              <small class="text-danger" *ngIf="name.errors?.['required']">Please provide a name</small>
+            </div>
+          </div>
+
+          <div id="email">
+            <input class="form-control" type="email" name="email" placeholder="Email"
+                   [(ngModel)]="contactMessage.email"
+                   required [pattern]="emailPattern" #email="ngModel">
+            <div [hidden]="email.valid || email.pristine">
+              <small class="text-danger" *ngIf="email.errors?.['required']">Please provide an email</small>
+              <small class="text-danger" *ngIf="email.errors?.['pattern']">Please provide your email address in format
+                username@example.com</small>
+            </div>
+          </div>
+
+          <div id="subject">
+            <input class="form-control" type="text" name="subject" placeholder="Subject"
+                   [(ngModel)]="contactMessage.subject"
+                   required #subject="ngModel">
+            <div [hidden]="subject.valid || subject.pristine">
+              <small class="text-danger" *ngIf="subject.errors?.['required']">Please provide a subject</small>
+              <!--            minlength-->
+              <!--            maxlength-->
+            </div>
+          </div>
+
+          <div id="message">
+            <textarea class="form-control" name="message" placeholder="Notes" [(ngModel)]="contactMessage.message"
+                    required minlength="10" maxlength="300" #message="ngModel" (ngModelChange)="countMessageLength($event)"></textarea>
+            <span id="counter">{{currentLength}}/300</span>
+            <div [hidden]="message.valid || message.pristine">
+              <small class="text-danger" *ngIf="message.errors?.['required']">Please provide a message</small>
+              <small class="text-danger" *ngIf="message.errors?.['minlength']">Please provide a message that is at least
+                10 characters long</small>
+            </div>
+          </div>
+
         </div>
-        <input type="submit" value="Send Message" class="button-primary" (click)="sendMessage()">
+<!--        <input type="submit" value="Send Message" class="button-primary" (click)="sendMessage()">-->
+        <button type="button" class="button-primary" (click)="sendMessage(contactForm.value)" [disabled]="contactForm.dirty && contactForm.invalid">Send Message</button>
       </form>
     </section>
   </div>

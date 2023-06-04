@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatIconModule} from "@angular/material/icon";
@@ -23,6 +24,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   imports: [
     BrowserModule,
+    // FormsModule,
+    // ReactiveFormsModule,
     FontAwesomeModule,
     MatIconModule,
     NgbModule,
