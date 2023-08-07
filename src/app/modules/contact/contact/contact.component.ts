@@ -4,7 +4,6 @@ import {CONTACT, googleMapUrl} from "../../mocks/mock-contact";
 import {ContactMessage} from "src/app/modules/contact/contact/contactMessage";
 import {EMAIL_PATTERN} from "../../../../assets/constants";
 import {ContactService} from "../contact.service";
-import {ObjectMapper} from "json-object-mapper";
 
 @Component({
   selector: 'app-contact',
@@ -24,13 +23,10 @@ export class ContactComponent {
     this.url = this.sanitizer.bypassSecurityTrustResourceUrl(googleMapUrl);
   }
 
-  sendMessage(contactFormValue: any) {
-    console.log("button clicked");
+  sendMessage(contactFormValue: ContactMessage) {
     this.contactMessage = contactFormValue;
     console.log(this.contactMessage); // maybe we could send it as a json?
-    let stringified: String = ObjectMapper.serialize(this.contactMessage);
-    console.log(stringified);
-    this.contactService.sendMessage(stringified);
+    this.contactService.sendMessage(this.contactMessage);
   }
   onSubmit() {
     this.submitted = true;

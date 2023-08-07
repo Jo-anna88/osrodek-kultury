@@ -19,6 +19,7 @@
     width: 100vw;
     height: 75vh;
     padding: 0;
+    overflow-y: auto; // to add a scrollbar if needed
   }
   .footer {
     width: 100vw;
