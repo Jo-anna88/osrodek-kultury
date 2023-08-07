@@ -15,6 +15,8 @@ import { AboutModule } from "./modules/about/about.module";
 import { HomeModule } from "./modules/home/home.module";
 import { ContactModule } from "./modules/contact/contact.module";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {EventsModule} from "./modules/events/events.module";
+import {ClassesModule} from "./modules/classes/classes.module";
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AboutModule,
     HomeModule,
     ContactModule,
+    EventsModule,
+    ClassesModule,
     AppRoutingModule // it should be the last imported module (because there are routing files in other modules)
   ],
   providers: [],
