@@ -1,1 +1,13 @@
-<p>cultural-events works!</p>
+<ng-container *ngIf="!isLoading else spinner">
+  <div class="culturalEvents" *ngFor="let culturalEvent of culturalEvents">
+    <section class="culturalEvent">
+      <img [src]= culturalEvent.imgSource alt="cultural event">
+      <a class="title" [routerLink]="">{{culturalEvent.title}}</a>
+      <span class="date">{{culturalEvent.date}}</span>
+      <p class="description">{{culturalEvent.description}}</p>
+    </section>
+  </div>
+</ng-container>
+<ng-template #spinner>
+  <mat-progress-spinner></mat-progress-spinner>
+</ng-template>

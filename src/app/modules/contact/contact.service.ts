@@ -7,12 +7,12 @@ import {catchError, map, of, tap} from "rxjs";
   providedIn: 'root'
 })
 export class ContactService {
-  private api = "http://localhost:4200/contact"; // or: this.environmentService.getApiBaseUrl() + /contact - in constructor
+  private apiUrl = "http://localhost:4200/contact"; // or: this.environmentService.getApiBaseUrl() + /contact - in constructor
 
   constructor(private http: HttpClient) { }
 
   sendMessage(input: ContactMessage) { // ? source: https://medium.com/@babatundelamidi/build-an-angular-contact-form-and-post-data-to-email-7b7327e56ad3
-    return this.http.post(this.api, input, {responseType: "text"}).subscribe({
+    return this.http.post(`${this.apiUrl}`, input, {responseType: "text"}).subscribe({
       next: (res: string) => {
         console.log(res)
       },
@@ -28,7 +28,7 @@ export class ContactService {
   }
 
   sendMessage2(input: ContactMessage) { // ? source: https://medium.com/@babatundelamidi/build-an-angular-contact-form-and-post-data-to-email-7b7327e56ad3
-    return this.http.post(this.api, input, {responseType: "text"}).pipe(
+    return this.http.post(`${this.apiUrl}`, input, {responseType: "text"}).pipe(
       map((res: string) => {
         alert('The message has been sent successfully') // to show the alert on the current page ?
         console.log(res)
