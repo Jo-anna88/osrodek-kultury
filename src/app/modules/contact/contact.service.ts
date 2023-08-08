@@ -7,7 +7,7 @@ import {catchError, map, of, tap} from "rxjs";
   providedIn: 'root'
 })
 export class ContactService {
-  private api = "http://localhost:4200/contact";
+  private api = "http://localhost:4200/contact"; // or: this.environmentService.getApiBaseUrl() + /contact - in constructor
 
   constructor(private http: HttpClient) { }
 
