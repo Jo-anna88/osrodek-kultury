@@ -5,6 +5,13 @@
   justify-content: center;
   align-items: center;
 }
+.home-background-dots {
+  position: absolute;
+
+  z-index: 99;
+  height: 100%;
+}
+
 .home-photo {
   height: 75vh;
   border-radius: 50% 50% 0 0;
