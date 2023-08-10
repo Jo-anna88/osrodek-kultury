@@ -1,13 +1,18 @@
 <ng-container *ngIf="!isLoading else spinner">
   <div class="culturalEvents" *ngFor="let culturalEvent of culturalEvents">
-    <section class="culturalEvent">
-      <img [src]= culturalEvent.imgSource alt="cultural event">
+    <article class="culturalEvent">
+      <img class="image" [src]= culturalEvent.imgSource alt="cultural event">
       <a class="title" [routerLink]="">{{culturalEvent.title}}</a>
-      <span class="date">{{culturalEvent.date}}</span>
+      <p class="date">{{culturalEvent.date}}</p>
       <p class="description">{{culturalEvent.description}}</p>
-    </section>
+    </article>
   </div>
 </ng-container>
+
 <ng-template #spinner>
-  <mat-progress-spinner></mat-progress-spinner>
+  <div class="spinner-container">
+    <p>cultural events are loading...</p>
+<!--    spinner is not visible - stroke is still undefined -->
+    <mat-spinner [color]="'accent'" [mode]="'indeterminate'" [diameter]="72" class="spinner"></mat-spinner>
+  </div>
 </ng-template>

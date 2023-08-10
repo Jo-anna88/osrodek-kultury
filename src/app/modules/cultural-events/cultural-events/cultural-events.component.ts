@@ -24,22 +24,31 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
 
   loadData() {
     this.isLoading = true;
+    // first solution:
     this.culturalEventService.getEvents()
-      .pipe(
-        delay(5000),
-        catchError((error) => {
-          alert("error during loading cultural events " + error);
-          this.isLoading = false;
-          return of(error);
-        }),
-        map(
-          (data: ICulturalEvent[]) => {this.culturalEvents = data})
-      )
-      .subscribe({
-        // next: (culturalEvent: ICulturalEvent[]) => this.culturalEvents.push(culturalEvent),
-        // error: (err: any) => console.error('error during loading cultural events')
-        next: () => this.isLoading = false
-      });
+      .subscribe({ //Partial<Observer<ICulturalEvent>> | ((value: ICulturalEvent[]) => void) | undefined
+        next: (value: ICulturalEvent[]) => {this.culturalEvents=value;},
+        error: (err: any) => {
+          console.error('error during loading cultural events: '+ err);
+          this.isLoading=false;},
+        complete: () => {this.isLoading=false;}
+
+      })
+    // // second solution:
+    // this.culturalEventService.getEvents()
+    //   .pipe( //Observable<ICulturalEvent[]>
+    //     delay(5000),
+    //     catchError((error) => {
+    //       alert("error during loading cultural events " + error);
+    //       this.isLoading = false;
+    //       return of(error);
+    //     }),
+    //     map(
+    //       (data: ICulturalEvent[]) => {this.culturalEvents = data})
+    //   )
+    //   .subscribe({
+    //     next: () => this.isLoading = false
+    //   });
   }
 
   ngOnDestroy(): void {

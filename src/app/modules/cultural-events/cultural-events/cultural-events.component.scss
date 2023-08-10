@@ -1,0 +1,13 @@
+spinner {
+  stroke: #0CC20C;
+  z-index: 99;
+}
+.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke:#0CC20C;
+}
+--mdc-circular-progress-active-indicator-color {
+  stroke: #0CC20C;
+}
+mat-spinner {
+    stroke: red;
+}
