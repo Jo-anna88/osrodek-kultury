@@ -14,6 +14,7 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
 
   culturalEvents : ICulturalEvent[] = [];
   isLoading: boolean = false;
+  spinnerNote: string = "Cultural Events are loading...";
 
   constructor(private culturalEventService : CulturalEventService) {
   }
@@ -26,7 +27,8 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     // first solution:
     this.culturalEventService.getEvents()
-      .subscribe({ //Partial<Observer<ICulturalEvent>> | ((value: ICulturalEvent[]) => void) | undefined
+      .pipe(delay(50000))
+      .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
         next: (value: ICulturalEvent[]) => {this.culturalEvents=value;},
         error: (err: any) => {
           console.error('error during loading cultural events: '+ err);

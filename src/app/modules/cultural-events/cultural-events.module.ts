@@ -4,15 +4,17 @@ import { CommonModule } from '@angular/common';
 import { CulturalEventsRoutingModule } from './cultural-events-routing.module';
 import { CulturalEventsComponent } from './cultural-events/cultural-events.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
     CulturalEventsComponent
   ],
-    imports: [
-        CommonModule,
-        CulturalEventsRoutingModule,
-        MatProgressSpinnerModule
-    ]
+  imports: [
+    CommonModule,
+    CulturalEventsRoutingModule,
+    MatProgressSpinnerModule,
+    SharedModule
+  ]
 })
 export class CulturalEventsModule { }

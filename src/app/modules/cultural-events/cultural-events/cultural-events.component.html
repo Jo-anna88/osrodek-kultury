@@ -10,9 +10,5 @@
 </ng-container>
 
 <ng-template #spinner>
-  <div class="spinner-container">
-    <p>cultural events are loading...</p>
-<!--    spinner is not visible - stroke is still undefined -->
-    <mat-spinner [color]="'accent'" [mode]="'indeterminate'" [diameter]="72" class="spinner"></mat-spinner>
-  </div>
+  <app-spinner [note]="spinnerNote"></app-spinner>
 </ng-template>

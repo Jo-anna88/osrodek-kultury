@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownComponent } from './dropdown/dropdown.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
     declarations: [
-        DropdownComponent
+        DropdownComponent,
+        SpinnerComponent
     ],
     exports: [
-        DropdownComponent
+        DropdownComponent,
+        SpinnerComponent
     ],
     imports: [
         CommonModule
