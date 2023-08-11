@@ -12,8 +12,23 @@ export class CulturalEventService {
 
   constructor(private http: HttpClient) { }
 
+  //TODO:return max 10 events for page and max 30 events from all of them (pagination needed!)
   getEvents() : Observable<Array<ICulturalEvent>>{
     //return this.http.get(`${this.apiUrl}`, responseType: );
     return of(mockCulturalEvents);
+  }
+
+  //TODO: add url
+  addCulturalEvent(culturalEvent: ICulturalEvent) { //Observable<Object>
+    return this.http.post('', culturalEvent);
+  }
+
+  //TODO: add url
+  editCulturalEvent(culturalEvent: ICulturalEvent) {
+    return this.http.patch('',culturalEvent); //or PUT
+  }
+
+  removeCulturalEvent(culturalEvent: ICulturalEvent) {
+    return this.http.delete(''); //TODO: how to specify which one should be deleted?
   }
 }
