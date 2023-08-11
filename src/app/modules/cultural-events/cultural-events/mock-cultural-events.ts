@@ -1,22 +1,23 @@
 import {ICulturalEvent} from "./cultural-event";
+import {SIMPLE_TEXT} from "../../../../assets/constants";
 
 export const mockCulturalEvents: Array<ICulturalEvent> = [
   {
     imgSource: "assets/images/cultural-event1.jpg",
-    title: "Event1",
+    name: "Event1",
     date: new Date(2023, 11, 12),
-    description: "Event1 - description"
+    description: "Event1 - description. " + SIMPLE_TEXT + " " + SIMPLE_TEXT
   },
   {
     imgSource: "assets/images/cultural-event2.jpg",
-    title: "Event2",
-    date: new Date(2023, 12, 1),
-    description: "Event2 - description"
+    name: "Event2",
+    date: new Date(2023, 10, 10),
+    description: "Event2 - description. " + SIMPLE_TEXT
   },
   {
     imgSource: "assets/images/cultural-event3.jpg",
-    title: "Event3",
-    date: new Date(2023, 12, 10),
-    description: "Event3 - description"
+    name: "Event3",
+    date: new Date(2023, 10, 5),
+    description: "Event3 - description. " + SIMPLE_TEXT
   }
 ]

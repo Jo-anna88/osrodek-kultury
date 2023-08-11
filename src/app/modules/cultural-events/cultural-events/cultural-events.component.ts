@@ -27,7 +27,7 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     // first solution:
     this.culturalEventService.getEvents()
-      .pipe(delay(50000))
+      //.pipe(delay(5000))
       .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
         next: (value: ICulturalEvent[]) => {this.culturalEvents=value;},
         error: (err: any) => {

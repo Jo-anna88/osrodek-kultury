@@ -1,6 +1,6 @@
 export interface ICulturalEvent {
   imgSource: string,
-  title: string,
+  name: string,
   date: Date,
   description: string
 }

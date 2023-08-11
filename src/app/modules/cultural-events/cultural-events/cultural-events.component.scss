@@ -1,1 +1,39 @@
 @import 'src/styles';
+
+.cultural-events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1.5rem; // or: 2%
+}
+.cultural-event {
+  display: flex;
+  height: 30vh;
+  width: 70%;
+  padding-bottom: 2%;
+  .event-image {
+    height: 100%;
+    padding-right: 2%;
+    border-radius: 3rem;
+    border: 0;
+    //box-shadow: $shadow;
+  }
+  .event-text {
+    overflow: hidden;
+  }
+  .description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5; /* start showing ellipsis when 5th line is reached */
+    text-overflow: ellipsis; /* enables ellipsis */
+    white-space: pre-wrap; /* let the text wrap preserving spaces */
+    overflow: hidden; /* keeps the element from overflowing its parent */
+  }
+  .event-name { //why h3 is not working?
+    font-size: 1.25rem;
+    font-family: $font-primary;
+  }
+  .date {
+    font-weight: bold;
+  }
+}

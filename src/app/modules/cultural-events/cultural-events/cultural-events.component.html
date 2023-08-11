@@ -1,10 +1,12 @@
 <ng-container *ngIf="!isLoading else spinner">
-  <div class="culturalEvents" *ngFor="let culturalEvent of culturalEvents">
-    <article class="culturalEvent">
-      <img class="image" [src]= culturalEvent.imgSource alt="cultural event">
-      <a class="title" [routerLink]="">{{culturalEvent.title}}</a>
-      <p class="date">{{culturalEvent.date}}</p>
-      <p class="description">{{culturalEvent.description}}</p>
+  <div class="cultural-events">
+    <article class="cultural-event" *ngFor="let culturalEvent of culturalEvents">
+      <img class="event-image" [src]= culturalEvent.imgSource alt="cultural event">
+      <div class="event-text">
+        <a class="event-name" [routerLink]="">{{culturalEvent.name}}</a>
+        <p class="date">{{culturalEvent.date | date:'longDate'}} </p>
+        <p class="description">{{culturalEvent.description}}</p>
+      </div>
     </article>
   </div>
 </ng-container>
