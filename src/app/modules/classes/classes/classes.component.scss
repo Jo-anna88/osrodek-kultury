@@ -19,20 +19,19 @@
   .course-icon-container {
     display: flex;
     height: 100%;
-    //width: 18%;
-    //border: solid 2px $primary-rose;
-    //border-radius: 50%;
     justify-content: center;
     align-items: center;
     position: relative;
+    &:hover {
+      .course-icon {height: 100%}
+      i {
+        font-size: 6rem;
+        color: $primary-rose;
+      }
+    }
     .course-icon {
       position: absolute;
       height: 70%;
-      &:hover {
-        transition-delay: 250ms;
-        transition-property: height;
-        height: 100%
-      }
     }
   }
   .course-description-divider {
@@ -47,7 +46,8 @@
     &:hover {color: $primary-rose}
   }
   i {
-    color: $primary-rose;
+    color: $primary-blue;
+    //&:hover {color: $primary-rose}
     font-size: 5rem;
     font-weight: lighter;
   }
