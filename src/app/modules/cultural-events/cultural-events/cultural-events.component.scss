@@ -31,7 +31,7 @@
     white-space: pre-wrap; /* let the text wrap preserving spaces */
     overflow: hidden; /* keeps the element from overflowing its parent */
   }
-  .event-name { //why h3 is not working?
+  .event-name {
     font-size: 1.25rem;
     font-family: $font-primary;
     &:hover {color: $primary-rose}

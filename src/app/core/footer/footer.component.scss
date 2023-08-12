@@ -33,10 +33,7 @@ li {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  li {
-    border-left: solid 1px;
-    border-color: $font-color;
-  }
+  li { border-left: solid 1px $font-color; }
   //li {
   //  list-style-type: '|';
   //  padding-inline: 1ch; // "1ch" = rozmiar szerokości cyfry "0"

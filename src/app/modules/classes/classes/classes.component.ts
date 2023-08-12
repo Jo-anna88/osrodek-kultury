@@ -35,7 +35,6 @@ export class ClassesComponent implements OnInit, OnDestroy {
         complete: () => {
           this.isLoading = false;
         }
-
       })
   }
   ngOnDestroy(): void {

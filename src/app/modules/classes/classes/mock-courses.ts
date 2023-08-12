@@ -9,7 +9,7 @@ export const mockCourses: ICourse[] = [
     description: SIMPLE_TEXT
   },
   {
-    imgSource: "assets/icons/chess",
+    imgSource: "assets/icons/chess.png",
     name: "Chess",
     teacher: "Igor Szachista",
     description: SIMPLE_TEXT
@@ -17,7 +17,7 @@ export const mockCourses: ICourse[] = [
   {
     imgSource: "assets/icons/guitar.png",
     name: "Guitar",
-    teacher: "Jan Kowalski",
+    teacher: "Jan Muzyk",
     description: SIMPLE_TEXT
   },
   {
