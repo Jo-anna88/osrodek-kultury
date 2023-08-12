@@ -1,1 +1,19 @@
-<p>classes works!</p>
+<ng-container *ngIf="!isLoading else spinner">
+  <div class="courses">
+    <article class="course-card" *ngFor="let course of courses">
+      <img class="course-icon" [src]= course.imgSource alt="cultural event">
+      <div class="course-text">
+        <a class="course-name" [routerLink]="">{{course.name}}</a>
+<!--        link to teacher page or some pop-up window about him/her-->
+        <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
+        <p class="description">{{course.description}}</p>
+      </div>
+    </article>
+  </div>
+  <a href="https://www.flaticon.com/free-icons/">Icons created by Freepik - Flaticon</a>
+</ng-container>
+
+<ng-template #spinner>
+  <app-spinner [note]="spinnerNote"></app-spinner>
+</ng-template>
+
