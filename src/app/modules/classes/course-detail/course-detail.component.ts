@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ICourse} from "../classes/course";
+import {ICourse} from "../courses-list/course";
 import {Observable, switchMap} from "rxjs";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {ClassesService} from "../classes.service";
+import {CoursesService} from "../courses.service";
 
 @Component({
   selector: 'app-course-detail',
@@ -14,7 +14,7 @@ export class CourseDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private classesService: ClassesService
+    private classesService: CoursesService
   ) {}
   ngOnInit() {
     this.course$ = this.route.paramMap.pipe(

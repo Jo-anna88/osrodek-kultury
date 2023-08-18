@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, of} from "rxjs";
-import {ICourse} from "./classes/course";
-import {mockCourses} from "./classes/mock-courses";
+import {ICourse} from "./courses-list/course";
+import {mockCourses} from "./courses-list/mock-courses";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClassesService {
+export class CoursesService {
 
   private apiUrl = "http://localhost:4200/classes";
 

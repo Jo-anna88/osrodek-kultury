@@ -16,7 +16,7 @@ import { HomeModule } from "./modules/home/home.module";
 import { ContactModule } from "./modules/contact/contact.module";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {CulturalEventsModule} from "./modules/cultural-events/cultural-events.module";
-import {ClassesModule} from "./modules/classes/classes.module";
+import {CoursesModule} from "./modules/classes/courses.module";
 import {SharedModule} from "./shared/shared.module";
 
 
@@ -38,7 +38,7 @@ import {SharedModule} from "./shared/shared.module";
     HomeModule,
     ContactModule,
     CulturalEventsModule,
-    ClassesModule,
+    CoursesModule,
     SharedModule,
     AppRoutingModule // it should be the last imported module (because there are routing files in other modules)
   ],

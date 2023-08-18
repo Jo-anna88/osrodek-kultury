@@ -1,20 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
 import {ICourse} from "./course";
-import {ClassesService} from "../classes.service";
+import {CoursesService} from "../courses.service";
 import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-classes',
-  templateUrl: './classes.component.html',
-  styleUrls: ['./classes.component.scss']
+  templateUrl: './courses-list.component.html',
+  styleUrls: ['./courses-list.component.scss']
 })
-export class ClassesComponent implements OnInit, OnDestroy {
+export class CoursesListComponent implements OnInit, OnDestroy {
   destroy$: Subject<any> = new Subject();
   courses: ICourse[] = [];
   isLoading: boolean = false;
   spinnerNote: string = "Classes are loading...";
-  constructor(private classesService: ClassesService,
+  constructor(private classesService: CoursesService,
               private router: Router){
   }
   ngOnInit(): void {
