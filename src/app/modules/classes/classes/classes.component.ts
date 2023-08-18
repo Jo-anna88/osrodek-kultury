@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
 import {ICourse} from "./course";
 import {ClassesService} from "../classes.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-classes',
@@ -13,7 +14,8 @@ export class ClassesComponent implements OnInit, OnDestroy {
   courses: ICourse[] = [];
   isLoading: boolean = false;
   spinnerNote: string = "Classes are loading...";
-  constructor(private classesService: ClassesService){
+  constructor(private classesService: ClassesService,
+              private router: Router){
   }
   ngOnInit(): void {
     this.loadData();

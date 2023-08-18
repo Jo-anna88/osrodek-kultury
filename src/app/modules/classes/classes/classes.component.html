@@ -1,7 +1,8 @@
 <ng-container *ngIf="!isLoading else spinner">
   <ul class="courses">
     <li class="course-card" *ngFor="let course of courses">
-      <a class="course-icon-container">
+      <a class="course-icon-container" [routerLink]="['/classes', course.id]" >
+<!--        <a class="course-icon-container" target="_blank" [routerLink]="['/classes', course.id]" >-->
         <i class="bi bi-circle"></i>
         <img class="course-icon" [src]=course.imgSource alt="cultural event">
       </a>

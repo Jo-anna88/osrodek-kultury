@@ -18,4 +18,9 @@ export class ClassesService {
     //return this.http.get(`${this.apiUrl}`, responseType: );
     return of(mockCourses);
   }
+  getCourseById(id: number) : Observable <ICourse> {
+    console.log("id: "+id);
+    //return this.http.get(...);
+    return of(mockCourses[--id]);
+  }
 }
