@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading else spinner">
-  <div class="cultural-events">
+  <div class="cultural-events-container">
     <article class="cultural-event" *ngFor="let culturalEvent of culturalEvents">
       <img class="event-image" [src]= culturalEvent.imgSource alt="cultural event">
       <div class="event-text">
