@@ -14,42 +14,45 @@
   padding-bottom: 2%;
   justify-content: center;
   align-items: center;
-  gap: 2%;
   color: $font-color;
 
   .course-icon-container {
     display: flex;
     height: 100%;
-    justify-content: center;
     align-items: center;
-    position: relative;
 
     &:hover {
-      .course-icon {height: 100%}
       i {
         font-size: 6rem;
         color: $primary-rose;
+        .course-icon {height: 75%}
       }
     }
 
-    .course-icon {
-      position: absolute;
-      height: 70%;
-    }
-
     i {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
       color: $primary-blue;
       font-size: 5rem;
+      .course-icon {
+        position: absolute;
+        height: 50%;
+      }
     }
   }
 
   .course-description-divider {
     font-size: 2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .course-name {
     font-size: 1.25rem;
     font-family: $font-primary;
+    padding-left: 0.5rem;
   }
 
   a {

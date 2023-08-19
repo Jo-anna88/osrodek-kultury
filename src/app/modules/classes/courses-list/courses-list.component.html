@@ -3,15 +3,14 @@
     <li class="course-card" *ngFor="let course of courses">
       <a class="course-icon-container" [routerLink]="['/classes', course.id]" >
 <!--        <a class="course-icon-container" target="_blank" [routerLink]="['/classes', course.id]" >-->
-        <i class="bi bi-circle"></i>
-        <img class="course-icon" [src]=course.imgSource alt="cultural event">
+        <i class="bi bi-circle">
+          <img class="course-icon" [src]=course.imgSource alt="cultural event">
+        </i>
+        <p class = "course-name">{{course.name}}</p>
       </a>
-      <a class="course-name" [routerLink]="">{{course.name}}</a>
-      <!--        link to teacher page or some pop-up window about him/her-->
       <p class="course-description-divider">|</p>
+      <!--        link to teacher page or some pop-up window / profile card about him/her-->
       <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
-      <!--        <p class="description">{{course.description}}</p>-->
-      <!--      TODO: move description to specific course's component -->
     </li>
   </ul>
   <div class="source-link">
