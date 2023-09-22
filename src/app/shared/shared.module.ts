@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DropdownComponent } from './dropdown/dropdown.component';
-import { SpinnerComponent } from './spinner/spinner.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
     declarations: [

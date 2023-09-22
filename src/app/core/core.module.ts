@@ -4,18 +4,22 @@ import {HeaderComponent} from "./header/header.component";
 import {MatButtonModule} from "@angular/material/button";
 import {LowerCasePipe, NgForOf} from "@angular/common";
 import {RouterLink, RouterLinkActive} from "@angular/router";
+import { LoginComponent } from './authorization/login/login.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
         FooterComponent,
-        HeaderComponent
+        HeaderComponent,
+        LoginComponent
     ],
   imports: [
     MatButtonModule,
     NgForOf,
     RouterLink,
     RouterLinkActive,
-    LowerCasePipe
+    LowerCasePipe,
+    ReactiveFormsModule
   ],
     exports: [
         FooterComponent,
