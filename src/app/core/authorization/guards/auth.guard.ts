@@ -6,12 +6,13 @@ import {filter, map} from "rxjs";
 export const authGuard = () => {
   const userService = inject(UserService);
   const router = inject(Router);
+  console.log("auth guard");
   return userService.user$.pipe(
     filter((user) => user !== undefined),
     map((user) => {
     if (!user) {
-      router.navigateByUrl('/');
-      return false
+      router.navigateByUrl('/login');
+      return false;
     }
     return true;
   }))

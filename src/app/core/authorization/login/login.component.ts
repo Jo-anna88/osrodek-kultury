@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
+import {UserService} from "../../services/user.service";
+import {Role} from "../../../shared/models/user";
 
 @Component({
   selector: 'app-login',
@@ -13,6 +15,7 @@ export class LoginComponent {
 
   constructor(private fb:FormBuilder,
               private authService: AuthService,
+              private userService: UserService,
               private router: Router) {
 
     this.form = this.fb.group({
@@ -29,7 +32,8 @@ export class LoginComponent {
         .subscribe(
           () => {
             console.log("User is logged in");
-            this.router.navigateByUrl('/');
+            this.userService.setCurrentUser({id: 0, login: val.email, password: val.password, role: Role.Client});
+            this.router.navigate(['landing-page']);
           }
         );
     }
