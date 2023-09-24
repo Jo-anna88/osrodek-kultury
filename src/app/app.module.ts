@@ -17,6 +17,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import {CulturalEventsModule} from "./modules/cultural-events/cultural-events.module";
 import {CoursesModule} from "./modules/classes/courses.module";
 import {SharedModule} from "./shared/shared.module";
+import {LandingPageModule} from "./modules/landing-page/landing-page.module";
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import {SharedModule} from "./shared/shared.module";
     ContactModule,
     CulturalEventsModule,
     CoursesModule,
+    LandingPageModule,
     SharedModule,
     AppRoutingModule // it should be the last imported module (because there are routing files in other modules)
   ],
