@@ -3,7 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
-import {Role} from "../../../shared/models/user";
+import {IUser, Role} from "../../../shared/models/user";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -11,16 +12,16 @@ import {Role} from "../../../shared/models/user";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  form:FormGroup;
+  form: FormGroup;
 
-  constructor(private fb:FormBuilder,
+  constructor(private fb: FormBuilder,
               private authService: AuthService,
               private userService: UserService,
               private router: Router) {
 
     this.form = this.fb.group({
-      email: ['',Validators.required],
-      password: ['',Validators.required]
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -28,14 +29,17 @@ export class LoginComponent {
     const val = this.form.value;
 
     if (val.email && val.password) {
+      console.log("Email + Password: " + val.email + " " + val.password)
       this.authService.login(val.email, val.password)
         .subscribe(
-          () => {
-            console.log("User is logged in");
-            this.userService.setCurrentUser({id: 0, login: val.email, password: val.password, role: Role.Client});
+          (res) => {
+            if(res.body) this.userService.setCurrentUser({...res.body});
+            else this.userService.setCurrentUserToNull();
+            console.log("LoginComponent");
             this.router.navigate(['landing-page']);
           }
         );
     }
   }
 }
+

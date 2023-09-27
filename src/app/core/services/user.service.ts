@@ -6,10 +6,20 @@ import {IUser} from "../../shared/models/user";
   providedIn: 'root'
 })
 export class UserService {
-  user$ = new BehaviorSubject<IUser | null | undefined>(undefined); // inital _value: undefined
+  // inital _value: undefined (it means we are not fetching the user yet)
+  user$ = new BehaviorSubject<IUser | null | undefined>(undefined);
   constructor() { }
 
   setCurrentUser(currentUser: IUser) {
     this.user$.next(currentUser);
   }
+  setCurrentUserToNull() {
+    this.user$.next(null);
+  }
+  /*
+  setCurrentUser() {
+    if(localStorage.getItem('token')){
+    or rather make an API call to get currentUser
+  }
+  */
 }
