@@ -1,12 +1,13 @@
-export interface Message {
-  id: number;
+export interface IAlert {
+  id?: number;
   severity: Severity;
-  detail: String;
+  description: string;
 }
 
 export enum Severity {
   Success = 'Success',
   Info = 'Info',
   Warn = 'Warn',
-  Error = 'Error'
+  Error = 'Error',
+  None = 'None'
 }

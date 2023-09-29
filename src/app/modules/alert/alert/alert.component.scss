@@ -1,0 +1,35 @@
+//todo: set in in the center or right
+:host {
+  display: block;
+  flex-direction: column;
+  position: relative;
+  left: 100px;
+  bottom: 0;
+  z-index: 1;
+}
+.alerts{
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+}
+.alert-content {
+  //display: none;
+  display: flex;
+  flex-direction: row;
+  //position: absolute; // relative to the parent
+  //z-index: 1;
+  margin-top: 1rem;
+  //top: 1rem;
+  overflow: auto;
+  background: #CE8D3D;
+  color: yellow;
+  border: solid 2px;
+  border-radius: 3rem;
+}
+
+.alert-error {
+  //'i class':
+  //color:
+  //background-color:
+}
+
