@@ -1,30 +1,49 @@
 //todo: set in in the center or right
-:host {
-  display: block;
-  flex-direction: column;
-  position: relative;
-  left: 100px;
-  bottom: 0;
-  z-index: 1;
+//source: https://codefrontend.com/css-ellipsis/
+//source: https://www.atatus.com/blog/applying-css-word-wrap-overflow-wrap-word-break/
+@mixin multiline-ellipsis ($lines: 3) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow-wrap: break-word; /* puts the rest of the word in a new line */
+
 }
-.alerts{
+@mixin ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* keeps the text in a single line */
+}
+
+.alerts {
+  position: fixed;
   display: flex;
   flex-direction: column;
-  position: fixed;
+  align-items: flex-end;
+  width: 25%;
+  margin-left: 50%;
+  margin-top: 7%;
 }
 .alert-content {
+  max-width: 100%;
   //display: none;
   display: flex;
   flex-direction: row;
-  //position: absolute; // relative to the parent
-  //z-index: 1;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 1rem;
-  //top: 1rem;
-  overflow: auto;
+  padding: 0.5rem;
   background: #CE8D3D;
   color: yellow;
   border: solid 2px;
   border-radius: 3rem;
+}
+
+.alert-message {
+  @include multiline-ellipsis();
 }
 
 .alert-error {
