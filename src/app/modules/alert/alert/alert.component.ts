@@ -1,22 +1,36 @@
-import {Component} from '@angular/core';
-import {Alert, Severity} from "../alert.model";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Alert, IAlertStyle, Severity} from "../alert.model";
+import {AlertService} from "../alert.service";
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss']
 })
-export class AlertComponent {
-  alert: Alert = new Alert(Severity.Warn, "this is an alert's description");
-  alertIcon: string;
-  errorTypeToIconMapping = new Map<string, string>([
-    [Severity.Success, ''],
-    [Severity.Info, ''],
-    [Severity.Warn,'bi bi-phone'],
-    [Severity.Success, ''],
-    [Severity.None, '']
+export class AlertComponent implements OnInit {
+  @Output()
+  onAlertClose = new EventEmitter<Alert>();
+
+  @Input()
+  alert: Alert = {description: "", severity: Severity.None};
+
+  alertStyle: IAlertStyle = {colors:"", icon:""};
+  isHidden: boolean = false;
+  alertTypeToStyleMapping = new Map<string, IAlertStyle>([
+    [Severity.Success, {colors:"alert-success", icon: 'bi bi-check-circle'}],
+    [Severity.Info, {colors:"alert-info", icon: 'bi bi-info-circle'}],
+    [Severity.Warn, {colors:"alert-warn", icon: 'bi bi-exclamation-circle'}],
+    [Severity.Error, {colors: "alert-error", icon: 'bi bi-exclamation-circle-fill'}],
+    [Severity.None, {colors:"alert-none", icon: ''}]
   ])
-  constructor() {
-    this.alertIcon = this.errorTypeToIconMapping.get(this.alert.severity)!;
+  ngOnInit(): void {
+    console.log("Alert Component");
+    this.alertStyle = this.alertTypeToStyleMapping.get(this.alert.severity)!;
   }
+  onClose(): void {
+    //this.alertService.removeAlert();
+    this.isHidden = true;
+    this.onAlertClose.emit(this.alert);
+  }
+
 }

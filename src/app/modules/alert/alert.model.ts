@@ -16,3 +16,8 @@ export enum Severity {
   Error = 'ERROR',
   None = ''
 }
+
+export interface IAlertStyle {
+  colors: string
+  icon: string
+}
