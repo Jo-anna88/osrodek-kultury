@@ -1,21 +1,4 @@
-//todo: set in in the center or right
-//source: https://codefrontend.com/css-ellipsis/
-//source: https://www.atatus.com/blog/applying-css-word-wrap-overflow-wrap-word-break/
-@mixin multiline-ellipsis ($lines: 3) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: pre-wrap;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: $lines;
-  overflow-wrap: break-word; /* puts the rest of the word in a new line */
-
-}
-@mixin ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; /* keeps the text in a single line */
-}
+@import 'src/styles';
 
 .alerts {
   position: fixed;
@@ -36,8 +19,8 @@
   justify-content: space-between;
   margin-top: 1rem;
   padding: 0.5rem;
-  background: #CE8D3D;
-  color: yellow;
+  background: $primary-white;
+  //color: yellow;
   border: solid 2px;
   border-radius: 3rem;
 }
@@ -46,9 +29,26 @@
   @include multiline-ellipsis();
 }
 
-.alert-error {
-  //'i class':
-  //color:
-  //background-color:
+@mixin alert-theme($alert-color, $alert-font-color) {
+  background-color: $alert-color;
+  color: $alert-font-color;
+  // 'i class'
 }
 
+.alert-error {
+  //@include alert-theme()
+}
+
+.alert-success {
+}
+
+.alert-info {
+}
+
+.alert-warn {
+  @include alert-theme($primary-yellow, yellow);
+  //i
+}
+
+.alert-clear {
+}

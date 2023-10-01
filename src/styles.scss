@@ -12,6 +12,24 @@ $shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.1
 $font-primary: "Bauhaus 93", sans-serif;
 $font-secondary: "Poppins", normal;
 
+//source: https://codefrontend.com/css-ellipsis/
+//source: https://www.atatus.com/blog/applying-css-word-wrap-overflow-wrap-word-break/
+@mixin multiline-ellipsis ($lines: 3) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow-wrap: break-word; /* puts the rest of the word in a new line */
+
+}
+@mixin ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* keeps the text in a single line */
+}
+
 h2, .h2 {
   font-size: 1.25rem;
   font-family: $font-primary;

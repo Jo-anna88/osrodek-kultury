@@ -1,8 +1,11 @@
 <div class="alerts">
 
-  <div class="alert-content">
-    <i class="bi bi-phone"></i>
-    <div class="alert-message">1alennnnnnnn 2nnnnnmmmmmmmmmmmmmmmmmmmmm 3mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm 4mmmmmmmmmmmmmmmmmmmmmmmmmm 5mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm 6mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</div>
+  <div class="alert-content alert-warn">
+    <i [ngClass]="alertIcon"></i>
+    <div class="alert-message">
+      <div>{{alert.severity}}</div>
+      <div>{{alert.description}}</div>
+    </div>
     <span>&times;</span>
   </div>
 
