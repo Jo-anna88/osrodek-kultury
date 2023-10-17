@@ -12,7 +12,7 @@ export class AlertComponent implements OnInit {
   onAlertClose = new EventEmitter<Alert>();
 
   @Input()
-  alert: Alert = {description: "", severity: Severity.None};
+  alert: Alert = {id: -1, description: "", severity: Severity.None};
 
   alertStyle: IAlertStyle = {colors:"", icon:""};
   isHidden: boolean = false;

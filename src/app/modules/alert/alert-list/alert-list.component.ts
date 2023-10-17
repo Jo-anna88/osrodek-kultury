@@ -10,14 +10,15 @@ import {Subscription} from "rxjs";
   styleUrls: ['./alert-list.component.scss']
 })
 export class AlertListComponent implements OnInit, OnDestroy {
-  //alerts: Alert[] = alerts;
-  alerts: Alert[] = [];
+  alerts: Alert[]=[];
+  //alerts: Alert[] = [];
   alertSubscription!: Subscription;
   constructor(private alertService: AlertService) {}
 
   ngOnInit(): void {
+    this.alerts = alerts;
     console.log("alert list component")
-    this.alertSubscription = this.alertService.getAlert()
+    /*this.alertSubscription = this.alertService.getAlert()
       .subscribe(alert => {
         console.log("alert in alert list: " + alert);
         if (alert) {
@@ -25,10 +26,12 @@ export class AlertListComponent implements OnInit, OnDestroy {
         } else {
           this.alerts = []
         } //?
-      })
+      })*/
   }
 
   removeAlert(alert: Alert) {
+    console.log("remove alert with id: "+ alert.id)
+    // todo: it should be moved to alert service:
     const index: number = this.alerts.findIndex(
       (_alert) => (_alert.id === alert.id)
     )
@@ -37,6 +40,6 @@ export class AlertListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // unsubscribe to avoid memory leaks
-    this.alertSubscription.unsubscribe();
+    //this.alertSubscription.unsubscribe();
   }
 }

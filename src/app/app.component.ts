@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     console.log("alerts will be add");
-    this.alertService.addAlert(alerts[0]);
+    //this.alertService.addAlert(alerts[0]);
   }
 
   public open(modal: any): void {

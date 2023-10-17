@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Alert } from "./alert.model";
+import {Alert, Severity} from "./alert.model";
 import {delay, Observable, Subject} from "rxjs";
 
 @Injectable({
@@ -11,6 +11,9 @@ export class AlertService {
     this.alert$.next(alert);
     console.log("Alert Service: ");
     console.log(alert);
+  }
+  addAlert2(severity: Severity, description: string) {
+
   }
   addAllAlerts(alerts: Alert[]) {
     console.log("alerts are being added")

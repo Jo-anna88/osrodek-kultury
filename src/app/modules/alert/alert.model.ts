@@ -1,11 +1,12 @@
 export class Alert {
-  id?: number;
+  static counter: number = 0;
+  id: number;
   severity: Severity;
   description: string;
   constructor(severity: Severity, description: string) {
     this.severity = severity;
     this.description = description;
-    this.id = 1; //todo: backend
+    this.id = Alert.counter++; //todo: backend
   }
 }
 
