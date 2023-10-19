@@ -1,24 +1,17 @@
 import { Injectable } from '@angular/core';
 import {Alert, Severity} from "./alert.model";
-import {delay, Observable, Subject} from "rxjs";
+import {BehaviorSubject, delay, Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlertService {
-  private alert$: Subject<Alert | null> = new Subject();
+  private alert$: BehaviorSubject<any> = new BehaviorSubject(undefined); //BehaviorSubject<Alert|null>
   addAlert(alert: Alert) {
     this.alert$.next(alert);
-    console.log("Alert Service: ");
-    console.log(alert);
-  }
-  addAlert2(severity: Severity, description: string) {
-
   }
   addAllAlerts(alerts: Alert[]) {
-    console.log("alerts are being added")
     for (let alert of alerts) {
-      console.log(alert);
       this.alert$.next(alert);
     }
   }
@@ -28,7 +21,6 @@ export class AlertService {
   }
 
   getAlert(): Observable<Alert|null> {
-    console.log("getAlert function")
     return this.alert$.asObservable();
   }
 

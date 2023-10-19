@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Alert, Severity} from "../alert.model";
+import {Alert} from "../alert.model";
 import {AlertService} from "../alert.service";
 import {alerts} from "../alert-mock";
 import {Subscription} from "rxjs";
@@ -10,27 +10,22 @@ import {Subscription} from "rxjs";
   styleUrls: ['./alert-list.component.scss']
 })
 export class AlertListComponent implements OnInit, OnDestroy {
-  alerts: Alert[]=[];
-  //alerts: Alert[] = [];
+  alerts: Alert[] = [];
   alertSubscription!: Subscription;
   constructor(private alertService: AlertService) {}
 
   ngOnInit(): void {
-    this.alerts = alerts;
-    console.log("alert list component")
-    /*this.alertSubscription = this.alertService.getAlert()
+    this.alertSubscription = this.alertService.getAlert()
       .subscribe(alert => {
-        console.log("alert in alert list: " + alert);
         if (alert) {
           this.alerts.push({id: alerts.length++, description: alert.description, severity: alert.severity});
         } else {
           this.alerts = []
         } //?
-      })*/
+      })
   }
 
   removeAlert(alert: Alert) {
-    console.log("remove alert with id: "+ alert.id)
     // todo: it should be moved to alert service:
     const index: number = this.alerts.findIndex(
       (_alert) => (_alert.id === alert.id)
@@ -40,6 +35,6 @@ export class AlertListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // unsubscribe to avoid memory leaks
-    //this.alertSubscription.unsubscribe();
+    this.alertSubscription.unsubscribe();
   }
 }

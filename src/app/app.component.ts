@@ -15,8 +15,14 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log("alerts will be add");
-    //this.alertService.addAlert(alerts[0]);
+    this.alertService.addAlert(alerts[0]);
+    //this.alertService.addAllAlerts(alerts.splice(2)); <-- does not work with BehaviorSubject (only the last value is returned)
+     /*
+    let i = 0;
+    setInterval(() => {
+      this.alertService.addAlert(alerts[i++]);
+    }, 2000);
+     */
   }
 
   public open(modal: any): void {

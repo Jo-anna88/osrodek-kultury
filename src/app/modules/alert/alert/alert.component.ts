@@ -24,7 +24,6 @@ export class AlertComponent implements OnInit {
     [Severity.None, {colors:"alert-none", icon: ''}]
   ])
   ngOnInit(): void {
-    console.log("Alert Component");
     this.alertStyle = this.alertTypeToStyleMapping.get(this.alert.severity)!;
   }
   onClose(): void {
