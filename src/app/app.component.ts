@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.alertService.addAlert(alerts[0]);
+    //this.alertService.addAlert(alerts[0]);
     //this.alertService.addAllAlerts(alerts.splice(2)); <-- does not work with BehaviorSubject (only the last value is returned)
      /*
     let i = 0;

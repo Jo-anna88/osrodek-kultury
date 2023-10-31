@@ -3,6 +3,8 @@ import {Subject} from "rxjs";
 import {ICourse} from "./course";
 import {CoursesService} from "../courses.service";
 import {Router} from "@angular/router";
+import {AlertService} from "../../alert/alert.service";
+import {Alert, Severity} from "../../alert/alert.model";
 
 @Component({
   selector: 'app-classes',
@@ -14,7 +16,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   courses: ICourse[] = [];
   isLoading: boolean = false;
   spinnerNote: string = "Classes are loading...";
-  constructor(private classesService: CoursesService,
+  constructor(private coursesService: CoursesService,
+              private alertService: AlertService,
               private router: Router){
   }
   ngOnInit(): void {
@@ -24,7 +27,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   loadData() {
     this.isLoading = true;
     // first solution:
-    this.classesService.getCourses()
+    this.coursesService.getCourses()
       //.pipe(delay(5000))
       .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
         next: (value: ICourse[]) => {
@@ -32,6 +35,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
         },
         error: (err: any) => {
           console.error('error during loading the classes: ' + err);
+          this.alertService.error('error during loading the classes');
           this.isLoading = false;
         },
         complete: () => {
