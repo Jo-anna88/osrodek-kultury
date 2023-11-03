@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatIconModule} from "@angular/material/icon";
@@ -19,6 +20,9 @@ import { CoursesModule } from "./modules/classes/courses.module";
 import { SharedModule } from "./shared/shared.module";
 import { LandingPageModule } from "./modules/landing-page/landing-page.module";
 import { AlertModule } from "./modules/alert/alert.module";
+import {HttpErrorInterceptor} from "./core/interceptors/http-error-interceptor.service";
+import {httpInterceptorProviders} from "./core/interceptors/http-interceptors";
+import {HttpErrorHandlerService} from "./core/services/http-error-handler.service";
 
 
 @NgModule({
@@ -28,6 +32,7 @@ import { AlertModule } from "./modules/alert/alert.module";
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     // FormsModule,
     // ReactiveFormsModule,
     FontAwesomeModule,
@@ -45,7 +50,10 @@ import { AlertModule } from "./modules/alert/alert.module";
     SharedModule,
     AppRoutingModule // it should be the last imported module (because there are routing files in other modules)
   ],
-  providers: [],
+  providers: [
+    { provide: ErrorHandler, useClass: HttpErrorHandlerService },
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

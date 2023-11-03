@@ -31,6 +31,11 @@ $font-secondary: "Poppins", normal;
   white-space: nowrap; /* keeps the text in a single line */
 }
 
+h1, .h1 {
+  font-size: 2rem;
+  font-family: $font-primary;
+}
+
 h2, .h2 {
   font-size: 1.25rem;
   font-family: $font-primary;

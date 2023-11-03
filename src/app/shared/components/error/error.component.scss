@@ -1,0 +1,15 @@
+@import 'src/styles';
+
+.error-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  .error-status {
+    color: $primary-rose;
+  }
+  .error-status-text, .error-description {
+    color: $primary-blue;
+  }
+}
