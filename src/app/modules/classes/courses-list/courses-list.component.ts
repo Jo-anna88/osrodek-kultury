@@ -4,7 +4,7 @@ import {ICourse} from "./course";
 import {CoursesService} from "../courses.service";
 import {Router} from "@angular/router";
 import {AlertService} from "../../alert/alert.service";
-import {AppErrorModel} from "../../../shared/models/app-error.model";
+import {AppError, errorStatusToAppErrorMapping} from "../../../shared/models/app-error.model";
 
 @Component({
   selector: 'app-classes',
@@ -16,11 +16,10 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   courses: ICourse[] = [];
   isLoading: boolean = false;
   spinnerNote: string = "Classes are loading...";
-  appError: AppErrorModel = {status: -1, statusTxt: "", description: ""};
+  appError: AppError = {status: -1, statusTxt: "", description: ""};
   constructor(private coursesService: CoursesService,
               private alertService: AlertService,
-              private router: Router){
-  }
+              private router: Router) {}
   ngOnInit(): void {
     this.loadData();
   }
@@ -36,13 +35,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           this.courses = value;
         },
         error: (err) => {
-          console.error('error during loading the classes: ', err);
-          if(err.status === 403) {this.appError = {
-            status: err.status,
-            statusTxt: "Access Denied",
-            description: "Sorry, you do not have permission to access this resource."
-          }}
-          this.alertService.error('error during loading the classes');
+          if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
+          this.alertService.error('An error occurred during loading the classes.');
           this.isLoading = false;
         },
         complete: () => {

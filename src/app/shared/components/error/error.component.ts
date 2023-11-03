@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {AppErrorModel} from "../../models/app-error.model";
+import {AppError} from "../../models/app-error.model";
 
 @Component({
   selector: 'app-error',
@@ -8,5 +8,5 @@ import {AppErrorModel} from "../../models/app-error.model";
 })
 export class ErrorComponent {
   @Input()
-  error: AppErrorModel = {status: -1, statusTxt: "", description: ""};
+  error: AppError = {status: -1, statusTxt: "", description: ""};
 }

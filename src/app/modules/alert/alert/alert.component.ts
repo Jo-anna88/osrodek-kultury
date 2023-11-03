@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Alert, IAlertStyle, Severity} from "../alert.model";
-import {AlertService} from "../alert.service";
+import {Alert, alertTypeToStyleMapping, IAlertStyle, Severity} from "../alert.model";
 
 @Component({
   selector: 'app-alert',
@@ -16,15 +15,9 @@ export class AlertComponent implements OnInit {
 
   alertStyle: IAlertStyle = {colors:"", icon:""};
   isHidden: boolean = false;
-  alertTypeToStyleMapping = new Map<string, IAlertStyle>([
-    [Severity.Success, {colors:"alert-success", icon: 'bi bi-check-circle'}],
-    [Severity.Info, {colors:"alert-info", icon: 'bi bi-info-circle'}],
-    [Severity.Warn, {colors:"alert-warn", icon: 'bi bi-exclamation-circle'}],
-    [Severity.Error, {colors: "alert-error", icon: 'bi bi-exclamation-circle-fill'}],
-    [Severity.None, {colors:"alert-none", icon: ''}]
-  ])
+
   ngOnInit(): void {
-    this.alertStyle = this.alertTypeToStyleMapping.get(this.alert.severity)!;
+    this.alertStyle = alertTypeToStyleMapping.get(this.alert.severity)!;
   }
   onClose(): void {
     //this.alertService.removeAlert();
