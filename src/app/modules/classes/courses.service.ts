@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map, Observable, of} from "rxjs";
+import {catchError, map, Observable, of, retry} from "rxjs";
 import {ICourse} from "./courses-list/course";
 import {mockCourses} from "./courses-list/mock-courses";
 import {environment} from "../../../environments/environment";
@@ -15,14 +15,10 @@ export class CoursesService {
   //TODO:return max 10 events for page and max 30 events from all of them (pagination needed!)
   getCourses() : Observable<Array<ICourse>>{
     return this.http.get<Array<ICourse>>(environment.baseUrl+'/classes') //Observable<Object>
-      .pipe(map(courses => courses.map(course => ({
-        id: course.id,
-        imgSource: course.imgSource,
-        name: course.name,
-        teacher: course.teacher,
-        description: course.description
-        })
-      )));
+      .pipe(
+        // retry(3), // to deal with slow connection,
+        // catchError(), // then handle the error
+        map(courses => courses.map(course => {return {...course}})));
     //return of(mockCourses);
   }
 

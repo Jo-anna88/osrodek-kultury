@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { ContactRoutingModule } from './contact-routing.module';
 import { ContactComponent } from './contact/contact.component';
-import { HttpClientModule } from '@angular/common/http';
 import {ContactService} from "./contact.service";
 
 
@@ -15,8 +14,7 @@ import {ContactService} from "./contact.service";
   imports: [
     CommonModule,
     ContactRoutingModule,
-    FormsModule,
-    HttpClientModule
+    FormsModule
   ],
   providers: [
     ContactService

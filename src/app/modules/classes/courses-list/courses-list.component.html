@@ -1,4 +1,5 @@
 <ng-container *ngIf="!isLoading else spinner">
+  <ng-container *ngIf="courses.length; else noDataTemplate">
   <ul class="courses-list">
     <li class="course-card" *ngFor="let course of courses">
       <a class="course-icon-container" [routerLink]="['/classes', course.id]" >
@@ -16,9 +17,14 @@
   <div class="source-link">
     <a href="https://www.flaticon.com/free-icons/" class="source">Icons created by Freepik - Flaticon</a>
   </div>
+  </ng-container>
 </ng-container>
 
 <ng-template #spinner>
   <app-spinner [note]="spinnerNote"></app-spinner>
 </ng-template>
 
+<ng-template #noDataTemplate>
+  <app-error [error]=appError></app-error>
+<!--  <p>Oops! No data available at that moment. Please, try again later.</p>-->
+</ng-template>
