@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
-import {IUser, Role} from "../../../shared/models/user";
+import {IUser, Role} from "../../../shared/models/user.model";
 import {delay} from "rxjs";
 
 @Component({

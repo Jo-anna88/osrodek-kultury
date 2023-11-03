@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {IUser, Role} from "../../shared/models/user";
+import {IUser, Role} from "../../shared/models/user.model";
 import {Observable, of} from "rxjs";
 //import * as moment from "moment";
 
