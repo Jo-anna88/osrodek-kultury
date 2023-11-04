@@ -18,13 +18,20 @@ export class CoursesService {
       .pipe(
         // retry(3), // to deal with slow connection,
         // catchError(), // then handle the error
-        map(courses => courses.map(course => {return {...course}})));
+        map(courses => courses.map(course => {return {...course}}))
+      );
     //return of(mockCourses);
   }
 
-  getCourseById(id: number) : Observable <ICourse> {
+  getCourseByIdTest(id: number) : Observable <ICourse> {
     console.log("id: "+ id);
     //return this.http.get(...);
     return of(mockCourses[--id]);
+  }
+  getCourseById(id: string): Observable<ICourse> {
+    return this.http.get<ICourse>(environment.baseUrl+'/classes/'+id)
+      .pipe(
+        map(course => {return {...course}})
+      );
   }
 }

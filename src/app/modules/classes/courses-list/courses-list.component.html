@@ -1,19 +1,24 @@
 <ng-container *ngIf="!isLoading else spinner">
   <ng-container *ngIf="courses.length; else noDataTemplate">
-  <ul class="courses-list">
-    <li class="course-card" *ngFor="let course of courses">
-      <a class="course-icon-container" [routerLink]="['/classes', course.id]" >
-<!--        <a class="course-icon-container" target="_blank" [routerLink]="['/classes', course.id]" >-->
-        <i class="bi bi-circle">
-          <img class="course-icon" [src]=course.imgSource alt="cultural event">
-        </i>
-        <p class = "course-name">{{course.name}}</p>
-      </a>
-      <p class="course-description-divider">|</p>
-      <!--        link to teacher page or some pop-up window / profile card about him/her-->
-      <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
-    </li>
-  </ul>
+    <ul class="courses-list">
+      <li>
+        <button-add (onAddEvent)="addCourse()"></button-add>
+      </li>
+      <li class="course-card" *ngFor="let course of courses">
+        <a class="course-icon-container" [routerLink]="['/classes', course.id]">
+          <!--        <a class="course-icon-container" target="_blank" [routerLink]="['/classes', course.id]" >-->
+          <i class="bi bi-circle">
+            <img class="course-icon" [src]=course.imgSource alt="cultural event">
+          </i>
+          <p class="course-name">{{course.name}}</p>
+        </a>
+        <p class="course-description-divider">|</p>
+        <!--        link to teacher page or some pop-up window / profile card about him/her-->
+        <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
+        <button-edit (onEditEvent)="editCourse(course)"></button-edit>
+        <button-delete (onDeleteEvent)="deleteCourse(course.id)"></button-delete>
+      </li>
+    </ul>
   <div class="source-link">
     <a href="https://www.flaticon.com/free-icons/" class="source">Icons created by Freepik - Flaticon</a>
   </div>

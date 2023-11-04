@@ -6,12 +6,12 @@
 //   description: string
 // }
 export class ICourse {
-  id: number;
+  id: string; // UUID
   imgSource: string;
   name: string;
   teacher: string;
-  description: string;
-  constructor(id: number, imgSource: string, name: string, teacher: string, description: string) {
+  description?: string;
+  constructor(id: string, imgSource: string, name: string, teacher: string, description?: string) {
     this.id=id;
     this.imgSource=imgSource;
     this.name=name;

@@ -19,8 +19,8 @@ export class HttpErrorHandlerService  implements ErrorHandler {
     }
 
     if (error instanceof HttpErrorResponse) {
-      //console.log('Error Handler Service');
-      //alertService.error('Error: '+ error.status);
+      console.log('Error Handler Service');
+      alertService.error('Error: '+ error.status);
     }
 
     if (error instanceof Error) {

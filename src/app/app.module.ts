@@ -1,10 +1,8 @@
 import {ErrorHandler, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MatIconModule} from "@angular/material/icon";
-import { MatButtonModule} from "@angular/material/button";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,7 +18,6 @@ import { CoursesModule } from "./modules/classes/courses.module";
 import { SharedModule } from "./shared/shared.module";
 import { LandingPageModule } from "./modules/landing-page/landing-page.module";
 import { AlertModule } from "./modules/alert/alert.module";
-import {HttpErrorInterceptor} from "./core/interceptors/http-error-interceptor.service";
 import {httpInterceptorProviders} from "./core/interceptors/http-interceptors";
 import {HttpErrorHandlerService} from "./core/services/http-error-handler.service";
 
@@ -33,12 +30,10 @@ import {HttpErrorHandlerService} from "./core/services/http-error-handler.servic
   imports: [
     BrowserModule,
     HttpClientModule,
+    NgbModule,
     // FormsModule,
     // ReactiveFormsModule,
     FontAwesomeModule,
-    MatIconModule,
-    NgbModule,
-    MatButtonModule,
     CoreModule,
     AboutModule,
     HomeModule,
