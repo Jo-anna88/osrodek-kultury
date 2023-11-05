@@ -7,7 +7,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class ButtonEditComponent {
   @Output()
-  onEditEvent = new EventEmitter<any>();
+  onEditEvent = new EventEmitter();
   onEdit() {
     this.onEditEvent.emit();
   }

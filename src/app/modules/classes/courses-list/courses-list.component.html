@@ -16,7 +16,7 @@
         <!--        link to teacher page or some pop-up window / profile card about him/her-->
         <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
         <button-edit (onEditEvent)="editCourse(course)"></button-edit>
-        <button-delete (onDeleteEvent)="deleteCourse(course.id)"></button-delete>
+        <button-delete (onDeleteEvent)="deleteCourse(course.id!)"></button-delete>
       </li>
     </ul>
   <div class="source-link">

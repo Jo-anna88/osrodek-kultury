@@ -14,14 +14,12 @@ export class AlertComponent implements OnInit {
   alert: Alert = {id: -1, description: "", severity: Severity.None};
 
   alertStyle: IAlertStyle = {colors:"", icon:""};
-  isHidden: boolean = false;
+  //isHidden: boolean = false;
 
   ngOnInit(): void {
     this.alertStyle = alertTypeToStyleMapping.get(this.alert.severity)!;
   }
   onClose(): void {
-    //this.alertService.removeAlert();
-    this.isHidden = true;
     this.onAlertClose.emit(this.alert);
   }
 

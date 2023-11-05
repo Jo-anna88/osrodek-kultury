@@ -44,15 +44,33 @@ export class CoursesListComponent implements OnInit, OnDestroy {
         }
       })
   }
-
+  // todo: do we really need to load data again ???
   addCourse() {
-    console.log("add");
+    //show popUp window with data to send - empty fields in form
+    let newCourse = new ICourse( "imgSource", "name", "teacher", "description");
+    console.log("add course: ", newCourse);
+    this.coursesService.addCourse(newCourse)
+      .subscribe(
+        {next: () => this.loadData()}
+      ); // <- when user click on 'send' button in popUp window
   }
   editCourse(course: ICourse) {
-    console.log("edit", course);
+    //show popUp window with data to send - not empty fields in form
+    console.log("edit course: ", course);
+    course.teacher = "New Teacher";
+    console.log("course after edition", course);
+    this.coursesService.updateCourse(course)
+      .subscribe(
+        // {next: () => this.loadData()}
+      );
   }
   deleteCourse(courseId: string) {
-    console.log("delete", courseId);
+    //show popUp window with question  - Do you really want to delete this course?
+    console.log("delete course with id: ", courseId);
+    this.coursesService.deleteCourse(courseId)
+      .subscribe(
+        {next: () => this.loadData()}
+      ); // <- when user click 'yes' on popUp window
   }
   ngOnDestroy(): void {
     this.destroy$.complete();

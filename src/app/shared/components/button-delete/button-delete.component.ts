@@ -7,7 +7,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class ButtonDeleteComponent {
     @Output()
-    onDeleteEvent = new EventEmitter<any>();
+    onDeleteEvent = new EventEmitter();
     onDelete(){
       this.onDeleteEvent.emit();
     }

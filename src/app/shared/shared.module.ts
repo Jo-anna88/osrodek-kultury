@@ -13,6 +13,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { ButtonEditComponent } from './components/button-edit/button-edit.component';
 import { ButtonDeleteComponent } from './components/button-delete/button-delete.component';
 import { ButtonAddComponent } from './components/button-add/button-add.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { ButtonAddComponent } from './components/button-add/button-add.component
         ErrorComponent,
         ButtonEditComponent,
         ButtonDeleteComponent,
-        ButtonAddComponent
+        ButtonAddComponent,
+        ModalComponent
     ],
   exports: [
     //FontAwesomeModule,

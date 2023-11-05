@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {catchError, map, Observable, of, retry} from "rxjs";
 import {ICourse} from "./courses-list/course";
 import {mockCourses} from "./courses-list/mock-courses";
@@ -23,15 +23,22 @@ export class CoursesService {
     //return of(mockCourses);
   }
 
-  getCourseByIdTest(id: number) : Observable <ICourse> {
-    console.log("id: "+ id);
-    //return this.http.get(...);
-    return of(mockCourses[--id]);
-  }
   getCourseById(id: string): Observable<ICourse> {
     return this.http.get<ICourse>(environment.baseUrl+'/classes/'+id)
       .pipe(
         map(course => {return {...course}})
       );
+  }
+
+  addCourse(course: ICourse): Observable<ICourse> {
+    return this.http.post<ICourse>(environment.baseUrl +'/classes', course)
+  }
+
+  updateCourse(course: ICourse): Observable<ICourse> {
+    return this.http.put<ICourse>(environment.baseUrl +'/classes', course);
+  }
+
+  deleteCourse(id: string): Observable<Object> {
+    return this.http.delete(environment.baseUrl +'/classes' + '/' + id);
   }
 }
