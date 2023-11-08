@@ -16,7 +16,7 @@
         <!--        link to teacher page or some pop-up window / profile card about him/her-->
         <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
         <button-edit (onEditEvent)="editCourse(course)"></button-edit>
-        <button-delete (onDeleteEvent)="deleteCourse(course.id!)"></button-delete>
+        <button-delete (onDeleteEvent)="openConfirmationDialog(course.id!)"></button-delete>
       </li>
     </ul>
   <div class="source-link">
@@ -33,3 +33,9 @@
   <app-error [error]=appError></app-error>
 <!--  <p>Oops! No data available at that moment. Please, try again later.</p>-->
 </ng-template>
+
+<app-modal id="modal-add">
+  <h1>A custom modal popup</h1>
+  <p>Home page text: <input type="text"/></p>
+  <button (click)="modalService.close();">Close</button>
+</app-modal>

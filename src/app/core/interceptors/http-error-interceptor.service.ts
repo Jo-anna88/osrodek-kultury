@@ -23,7 +23,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         tap({
           next: (v) => {},
           error: (err) => {
-            this.injector.get(HttpErrorHandlerService).handleError(err);
+            //this.injector.get(HttpErrorHandlerService).handleError(err);
           }
         })
     )

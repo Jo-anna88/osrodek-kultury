@@ -6,6 +6,7 @@ export interface AppError {
 
 export const errorStatusToAppErrorMapping = new Map<number, AppError>([
   [0, {status:0, statusTxt: 'Connection Refused', description: 'Sorry, a client-side or network error occurred.'}],
+  [400, {status:400, statusTxt: "Bad Request", description: 'Sorry, we are not able to process this request.'}],
   [401, {status:401, statusTxt: 'Unauthorized', description: 'Sorry, you should login first.'}],
   [403, {status:403, statusTxt: 'Access Denied', description: 'Sorry, you do not have permission to access this resource.'}],
   [405, {status:405, statusTxt: 'Method Not Allowed', description: 'Sorry, this method is not allowed.'}],

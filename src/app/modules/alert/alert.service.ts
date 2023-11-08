@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Alert, Severity} from "./alert.model";
 import {BehaviorSubject, Observable} from "rxjs";
+import {AppError} from "../../shared/models/app-error.model";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,11 @@ export class AlertService {
   warn(description: string) {
     this.addAlert(new Alert(Severity.Warn, description));
   }
-  error(description: string) {
+  error(description: string, appError?: AppError) {
+    if(appError) {
+      description = description + "\nError: " + appError.status.toString() + " - " + appError.statusTxt + "\n" + appError.description;
+    }
+    console.log(description);
     this.addAlert(new Alert(Severity.Error, description));
   }
 

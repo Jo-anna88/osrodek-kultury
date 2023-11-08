@@ -14,6 +14,8 @@ import { ButtonEditComponent } from './components/button-edit/button-edit.compon
 import { ButtonDeleteComponent } from './components/button-delete/button-delete.component';
 import { ButtonAddComponent } from './components/button-add/button-add.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { ModalUserConfirmationComponent } from './components/modal-user-confirmation/modal-user-confirmation.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
@@ -23,7 +25,8 @@ import { ModalComponent } from './components/modal/modal.component';
         ButtonEditComponent,
         ButtonDeleteComponent,
         ButtonAddComponent,
-        ModalComponent
+        ModalComponent,
+        ModalUserConfirmationComponent
     ],
   exports: [
     //FontAwesomeModule,
@@ -34,14 +37,16 @@ import { ModalComponent } from './components/modal/modal.component';
     ErrorComponent,
     ButtonEditComponent,
     ButtonDeleteComponent,
-    ButtonAddComponent
+    ButtonAddComponent,
+    ModalComponent
   ],
-    imports: [
-        CommonModule,
-        RouterLink,
-        //FontAwesomeModule,
-        MatIconModule,
-        MatButtonModule
-    ]
+  imports: [
+    CommonModule,
+    RouterLink,
+    //FontAwesomeModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule
+  ]
 })
 export class SharedModule { }
