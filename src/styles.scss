@@ -62,21 +62,6 @@ body {
   color: $font-color;
 }
 
-%button-shared { // e.g. login button
-  background-color: $primary-rose;
-  border: 1px black;
-  border-radius: 5rem;
-}
-
-.button-primary {
-  @extend %button-shared;
-  padding: 0.5rem 3rem;
-  color: $primary-white;
-  box-shadow: $shadow;
-  cursor: pointer;
-  //font-family: $font-secondary;
-}
-
 li {
   list-style: none;
 }
@@ -90,4 +75,31 @@ a {
   position: absolute;
   bottom: 0;
   font: italic 0.75em "Roboto";
+}
+
+%button-shared { // e.g. login button
+  border-style: solid;
+  border-radius: 5rem;
+  box-shadow: $shadow;
+  cursor: pointer;
+}
+
+%button-1 { // oval
+  border-width: 2px;
+  border-color: $primary-rose;
+  padding: 0.5rem 3rem;
+}
+
+.button-primary {
+  @extend %button-shared;
+  @extend %button-1;
+  background-color: $primary-rose;
+  color: white;
+}
+
+.button-secondary {
+  @extend %button-shared;
+  @extend %button-1;
+  background-color: white;
+  color: $primary-rose;
 }

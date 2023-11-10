@@ -1,18 +1,22 @@
-<form [formGroup]="form">
-  <fieldset>
-    <legend>Login</legend>
-    <div class="form-field">
-      <label>Email:</label>
-      <input name="email" formControlName="email">
+<!--<div class="login-form-container">-->
+<form [formGroup]="form" class="login-form-container">
+  <fieldset class="form-group">
+    <legend class = "h2">
+      Log in to CCW
+    </legend>
+    <div>
+      <input name="email" formControlName="email" class="form-control" placeholder="Email">
     </div>
-    <div class="form-field">
-      <label>Password:</label>
+    <div>
       <input name="password" formControlName="password"
-             type="password">
+             type="password" class="form-control" placeholder="Password">
     </div>
   </fieldset>
   <div class="form-buttons">
+    <button class="button button-secondary"
+            (click)="signUp()">Sign Up</button>
     <button class="button button-primary"
-            (click)="login()">Login</button>
+            (click)="logIn()">Log In</button>
   </div>
 </form>
+<!--</div>-->

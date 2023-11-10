@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
@@ -11,7 +11,7 @@ import {delay} from "rxjs";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
@@ -24,8 +24,20 @@ export class LoginComponent {
       password: ['', Validators.required]
     });
   }
+  @HostListener('document: keydown.enter', ['$event']) onEnterHandler(event: KeyboardEvent) {
+    console.log("enter listener ")
+    if(this.form.value) {
+      console.log("enter listener - form is not empty")
+      event.preventDefault();
+      this.logIn();
+    }
+  }
+  ngOnInit() {
+  }
 
-  login() {
+  logIn() {
+    console.log("I want to log in.");
+
     const val = this.form.value;
 
     if (val.email && val.password) {
@@ -37,9 +49,14 @@ export class LoginComponent {
             else this.userService.setCurrentUserToNull();
             console.log("LoginComponent");
             this.router.navigate(['landing-page']);
+            this.form.reset();
           }
         );
     }
+  }
+
+  signUp() {
+    console.log("I want to sign up.");
   }
 }
 

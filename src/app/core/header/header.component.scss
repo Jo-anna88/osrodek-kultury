@@ -36,10 +36,11 @@ a {
 
 .button-login {
   @extend %button-shared;
-}
-i {
+  background-color: $primary-rose;
   color: white;
+  border-width: 0;
 }
+
 .active {
   color: $primary-rose;
 }
