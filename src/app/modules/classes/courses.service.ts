@@ -9,13 +9,13 @@ import {environment} from "../../../environments/environment";
   providedIn: 'root'
 })
 export class CoursesService {
+  private apiUrl: string = environment.baseUrl + '/classes';
 
   constructor(private http: HttpClient) { }
 
-  //TODO:return max 10 events for page and max 30 events from all of them (pagination needed!)
   getCourses() : Observable<Array<ICourse>>{
 
-    return this.http.get<Array<ICourse>>(environment.baseUrl+'/classes') //Observable<Object>
+    return this.http.get<Array<ICourse>>(this.apiUrl) //Observable<Object>
       .pipe(
         // retry(3), // to deal with slow connection,
         // catchError(), // then handle the error
@@ -26,21 +26,21 @@ export class CoursesService {
   }
 
   getCourseById(id: string): Observable<ICourse> {
-    return this.http.get<ICourse>(environment.baseUrl+'/classes/'+id)
+    return this.http.get<ICourse>(this.apiUrl + '/' + id)
       .pipe(
         map(course => {return {...course}})
       );
   }
 
   addCourse(course: ICourse): Observable<ICourse> {
-    return this.http.post<ICourse>(environment.baseUrl +'/classes', course)
+    return this.http.post<ICourse>(this.apiUrl, course);
   }
 
   updateCourse(course: ICourse): Observable<ICourse> {
-    return this.http.put<ICourse>(environment.baseUrl +'/classes', course);
+    return this.http.put<ICourse>(this.apiUrl, course);
   }
 
   deleteCourse(id: string): Observable<Object> {
-    return this.http.delete(environment.baseUrl +'/classes' + '/' + id);
+    return this.http.delete(this.apiUrl + '/' + id);
   }
 }

@@ -12,9 +12,11 @@ export class UserService {
 
   setCurrentUser(currentUser: IUser) {
     this.user$.next(currentUser);
+    console.log(this.user$.value);
   }
   setCurrentUserToNull() {
     this.user$.next(null);
+    console.log(this.user$.value);
   }
   /*
   setCurrentUser() {

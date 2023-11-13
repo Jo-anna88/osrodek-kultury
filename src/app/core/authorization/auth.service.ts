@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {IUser, Role} from "../../shared/models/user.model";
 import {Observable, of} from "rxjs";
+import {environment} from "../../../environments/environment";
 //import * as moment from "moment";
 
 @Injectable({
@@ -12,6 +13,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
+  /*
   login(email:string, password:string ) : Observable<HttpResponse<any>>{
     if(email==="test" && password==="test") {return of(new HttpResponse({status: 403}))}
     let user: IUser = {id: 0, login: email, password: password, role: Role.Client, token: ""}
@@ -22,11 +24,18 @@ export class AuthService {
         role: user.role,
         token: 'fake-jwt-token'
       }}));
+
     //return this.http.post<IUser>('/api/login', {email, password})
      // .do(res => this.setSession)
     // this is just the HTTP call,
       // we still need to handle the reception of the token
       //.shareReplay(); - TODO: it does not work ("We are calling shareReplay to prevent the receiver of this Observable from accidentally triggering multiple POST requests due to multiple subscriptions.")
+  }
+
+   */
+
+  logIn(email:string, password:string): Observable<HttpResponse<any>> {
+    return this.http.post<any>(environment.baseUrl +'/login', {email: email, password: password})
   }
 /*
   private setSession(authResult) {

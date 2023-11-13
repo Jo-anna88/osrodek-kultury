@@ -60,7 +60,7 @@
 
         </div>
 <!--        <input type="submit" value="Send Message" class="button-primary" (click)="sendMessage()">-->
-        <button type="button" class="button-primary" (click)="sendMessage(contactForm.value)" [disabled]="contactForm.dirty && contactForm.invalid">Send Message</button>
+        <button type="button" class="button-primary" (click)="sendMessage(contactForm.value)" [disabled]="contactForm.untouched || (contactForm.dirty && contactForm.invalid)">Send Message</button>
       </form>
     </section>
   </div>

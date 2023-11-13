@@ -25,9 +25,7 @@ export class LoginComponent implements OnInit{
     });
   }
   @HostListener('document: keydown.enter', ['$event']) onEnterHandler(event: KeyboardEvent) {
-    console.log("enter listener ")
     if(this.form.value) {
-      console.log("enter listener - form is not empty")
       event.preventDefault();
       this.logIn();
     }
@@ -39,7 +37,7 @@ export class LoginComponent implements OnInit{
     console.log("I want to log in.");
 
     const val = this.form.value;
-
+/*
     if (val.email && val.password) {
       console.log("Email + Password: " + val.email + " " + val.password)
       this.authService.login(val.email, val.password)
@@ -52,6 +50,20 @@ export class LoginComponent implements OnInit{
             this.form.reset();
           }
         );
+    }
+*/
+    if (val.email && val.password) {
+      console.log("login2 test");
+      this.authService.logIn(val.email, val.password)
+        .subscribe(
+          (res) => {
+            console.log("Response: ", res)
+            if(res.body) this.userService.setCurrentUser({...res.body});
+            else this.userService.setCurrentUserToNull();
+            this.router.navigate(['landing-page']);
+            this.form.reset();
+          }
+        )
     }
   }
 
