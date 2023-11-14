@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ICourse} from "../courses-list/course";
+import {Course} from "../course";
 import {catchError, Observable, switchMap, tap} from "rxjs";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CoursesService} from "../courses.service";
@@ -10,7 +10,7 @@ import {CoursesService} from "../courses.service";
   styleUrls: ['./course-detail.component.scss']
 })
 export class CourseDetailComponent implements OnInit {
-  course$! : Observable<ICourse>; // the exclamation mark acts as a non-null assertion operator
+  course$! : Observable<Course>; // the exclamation mark acts as a non-null assertion operator
   //isLoading: boolean = false;
   constructor(
     private route: ActivatedRoute,

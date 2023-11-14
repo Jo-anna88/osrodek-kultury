@@ -1,7 +1,7 @@
-import {ICourse} from "./course";
+import {Course} from "../course";
 import {SIMPLE_TEXT} from "../../../../assets/constants";
 
-export const mockCourses: ICourse[] = [
+export const mockCourses: Course[] = [
   {
     id: "1",
     imgSource: "assets/icons/ballet-shoes.png",

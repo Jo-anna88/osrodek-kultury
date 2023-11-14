@@ -13,9 +13,10 @@ import { ErrorComponent } from './components/error/error.component';
 import { ButtonEditComponent } from './components/button-edit/button-edit.component';
 import { ButtonDeleteComponent } from './components/button-delete/button-delete.component';
 import { ButtonAddComponent } from './components/button-add/button-add.component';
-import { ModalComponent } from './components/modal/modal.component';
+import { ModalTestComponent } from './components/modal-test/modal-test.component';
 import { ModalUserConfirmationComponent } from './components/modal-user-confirmation/modal-user-confirmation.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
     declarations: [
@@ -25,8 +26,9 @@ import {MatDialogModule} from "@angular/material/dialog";
         ButtonEditComponent,
         ButtonDeleteComponent,
         ButtonAddComponent,
-        ModalComponent,
-        ModalUserConfirmationComponent
+        ModalTestComponent,
+        ModalUserConfirmationComponent,
+        ModalComponent
     ],
   exports: [
     //FontAwesomeModule,
@@ -38,6 +40,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     ButtonEditComponent,
     ButtonDeleteComponent,
     ButtonAddComponent,
+    ModalTestComponent,
     ModalComponent
   ],
   imports: [

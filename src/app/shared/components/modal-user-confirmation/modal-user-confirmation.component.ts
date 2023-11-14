@@ -8,8 +8,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 
 export class ModalUserConfirmationComponent {
-  constructor(public dialogRef: MatDialogRef<ModalUserConfirmationComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string) {}
 
   @Output()
   onConfirmEvent = new EventEmitter();

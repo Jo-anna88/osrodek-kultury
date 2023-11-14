@@ -1,0 +1,26 @@
+
+<form [formGroup]="form">
+  <div>
+    <label>
+      Name:
+      <input formControlName="name">
+    </label>
+<!--    <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)">-->
+<!--      Please provide a course name.-->
+<!--    </div>-->
+  </div>
+  <div>
+    <label>
+      Teacher:
+      <input formControlName="teacher">
+    </label>
+  </div>
+  <div>
+    <label>
+      Description:
+      <input formControlName="description">
+    </label>
+  </div>
+  <button class="button button-primary"
+          (click)="submit()">{{action}}</button>
+</form>

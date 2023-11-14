@@ -5,16 +5,18 @@
 //   teacher: string,
 //   description: string
 // }
-export class ICourse {
+export class Course {
   id?: string; // UUID
-  imgSource: string;
+  imgSource?: string;
   name: string;
   teacher: string;
-  description?: string;
-  constructor(imgSource: string, name: string, teacher: string, description?: string) {
-    this.imgSource=imgSource;
+  description: string;
+  constructor(name: string, teacher: string, description: string) {
+    this.imgSource=DEFAULT_IMG_SOURCE;
     this.name=name;
     this.teacher=teacher;
     this.description=description;
   }
 }
+
+export const DEFAULT_IMG_SOURCE = "assets/icons/default.png"

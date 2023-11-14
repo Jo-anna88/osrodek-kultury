@@ -1,15 +1,16 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
-import {ICourse} from "./course";
+import {DEFAULT_IMG_SOURCE, Course} from "../course";
 import {CoursesService} from "../courses.service";
 import {Router} from "@angular/router";
 import {AlertService} from "../../alert/alert.service";
 import {AppError, errorStatusToAppErrorMapping} from "../../../shared/models/app-error.model";
-import {ModalService} from "../../../shared/components/modal/modal.service";
+import {ModalTestService} from "../../../shared/components/modal-test/modal-test.service";
 import {MatDialog} from "@angular/material/dialog";
 import {
   ModalUserConfirmationComponent
 } from "../../../shared/components/modal-user-confirmation/modal-user-confirmation.component";
+import {ModalBtnAction} from "../../../shared/components/modal/modal";
 
 @Component({
   selector: 'app-classes',
@@ -18,17 +19,19 @@ import {
 })
 export class CoursesListComponent implements OnInit, OnDestroy {
   destroy$: Subject<any> = new Subject();
-  courses: ICourse[] = [];
+  courses: Course[] = [];
   isLoading: boolean = false;
+  isModalOpen: boolean = false;
+  modalTitle: string = "";
+  modalAction: string = "";
   spinnerNote: string = "Classes are loading...";
   appError: AppError = {status: -1, statusTxt: "", description: ""};
-  selectedCourseId = "";
-  courseDialog={}
+  selectedCourse: Course = {name: "", teacher: "", description: ""}; // needed form create/update form
 
   constructor(private coursesService: CoursesService,
               private alertService: AlertService,
-              protected modalService: ModalService,
               public dialog: MatDialog,
+              protected modalTestService: ModalTestService,
               private router: Router) {}
   ngOnInit(): void {
     this.loadData();
@@ -36,12 +39,11 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   loadData() {
     this.isLoading = true;
-    // first solution:
     this.coursesService.getCourses()
       //.pipe(delay(5000))
       //.pipe(retry(3)) // to deal with slow connection
       .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
-        next: (value: ICourse[]) => {
+        next: (value: Course[]) => {
           this.courses = value;
         },
         error: (err) => {
@@ -55,33 +57,55 @@ export class CoursesListComponent implements OnInit, OnDestroy {
       })
   }
 
-  openCourseDialog(course: ICourse): void { // for add and edit course
+  toggleModal() {this.isModalOpen = !this.isModalOpen;}
 
+  openModalCreate() {
+    //this.modalTestService.open('modal-add'); // for test purposes
+    this.modalTitle = "Create a new course"
+    this.modalAction = ModalBtnAction.CREATE;
+    this.toggleModal(); // to show modal form
+  }
+  openModalUpdate(course: Course) {
+    this.selectedCourse = course;
+    this.modalTitle = "Update " + course.name + " course"
+    this.modalAction = ModalBtnAction.UPDATE;
+    this.toggleModal(); // to show modal form
   }
 
-  addCourse() {
-    //show popUp window with data to send - empty fields in form
-    let newCourse = new ICourse( "assets/icons/ballet-shoes.png", "name", "teacher", "description");
-    this.modalService.open('modal-add');
+  updateCourse(updatedCourse:Course) { // when user click on 'submit' button in modal form
+    console.log("*************update******************")
+    updatedCourse.id = this.selectedCourse.id;
+    this.coursesService.updateCourse(updatedCourse)
+      .subscribe({
+        next: (uCourse) => {
+            let index = this.courses.findIndex(c => c.id === uCourse.id); // find index in an array
+            this.courses[index] = uCourse;
+          },
+        error: (err) => {
+          if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
+          this.alertService.error('An error occurred during updating the course.');
+        }
+      }
+    );
+  }
+
+  createCourse(newCourse: Course) { // when user click on 'submit' button in modal form
+    console.log("*************create****************")
+    newCourse.imgSource = DEFAULT_IMG_SOURCE;
     this.coursesService.addCourse(newCourse)
-      .subscribe(
-        {next: (nCourse: ICourse) => {
+      .subscribe({
+          next: (nCourse: Course) => {
             this.courses.unshift(nCourse); // unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
+          },
+          error: (err) => {
+            if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
+            this.alertService.error('An error occurred during creating the course.');
+          },
+          complete: () => {
+            console.log("complete");
+            this.toggleModal(); // to close the modal
           }
         }
-      ); // <- when user click on 'send' button in popUp window
-  }
-  editCourse(course: ICourse) {
-    //show popUp window with data to send - not empty fields in form
-    this.selectedCourseId = course.id!;
-    let updatedCourse = {...course};
-    updatedCourse.teacher = "New Teacher"; // for testing purposes
-    this.coursesService.updateCourse(updatedCourse)
-      .subscribe(
-         {next: (uCourse) => {
-             let index = this.courses.findIndex(c => c.id === uCourse.id); // find index in an array
-             this.courses[index] = uCourse;
-           }}
       );
   }
 

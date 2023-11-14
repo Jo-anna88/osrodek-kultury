@@ -1,7 +1,7 @@
 export interface IUser {
   id: number;
   login: string; // e.g. email
-  password?: string; // ??
+  password?: string; // ?? todo: remove password from this place?
   firstName?: string;
   lastName?: string;
   role: Role;

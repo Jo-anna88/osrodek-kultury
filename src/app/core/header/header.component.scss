@@ -39,6 +39,9 @@ a {
   background-color: $primary-rose;
   color: white;
   border-width: 0;
+  i {
+    //font-size: 1.5rem; // when user is log in and icon has changed to bi-person-circle
+  }
 }
 
 .active {

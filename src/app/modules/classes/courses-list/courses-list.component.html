@@ -2,7 +2,7 @@
   <ng-container *ngIf="courses.length; else noDataTemplate">
     <ul class="courses-list">
       <li>
-        <button-add (onAddEvent)="addCourse()"></button-add>
+        <button-add (onAddEvent)="openModalCreate()"></button-add>
       </li>
       <li class="course-card" *ngFor="let course of courses">
         <a class="course-icon-container" [routerLink]="['/classes', course.id]">
@@ -15,7 +15,7 @@
         <p class="course-description-divider">|</p>
         <!--        link to teacher page or some pop-up window / profile card about him/her-->
         <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
-        <button-edit (onEditEvent)="editCourse(course)"></button-edit>
+        <button-edit (onEditEvent)="openModalUpdate(course)"></button-edit>
         <button-delete (onDeleteEvent)="openConfirmationDialog(course.id!)"></button-delete>
       </li>
     </ul>
@@ -34,8 +34,17 @@
 <!--  <p>Oops! No data available at that moment. Please, try again later.</p>-->
 </ng-template>
 
-<app-modal id="modal-add">
-  <h1>A custom modal popup</h1>
-  <p>Home page text: <input type="text"/></p>
-  <button (click)="modalService.close();">Close</button>
+<app-modal *ngIf="isModalOpen" [modalTitle]="modalTitle" (onModalClose)="toggleModal()">
+  <create-update-modal-form
+    [data]="selectedCourse"
+    [action]="modalAction"
+    (onCreateSubmit)="createCourse($event)"
+    (onUpdateSubmit)="updateCourse($event)">
+  </create-update-modal-form>
 </app-modal>
+
+<!--<app-modal-test id="modal-add">-->
+<!--  <h1>A custom modal popup</h1>-->
+<!--  <p>Home page text: <input type="text"/></p>-->
+<!--  <button (click)="modalTestService.close();">Close</button>-->
+<!--</app-modal-test>-->
