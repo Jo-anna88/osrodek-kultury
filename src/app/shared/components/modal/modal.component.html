@@ -1,7 +1,5 @@
 <div class="app-modal-container">
-  <!--  <div class="app-modal-content">-->
-  <span class="btn-modal-close" *ngIf="isClosable" (click)="onClose()">&times;</span>
-  <span class="app-modal-title" *ngIf="isTitle">{{modalTitle}}</span>
-  <ng-content></ng-content>
-  <!--  </div>-->
+  <span class="btn-modal-close" *ngIf="isClosable" (click)="close()">&times;</span>
+  <span class="app-modal-title" *ngIf="isTitle">{{title}}</span>
+  <router-outlet></router-outlet>
 </div>

@@ -47,18 +47,7 @@
         justify-content: space-evenly;
         padding-bottom: 1.5rem;
       }
-      .form-control {
-        border-width: 0 0 1px 0;
-        border-bottom-color: $primary-blue;
-        height: 3rem;
-        &:focus {
-          outline: none;
-          border-width: 0 0 2px 0;
-          border-bottom-color: $primary-yellow}
-        &.ng-invalid.ng-dirty {
-          border-width: 0 0 2px 0;
-          border-bottom-color: $primary-rose;}
-      }
+
       #name, #email {width: 35%}
       #subject, #message {width: 80%}
       #message {

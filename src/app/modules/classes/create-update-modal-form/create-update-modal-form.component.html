@@ -1,26 +1,25 @@
-
 <form [formGroup]="form">
-  <div>
-    <label>
-      Name:
+  <fieldset class="form-group">
+<!--    <legend class="h2">{{modalTitle}}</legend>-->
+    <div class="form-field">
+      <label>Name:</label>
       <input formControlName="name">
-    </label>
-<!--    <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)">-->
-<!--      Please provide a course name.-->
-<!--    </div>-->
-  </div>
-  <div>
-    <label>
-      Teacher:
+      <!--    <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)">-->
+      <!--      Please provide a course name.-->
+      <!--    </div>-->
+    </div>
+    <div class="form-field">
+      <label>Teacher:</label>
       <input formControlName="teacher">
-    </label>
-  </div>
-  <div>
-    <label>
-      Description:
+    </div>
+    <div class="form-field">
+      <label>Description:</label>
       <input formControlName="description">
-    </label>
+    </div>
+  </fieldset>
+
+  <div class="form-buttons">
+    <button class="button button-primary"
+            (click)="submit()">{{action}}</button>
   </div>
-  <button class="button button-primary"
-          (click)="submit()">{{action}}</button>
 </form>

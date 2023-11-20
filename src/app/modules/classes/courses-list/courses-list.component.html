@@ -34,8 +34,9 @@
 <!--  <p>Oops! No data available at that moment. Please, try again later.</p>-->
 </ng-template>
 
-<app-modal *ngIf="isModalOpen" [modalTitle]="modalTitle" (onModalClose)="toggleModal()">
+<app-modal *ngIf="isModalOpen" [title]="modalTitle" (onModalClose)="toggleModal()">
   <create-update-modal-form
+    [modalTitle]="modalTitle"
     [data]="selectedCourse"
     [action]="modalAction"
     (onCreateSubmit)="createCourse($event)"

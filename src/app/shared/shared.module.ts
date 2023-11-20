@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from "@angular/router";
+import {RouterLink, RouterOutlet} from "@angular/router";
 
 // import these modules to make angular material visible in other modules by importing shared
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -43,13 +43,14 @@ import { ModalComponent } from './components/modal/modal.component';
     ModalTestComponent,
     ModalComponent
   ],
-  imports: [
-    CommonModule,
-    RouterLink,
-    //FontAwesomeModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDialogModule
-  ]
+    imports: [
+        CommonModule,
+        RouterLink,
+        //FontAwesomeModule,
+        MatIconModule,
+        MatButtonModule,
+        MatDialogModule,
+        RouterOutlet
+    ]
 })
 export class SharedModule { }

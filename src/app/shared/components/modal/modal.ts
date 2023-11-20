@@ -5,3 +5,9 @@ export enum ModalBtnAction {
   CANCEL = "Cancel",
   NONE = ""
 }
+
+export interface ModalConfiguration {
+  isClosable?: boolean,
+  // isTitle?: boolean, // maybe it is not needed, because we can use: if(this.modalTitle) this.isTitle = true;
+  title? : string,
+}

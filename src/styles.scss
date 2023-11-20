@@ -77,6 +77,8 @@ a {
   font: italic 0.75em "Roboto";
 }
 
+/* BUTTON STYLE */
+
 %button-shared { // e.g. login button
   border-style: solid;
   border-radius: 5rem;
@@ -102,4 +104,53 @@ a {
   @extend %button-1;
   background-color: white;
   color: $primary-rose;
+}
+
+/* FORM STYLE */
+
+.form-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-group {
+  display: inherit;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1.5rem;
+  legend {
+    padding-bottom: 1rem;
+    color: $primary-blue;
+  }
+}
+
+.form-field {
+  width: 100%;
+}
+
+.form-control {
+  border-width: 0 0 1px 0;
+  border-bottom-color: $primary-blue;
+  height: 3rem;
+  &:focus {
+    outline: none;
+    border-width: 0 0 2px 0;
+    border-bottom-color: $primary-yellow}
+  &.ng-invalid.ng-dirty {
+    border-width: 0 0 2px 0;
+    border-bottom-color: $primary-rose;}
+}
+
+::placeholder {
+  color: $primary-blue;
+  opacity: 0.3;
+}
+
+.form-buttons {
+  button {
+    margin: 2px;
+  }
 }

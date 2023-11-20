@@ -9,6 +9,7 @@ import {ModalBtnAction} from "../../../shared/components/modal/modal";
   styleUrls: ['./create-update-modal-form.component.scss']
 })
 export class CreateUpdateModalFormComponent implements OnInit {
+  @Input() modalTitle: string = "";
   @Input() data: Course = {name: "", teacher: "", description: ""}; // data to initialize a form in case of update action
   @Input() action: string = ""; // button action
   @Output() onCreateSubmit = new EventEmitter();

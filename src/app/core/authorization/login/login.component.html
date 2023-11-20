@@ -1,22 +1,28 @@
 <!--<div class="login-form-container">-->
-<form [formGroup]="form" class="login-form-container">
+<form [formGroup]="form" class="form-container">
   <fieldset class="form-group">
-    <legend class = "h2">
-      Log in to CCW
-    </legend>
-    <div>
+    <legend class = "h2">Log in to CCW</legend>
+    <div class="form-control">
       <input name="email" formControlName="email" class="form-control" placeholder="Email">
     </div>
-    <div>
+    <div class="form-control">
       <input name="password" formControlName="password"
              type="password" class="form-control" placeholder="Password">
     </div>
   </fieldset>
+
   <div class="form-buttons">
     <button class="button button-secondary"
             (click)="signUp()">Sign Up</button>
+
     <button class="button button-primary"
             (click)="logIn()">Log In</button>
   </div>
 </form>
 <!--</div>-->
+<!--<app-modal *ngIf="isModalOpen" (onModalClose)="toggleModal()">-->
+<!--  <app-sign-up-modal-form-->
+<!--    (onSubmit)="createAccount($event)"-->
+<!--    (onClose)="closeModal()">-->
+<!--  </app-sign-up-modal-form>-->
+<!--</app-modal>-->

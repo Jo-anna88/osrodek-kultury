@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subject} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {DEFAULT_IMG_SOURCE, Course} from "../course";
 import {CoursesService} from "../courses.service";
 import {Router} from "@angular/router";
@@ -7,9 +7,8 @@ import {AlertService} from "../../alert/alert.service";
 import {AppError, errorStatusToAppErrorMapping} from "../../../shared/models/app-error.model";
 import {ModalTestService} from "../../../shared/components/modal-test/modal-test.service";
 import {MatDialog} from "@angular/material/dialog";
-import {
-  ModalUserConfirmationComponent
-} from "../../../shared/components/modal-user-confirmation/modal-user-confirmation.component";
+import {ModalUserConfirmationComponent}
+  from "../../../shared/components/modal-user-confirmation/modal-user-confirmation.component";
 import {ModalBtnAction} from "../../../shared/components/modal/modal";
 
 @Component({
@@ -18,7 +17,7 @@ import {ModalBtnAction} from "../../../shared/components/modal/modal";
   styleUrls: ['./courses-list.component.scss']
 })
 export class CoursesListComponent implements OnInit, OnDestroy {
-  destroy$: Subject<any> = new Subject();
+  destroy$ = new Subject<void>();
   courses: Course[] = [];
   isLoading: boolean = false;
   isModalOpen: boolean = false;
@@ -42,6 +41,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.coursesService.getCourses()
       //.pipe(delay(5000))
       //.pipe(retry(3)) // to deal with slow connection
+      .pipe(takeUntil(this.destroy$))
       .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
         next: (value: Course[]) => {
           this.courses = value;
@@ -73,9 +73,9 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   updateCourse(updatedCourse:Course) { // when user click on 'submit' button in modal form
-    console.log("*************update******************")
     updatedCourse.id = this.selectedCourse.id;
     this.coursesService.updateCourse(updatedCourse)
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (uCourse) => {
             let index = this.courses.findIndex(c => c.id === uCourse.id); // find index in an array
@@ -90,9 +90,9 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   createCourse(newCourse: Course) { // when user click on 'submit' button in modal form
-    console.log("*************create****************")
     newCourse.imgSource = DEFAULT_IMG_SOURCE;
     this.coursesService.addCourse(newCourse)
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
           next: (nCourse: Course) => {
             this.courses.unshift(nCourse); // unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
@@ -109,6 +109,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
       );
   }
 
+  // delete confirmation dialog
   openConfirmationDialog(courseId: string): void {
     const dialogRef = this.dialog.open(ModalUserConfirmationComponent, {
       width: '250px',
@@ -121,6 +122,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   deleteCourse(courseId: string){
     this.coursesService.deleteCourse(courseId)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         {
           next: (id) => {
@@ -137,6 +139,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
     this.destroy$.complete();
   }
 }

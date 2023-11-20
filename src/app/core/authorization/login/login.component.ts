@@ -1,23 +1,28 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {IUser, Role} from "../../../shared/models/user.model";
-import {delay} from "rxjs";
+import {delay, Subscription} from "rxjs";
+import {ModalService} from "../../services/modal.service";
+import {AlertService} from "../../../modules/alert/alert.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
-
+  subscriptions = new Array<Subscription>;
   constructor(private fb: FormBuilder,
               private authService: AuthService,
+              private alertService: AlertService,
               private userService: UserService,
-              private router: Router) {
+              private modalService: ModalService,
+              private router: Router,
+              private route: ActivatedRoute) {
 
     this.form = this.fb.group({
       email: ['', Validators.required],
@@ -54,21 +59,46 @@ export class LoginComponent implements OnInit{
 */
     if (val.email && val.password) {
       console.log("login2 test");
-      this.authService.logIn(val.email, val.password)
-        .subscribe(
-          (res) => {
+      this.subscriptions.push(this.authService.logIn(val.email, val.password)
+        .subscribe({
+          next: (res) => {
             console.log("Response: ", res)
             if(res.body) this.userService.setCurrentUser({...res.body});
             else this.userService.setCurrentUserToNull();
             this.router.navigate(['landing-page']);
             this.form.reset();
+          },
+          error: (err) => { //todo: change this handling errors!
+            if(err.status == '403') this.alertService.error("Sorry, the login or password is incorrect.")
+            else this.alertService.error("error description")
+            this.form.reset();
           }
+        }
         )
+      )
     }
   }
 
   signUp() {
-    console.log("I want to sign up.");
+    this.router.navigate([{ outlets: { modalOutlet: ['modal', 'signup'] } }]);
+    this.subscriptions.push(this.modalService.getEvent().subscribe({
+      next: (event) => {
+        console.log("************************", event)
+        this.modalService.close();
+      }
+    })
+    )
+  }
+
+  createAccount($event: any) {
+    console.log("Create an account");
+    console.log($event);
+   // this.toggleModal(); // close modal
+
+    // send POST request to backend
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.map((subs: Subscription) => subs.unsubscribe());
   }
 }
-
