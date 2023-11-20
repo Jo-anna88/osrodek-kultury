@@ -66,16 +66,16 @@ export class LoginComponent implements OnInit, OnDestroy {
             if(res.body) this.userService.setCurrentUser({...res.body});
             else this.userService.setCurrentUserToNull();
             this.router.navigate(['landing-page']);
-            this.form.reset();
           },
-          error: (err) => { //todo: change this handling errors!
-            if(err.status == '403') this.alertService.error("Sorry, the login or password is incorrect.")
-            else this.alertService.error("error description")
-            this.form.reset();
-          }
+          // error: (err) => { //todo: change this handling errors!
+          //   //if(err.status == '403') this.alertService.error("Sorry, the login or password is incorrect.")
+          //   //else this.alertService.error("error description")
+          //   this.form.reset();
+          // }
         }
         )
       )
+      this.form.reset();
     }
   }
 

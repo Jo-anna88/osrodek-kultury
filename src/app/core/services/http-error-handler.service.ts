@@ -18,12 +18,12 @@ export class HttpErrorHandlerService  implements ErrorHandler {
       alertService.error('Timeout Exception');
     }
 
-    if (error instanceof HttpErrorResponse) {
+    else if (error instanceof HttpErrorResponse) {
       console.log('Error Handler Service');
       alertService.error('Error: '+ error.status);
     }
 
-    if (error instanceof Error) {
+    else {
       alertService.error('An unknown error occurred');
     }
   }

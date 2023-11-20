@@ -19,7 +19,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     console.log("Http Error Interceptor", request);
     return next.handle(request)
       .pipe(
-        retry(retryConfig), // to deal with slow connection
+        retry(retryConfig), // to deal with slow connection //todo: it shouldn't happen during logging!
         tap({
           next: (v) => {},
           error: (err) => {

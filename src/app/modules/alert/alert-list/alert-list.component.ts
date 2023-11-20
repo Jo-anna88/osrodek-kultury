@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, NgZone} from '@angular/core';
 import {Alert} from "../alert.model";
 import {AlertService} from "../alert.service";
 import {alerts} from "../alert-mock";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'alerts', //app-alert-list
@@ -11,17 +11,23 @@ import {Subscription} from "rxjs";
 })
 export class AlertListComponent implements OnInit, OnDestroy {
   alerts: Alert[] = [];
+  //alerts$: Observable<Alert>;
   alertSubscription!: Subscription;
-  constructor(private alertService: AlertService) {}
+  constructor(private alertService: AlertService,
+              private ngZone: NgZone) {
+    //this.alerts$ = this.alertService.getAlert();
+  }
 
   ngOnInit(): void {
     this.alertSubscription = this.alertService.getAlert()
       .subscribe(alert => {
-        if (alert) {
-          this.alerts.push({id: alerts.length++, description: alert.description, severity: alert.severity});
-        } else {
-          this.alerts = []
-        } //?
+        this.ngZone.run(() => { // Thanks to that change detection will be triggered automatically.
+          if (alert) {
+            this.alerts.push({id: alerts.length++, description: alert.description, severity: alert.severity});
+          } else {
+            this.alerts = []
+          } //?
+        })
       })
   }
 
