@@ -26,7 +26,7 @@ export class SignUpModalFormComponent {
       firstName: value.firstName,
       lastName: value.lastName,
       phone: value.phone,
-      login: value.email,
+      username: value.email,
       password: value.password, // todo: first we need to validate if password is equal confirmPassword
       role: Role.Client
     }

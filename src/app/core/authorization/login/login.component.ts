@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
-import {User, Role} from "../../../shared/models/user.model";
+import {User, Role, Credentials} from "../../../shared/models/user.model";
 import {delay, Subscription} from "rxjs";
 import {ModalService} from "../../services/modal.service";
 import {AlertService} from "../../../modules/alert/alert.service";
@@ -59,8 +59,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     */
     if (val.email && val.password) {
+      let credentials: Credentials = {username: val.email, password: val.password}
       this.subscriptions.push(
-        this.authService.logIn(val.email, val.password)
+        this.authService.logIn(credentials)
           .subscribe({
               next: (res) => {
                 console.log("Response after login: ", res)

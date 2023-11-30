@@ -3,10 +3,15 @@ export interface User {
   firstName?: string;
   lastName?: string;
   phone?: string;
-  login: string; // e.g. email, username
+  username: string; // e.g. email, login
   password?: string; // ?? todo: remove password from this place?
-  role: Role;
+  role?: Role;
   token?: string
+}
+
+export interface Credentials {
+  username: string;
+  password: string;
 }
 
 export enum Role {
