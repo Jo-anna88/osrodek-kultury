@@ -8,7 +8,7 @@ import {environment} from "../../../environments/environment";
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl: string = environment.baseUrl + '/contact';
+  private apiUrl: string = environment.baseUrl + '/api/contact';
   //private apiUrl = this.environmentService.getApiBaseUrl() + /contact // in constructor
 
   constructor(private http: HttpClient) { }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {IUser, Role} from "../../shared/models/user.model";
+import {User, Role} from "../../shared/models/user.model";
 import {Observable, of} from "rxjs";
 import {environment} from "../../../environments/environment";
 //import * as moment from "moment";
@@ -9,7 +9,8 @@ import {environment} from "../../../environments/environment";
   providedIn: 'root'
 })
 export class AuthService {
-  //private loggedIn: boolean;
+  private apiUrl: string = environment.baseUrl + '/api/auth';
+  //private isLoggedIn: boolean = false;
   constructor(private http: HttpClient) {
   }
 
@@ -35,7 +36,11 @@ export class AuthService {
    */
 
   logIn(email:string, password:string): Observable<HttpResponse<any>> {
-    return this.http.post<any>(environment.baseUrl +'/login', {email: email, password: password})
+    return this.http.post<any>(this.apiUrl +'/login', {email: email, password: password})
+  }
+
+  signUp(newUser: User): Observable<HttpResponse<any>> {
+    return this.http.post<any>(this.apiUrl +'/signup', newUser);
   }
 /*
   private setSession(authResult) {

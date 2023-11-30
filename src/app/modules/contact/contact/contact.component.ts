@@ -5,6 +5,7 @@ import {ContactMessage} from "src/app/modules/contact/contact/contactMessage";
 import {EMAIL_PATTERN} from "../../../../assets/constants";
 import {ContactService} from "../contact.service";
 import {AlertService} from "../../alert/alert.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-contact',
@@ -24,10 +25,8 @@ export class ContactComponent {
     this.url = this.sanitizer.bypassSecurityTrustResourceUrl(googleMapUrl);
   }
 
-  sendMessage(contactFormValue: ContactMessage) {
-    this.contactMessage = contactFormValue;
-    console.log(this.contactMessage); // maybe we could send it as a json?
-    this.contactService.sendMessage(this.contactMessage)
+  sendMessage(contactForm: NgForm) {
+    this.contactService.sendMessage(contactForm.value)
       .subscribe({
       next: () => {
         this.alertService.success('The message has been sent successfully,')
@@ -36,9 +35,10 @@ export class ContactComponent {
         this.alertService.error('An error has occurred while sending email.');
       }
     });
+    contactForm.resetForm();
   }
 
   countMessageLength(value: EventEmitter<string>) {
-    this.currentLength=value.length;
+    this.currentLength = value ? value.length : 0; // after submitting form value will be null
   }
 }

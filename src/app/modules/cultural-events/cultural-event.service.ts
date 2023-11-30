@@ -3,12 +3,13 @@ import {Observable, of} from "rxjs";
 import {mockCulturalEvents} from "./cultural-events/mock-cultural-events";
 import {ICulturalEvent} from "./cultural-events/cultural-event";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CulturalEventService {
-  private apiUrl = "http://localhost:4200/events";
+  private apiUrl: string = environment.baseUrl + '/api/events';
 
   constructor(private http: HttpClient) { }
 

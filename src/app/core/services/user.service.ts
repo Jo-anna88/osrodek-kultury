@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {IUser} from "../../shared/models/user.model";
+import {User} from "../../shared/models/user.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   // inital _value: undefined (it means we are not fetching the user yet)
-  user$ = new BehaviorSubject<IUser | null | undefined>(undefined);
+  user$ = new BehaviorSubject<User | null | undefined>(undefined);
   constructor() { }
 
-  setCurrentUser(currentUser: IUser) {
+  setCurrentUser(currentUser: User) {
     this.user$.next(currentUser);
     console.log(this.user$.value);
   }

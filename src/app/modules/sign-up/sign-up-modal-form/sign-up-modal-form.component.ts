@@ -2,6 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModalService} from "../../../core/services/modal.service";
+import {User, Role} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'app-sign-up-modal-form',
@@ -18,15 +19,21 @@ export class SignUpModalFormComponent {
     confirmPassword: ['', [Validators.required]]
   })
   constructor (private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private modalService: ModalService) {}
-    @Output() onSubmit = new EventEmitter(); // <User>
-    //@Output() onClose = new EventEmitter();
+
   submit() {
-    //this.onSubmit.emit(this.signUpForm.value);
-    this.modalService.emitEvent(this.signUpForm.value);
+    let value = this.signUpForm.value;
+    let newUser: User = {
+      firstName: value.firstName,
+      lastName: value.lastName,
+      phone: value.phone,
+      login: value.email,
+      password: value.password, // todo: first we need to validate if password is equal confirmPassword
+      role: Role.Client
+    }
+    this.modalService.emitEvent(newUser);
   }
   close() {
     this.router.navigate([{ outlets: { modalOutlet: null } }]);
-    //this.onClose.emit();
   }
 
 }
