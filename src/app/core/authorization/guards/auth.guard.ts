@@ -1,10 +1,10 @@
 import {inject} from "@angular/core";
 import {UserService} from "../../services/user.service";
-import {Router} from "@angular/router";
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {filter, map, Observable} from "rxjs";
 import {AlertService} from "../../../modules/alert/alert.service";
 
-export const authGuard = () => {
+export const authGuard = (routeSnapshot: ActivatedRouteSnapshot, routerState: RouterStateSnapshot) => {
   const userService = inject(UserService);
   const router = inject(Router);
   const alertService = inject(AlertService);
@@ -18,7 +18,7 @@ export const authGuard = () => {
         //if(user != null && Object.keys(user).length===0){ // != null checks for null and undefined
         console.log("user is null")
         alertService.error("Username or password is incorrect. \nPlease try again.")
-        router.navigate(['/login']);
+        router.navigate(['/login'], {queryParams: {requested: routerState.url}});
         return false;
       }
       console.log("User is logged in");

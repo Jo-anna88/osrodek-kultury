@@ -35,8 +35,13 @@ export class AuthService {
 
    */
 
-  logIn(credentials: Credentials): Observable<HttpResponse<any>> { // username (email) and password
+  logIn(credentials: Credentials): Observable<HttpResponse<any>> { // username (email) and password; to authenticate
     return this.http.post<any>(this.apiUrl +'/login', credentials)
+  } // here we should receive a token as a repsonse
+  // tu raczej powinna być metoda 'get', a nie 'post' ??
+
+  logIn2(credentials: Credentials): Observable<User> { // username (email) and password; to authenticate
+    return this.http.post<User>(this.apiUrl +'/login', credentials)
   }
 
   signUp(newUser: User): Observable<HttpResponse<any>> {
