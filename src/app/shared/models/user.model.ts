@@ -4,9 +4,9 @@ export interface User {
   lastName?: string;
   phone?: string;
   username: string; // e.g. email, login
-  password?: string; // ?? todo: remove password from this place?
+  //password?: string; // rather to remove (we just need this field to send from sign up form)
   role?: Role;
-  token?: string
+  //token?: string
 }
 
 export interface Credentials {
@@ -16,11 +16,11 @@ export interface Credentials {
 
 export enum Role {
   User = 'User', // read-only (or: 'unknown', 'viewer') todo: is this role needed?
-  Client = 'Client', // logged-in user
-  Employee = 'Employee', // np. księgowa, nauczyciel, sprzątaczka, etc. (can add and update)
+  Client = 'CLIENT', // logged-in user
+  Employee = 'EMPLOYEE', // np. księgowa, nauczyciel, sprzątaczka, etc. (can add and update)
   Teacher = 'Teacher', // logged-in user todo: is this role needed?
   Director = 'Director', // logged-in user (or: 'publisher') todo: is this role needed?
-  Admin = 'Admin' // logged-in user, 'superuser' (can add, update and delete; can add new employees)
+  Admin = 'ADMIN' // logged-in user, 'superuser' (can add, update and delete; can add new employees)
 }
 
 export enum Privilege {

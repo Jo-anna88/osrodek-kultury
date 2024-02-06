@@ -35,8 +35,8 @@ export class AuthService {
 
    */
 
-  logIn(credentials: Credentials): Observable<HttpResponse<any>> { // username (email) and password; to authenticate
-    return this.http.post<any>(this.apiUrl +'/login', credentials)
+  logIn(credentials: Credentials): Observable<User> { // username (email) and password; to authenticate
+    return this.http.post<User>(this.apiUrl +'/login', credentials, {withCredentials: true})
   } // here we should receive a token as a repsonse
   // tu raczej powinna być metoda 'get', a nie 'post' ??
 
@@ -44,8 +44,9 @@ export class AuthService {
     return this.http.post<User>(this.apiUrl +'/login', credentials)
   }
 
-  signUp(newUser: User): Observable<HttpResponse<any>> {
-    return this.http.post<any>(this.apiUrl +'/signup', newUser);
+  signUp(newUser: User, pswd: string): Observable<HttpResponse<any>> {
+    let fullUser = {...newUser, password: pswd}
+    return this.http.post<any>(this.apiUrl +'/signup', fullUser, {withCredentials: true});
   }
 /*
   private setSession(authResult) {
@@ -54,12 +55,14 @@ export class AuthService {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
   }
+  */
 
-  logout() {
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("expires_at");
+  logout():Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/logout', {});
+    //localStorage.removeItem("id_token");
+    //localStorage.removeItem("expires_at");
   }
-
+/*
   public isLoggedIn() {
     return moment().isBefore(this.getExpiration());
   }

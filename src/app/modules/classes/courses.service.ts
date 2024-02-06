@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError, map, Observable, of, retry} from "rxjs";
-import {Course} from "./course";
+import {Course, CourseDetails} from "./course";
 import {mockCourses} from "./courses-list/mock-courses";
 import {environment} from "../../../environments/environment";
 
@@ -32,15 +32,27 @@ export class CoursesService {
       );
   }
 
-  addCourse(course: Course): Observable<Course> {
-    return this.http.post<Course>(this.apiUrl, course);
+  getCourseDetailsById(id: string): Observable<CourseDetails> {
+    return this.http.get<CourseDetails>(this.apiUrl + '/' + id + '/details')
+      .pipe(
+        map (courseDetails => {return {...courseDetails}})
+      );
   }
 
-  updateCourse(course: Course): Observable<Course> {
-    return this.http.put<Course>(this.apiUrl, course);
+  addCourse(newCourse: Course): Observable<Course> {
+    return this.http.post<Course>(this.apiUrl, newCourse);
+  }
+
+  addCourseDetails(newCourseDetails: CourseDetails): Observable<CourseDetails> {
+    return this.http.post<CourseDetails>(this.apiUrl + '/' + newCourseDetails.id + '/details', newCourseDetails);
+  }
+
+  updateCourse(updatedCourse: Course): Observable<Course> {
+    return this.http.put<Course>(this.apiUrl, updatedCourse);
   }
 
   deleteCourse(id: string): Observable<Object> {
     return this.http.delete(this.apiUrl + '/' + id);
   }
+
 }

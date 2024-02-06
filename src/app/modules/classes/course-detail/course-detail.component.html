@@ -1,6 +1,22 @@
-<div class = "course-detail-container" *ngIf="course$ | async as course">
+<div class = "course-detail-container"
+     *ngIf="course$ | async as course">
   <h2>{{course.name}}</h2>
   <p>{{course.teacher}}</p>
   <p>{{course.description}}</p>
 </div>
+<div class="course-detail-container2" *ngIf="courseDetails">
+  <p>{{courseDetails.minAge}}</p>
+  <p>{{courseDetails.maxAge}}</p>
+  <p>{{courseDetails.price}}</p>
+  <p>{{courseDetails.maxParticipantsNumber}}</p>
+  <p>{{courseDetails.lessonDurationMinutes}}</p>
+  <p>{{courseDetails.date}}</p>
+  <p>{{courseDetails.roomId}}</p>
+</div>
 
+<div class="no-details-message" *ngIf="courseDetails === null">
+  <p>There is no details for now.</p>
+</div>
+<!--<ng-template #noDetails>-->
+<!--  <p>There is no details for now.</p>-->
+<!--</ng-template>-->

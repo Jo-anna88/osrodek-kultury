@@ -1,1 +1,15 @@
 <p>landing-page works!</p>
+<div [ngSwitch]="currentUserRole">
+  <div *ngSwitchCase=Role.Client>
+    <p> User has Client role.</p>
+    <app-dashboard-client></app-dashboard-client>
+  </div>
+  <div *ngSwitchCase=Role.Admin>
+    <p> User has Admin role.</p>
+    <app-dashboard-admin></app-dashboard-admin>
+  </div>
+  <div *ngSwitchCase=Role.Employee>
+    <p> User has Employee role.</p>
+    <app-dashboard-employee></app-dashboard-employee>
+  </div>
+</div>

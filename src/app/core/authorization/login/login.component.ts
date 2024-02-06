@@ -43,32 +43,20 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   logIn() {
     const val = this.form.value;
-    /*
-        if (val.email && val.password) {
-          console.log("Email + Password: " + val.email + " " + val.password)
-          this.authService.login(val.email, val.password)
-            .subscribe(
-              (res) => {
-                if(res.body) this.userService.setCurrentUser({...res.body});
-                else this.userService.setCurrentUserToNull();
-                console.log("LoginComponent");
-                this.router.navigate(['landing-page']);
-                this.form.reset();
-              }
-            );
-        }
-    */
     if (val.email && val.password) {
       let credentials: Credentials = {username: val.email, password: val.password}
       this.subscriptions.push(
         this.authService.logIn(credentials)
           .subscribe({
-              next: (res) => {
-                console.log("Response after login: ", res)
-                if (res.body) this.userService.setCurrentUser({...res.body});
+              next: (user) => {
+                console.log("Response after login: ", user)
+                if (user) {
+                  this.userService.setCurrentUser({...user});
+                }
                 else this.userService.setCurrentUserToNull();
-                const url = this.route.snapshot.queryParams['requested'];
-                url ? this.router.navigate(['landing-page']) : this.router.navigateByUrl(url);
+                //const url = this.route.snapshot.queryParams['requested'];
+                //url ? this.router.navigateByUrl(url) :
+                  this.router.navigate(['landing-page']);
               },
               // error: (err) => { //todo: change this handling errors!
               //   //if(err.status == '403') this.alertService.error("Sorry, the login or password is incorrect.")
@@ -86,8 +74,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.router.navigate([{outlets: {modalOutlet: ['modal', 'signup']}}]);
     this.subscriptions.push(
       this.modalService.getEvent().subscribe({
-        next: (newUser: User) => {
-          this.authService.signUp(newUser)
+        next: ({user: newUser, password: pswd}) => {
+          this.authService.signUp(newUser, pswd)
             .subscribe({
               next: (nUser) => {
                 console.log("Response after signup: ", nUser);

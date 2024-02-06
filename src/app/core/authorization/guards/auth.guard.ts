@@ -13,7 +13,7 @@ export const authGuard = (routeSnapshot: ActivatedRouteSnapshot, routerState: Ro
 
     filter((user) => user !== undefined), //it should be sth like -> if user is undefined wait for 3s
     map((user) => {
-      console.log("User in auth gard: " + user);
+      console.log("User in auth gard: ", user);
       if (!user) { // user is falsy
         //if(user != null && Object.keys(user).length===0){ // != null checks for null and undefined
         console.log("user is null")

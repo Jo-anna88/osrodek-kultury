@@ -27,10 +27,11 @@ export class SignUpModalFormComponent {
       lastName: value.lastName,
       phone: value.phone,
       username: value.email,
-      password: value.password, // todo: first we need to validate if password is equal confirmPassword
+      //password: value.password, // todo: first we need to validate if password is equal to confirmPassword
       role: Role.Client
     }
-    this.modalService.emitEvent(newUser);
+    let pswd = value.password;
+    this.modalService.emitEvent({user: newUser, password: pswd});
   }
   close() {
     this.router.navigate([{ outlets: { modalOutlet: null } }]);

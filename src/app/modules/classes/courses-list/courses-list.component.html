@@ -38,6 +38,7 @@
   <create-update-modal-form
     [modalTitle]="modalTitle"
     [data]="selectedCourse"
+    [dataDetails]="selectedCourseDetails"
     [action]="modalAction"
     (onCreateSubmit)="createCourse($event)"
     (onUpdateSubmit)="updateCourse($event)">

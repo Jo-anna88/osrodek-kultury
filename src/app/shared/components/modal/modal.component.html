@@ -1,5 +1,8 @@
 <div class="app-modal-container">
   <span class="btn-modal-close" *ngIf="isClosable" (click)="close()">&times;</span>
   <span class="app-modal-title" *ngIf="isTitle">{{title}}</span>
+<!--  when we use additional outlet for modal window, e.g. login, signup -->
   <router-outlet></router-outlet>
+<!--  when we want to paste some content like in create/update courses -->
+  <ng-content></ng-content>
 </div>

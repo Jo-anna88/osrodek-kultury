@@ -1,14 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject, takeUntil} from "rxjs";
-import {DEFAULT_IMG_SOURCE, Course} from "../course";
+import {Category, Course, CourseDetails, DEFAULT_IMG_SOURCE} from "../course";
 import {CoursesService} from "../courses.service";
 import {Router} from "@angular/router";
 import {AlertService} from "../../alert/alert.service";
 import {AppError, errorStatusToAppErrorMapping} from "../../../shared/models/app-error.model";
 import {ModalTestService} from "../../../shared/components/modal-test/modal-test.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ModalUserConfirmationComponent}
-  from "../../../shared/components/modal-user-confirmation/modal-user-confirmation.component";
+import {
+  ModalUserConfirmationComponent
+} from "../../../shared/components/modal-user-confirmation/modal-user-confirmation.component";
 import {ModalBtnAction} from "../../../shared/components/modal/modal";
 
 @Component({
@@ -25,7 +26,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   modalAction: string = "";
   spinnerNote: string = "Classes are loading...";
   appError: AppError = {status: -1, statusTxt: "", description: ""};
-  selectedCourse: Course = {name: "", teacher: "", description: ""}; // needed form create/update form
+  selectedCourse: Course = {name: "", teacher: "", description: "", category: Category.default}; // needed form create/update form
+  selectedCourseDetails: CourseDetails = {}
 
   constructor(private coursesService: CoursesService,
               private alertService: AlertService,
@@ -48,7 +50,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
-          this.alertService.error('An error occurred during loading the classes.');
+          this.alertService.error('An error occurred during loading the courses.');
           this.isLoading = false;
         },
         complete: () => {
@@ -69,7 +71,17 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.selectedCourse = course;
     this.modalTitle = "Update " + course.name + " course"
     this.modalAction = ModalBtnAction.UPDATE;
-    this.toggleModal(); // to show modal form
+    this.coursesService.getCourseDetailsById(course.id!)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (value: CourseDetails) => {
+          this.selectedCourseDetails = value;
+        },
+        complete: () => {
+          this.toggleModal(); // to show modal form
+        }
+        }
+      )
   }
 
   updateCourse(updatedCourse:Course) { // when user click on 'submit' button in modal form
@@ -89,13 +101,23 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     );
   }
 
-  createCourse(newCourse: Course) { // when user click on 'submit' button in modal form
+  createCourse({newCourse, newCourseDetails}: {newCourse: Course, newCourseDetails: CourseDetails} ) { // when user click on 'submit' button in modal form
     newCourse.imgSource = DEFAULT_IMG_SOURCE;
     this.coursesService.addCourse(newCourse)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
           next: (nCourse: Course) => {
             this.courses.unshift(nCourse); // unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
+            if (newCourseDetails !== null) {
+              newCourseDetails.id = newCourse.id;
+              this.coursesService.addCourseDetails(newCourseDetails)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe({
+                  error: () => {
+                    this.alertService.error('An error occurred during adding the course details.')
+                  }
+                })
+            }
           },
           error: (err) => {
             if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;

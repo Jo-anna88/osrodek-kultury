@@ -16,6 +16,48 @@
       <label>Description:</label>
       <input formControlName="description">
     </div>
+    <div class="form-field">
+      <label>Category:</label>
+      <select formControlName="category">
+        <option value="">--Please choose an option--</option>
+        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+      </select>
+    </div>
+
+    <div class="form-buttons">
+    <button class="button button-secondary" (click)="toggleDetails()">{{showDetailsButtonText}}</button>
+    </div>
+
+    <div *ngIf="showDetails">
+    <div class="form-field">
+      <label>Min Age:</label>
+      <input formControlName="minAge">
+    </div>
+    <div class="form-field">
+      <label>Max Age:</label>
+      <input formControlName="maxAge">
+    </div>
+    <div class="form-field">
+      <label>Price:</label>
+      <input formControlName="price">
+    </div>
+    <div class="form-field">
+      <label>Max Participants Number:</label>
+      <input formControlName="maxParticipantsNumber">
+    </div>
+    <div class="form-field">
+      <label>Lesson Duration in Minutes:</label>
+      <input formControlName="lessonDurationMinutes">
+    </div>
+    <div class="form-field">
+      <label>Date in format Mon 13:00-13:45:</label>
+      <input formControlName="date">
+    </div>
+    <div class="form-field">
+      <label>Room:</label>
+      <input formControlName="room">
+    </div>
+    </div>
   </fieldset>
 
   <div class="form-buttons">

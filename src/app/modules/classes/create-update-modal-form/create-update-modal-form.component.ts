@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Course} from "../course";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Category, Course, CourseDetails} from "../course";
 import {ModalBtnAction} from "../../../shared/components/modal/modal";
+import {CoursesService} from "../courses.service";
 
 @Component({
   selector: 'create-update-modal-form',
@@ -10,22 +11,36 @@ import {ModalBtnAction} from "../../../shared/components/modal/modal";
 })
 export class CreateUpdateModalFormComponent implements OnInit {
   @Input() modalTitle: string = "";
-  @Input() data: Course = {name: "", teacher: "", description: ""}; // data to initialize a form in case of update action
+  @Input() data: Course = {name: "", teacher: "", description: "", category: Category.default}; // data to initialize a form in case of update action
+  @Input() dataDetails: CourseDetails = {}
   @Input() action: string = ""; // button action
-  @Output() onCreateSubmit = new EventEmitter();
-  @Output() onUpdateSubmit = new EventEmitter();
+  @Output() onCreateSubmit: EventEmitter<{course: Course, courseDetails: CourseDetails | null}> = new EventEmitter();
+  @Output() onUpdateSubmit: EventEmitter<{course: Course, courseDetails: CourseDetails | null}> = new EventEmitter();
   //formFields = new Array<string>();
   form: FormGroup = this.fb.group({
     name: ['', Validators.required],
     teacher: ['', Validators.required],
     description: ['', Validators.required],
+    category: ['', Validators.required],
+    minAge: [''],
+    maxAge: [''],
+    price: [''],
+    maxParticipantsNumber: [''],
+    lessonDurationMinutes: [''],
+    date: [''],
+    room: ['']
   });
+  categories: string[] = Object.values(Category); // e.g., 0:"ART"
+  showDetails: boolean = false;
+  showDetailsButtonText: string = "Show Course Details";
   constructor(private fb: FormBuilder) {
     //console.log( "data in constructor: ", this.data) // here 'data' is still undefined
   }
   ngOnInit () {
     //this.formFields = Object.keys(this.data);
-    if(this.action === ModalBtnAction.UPDATE) {this.populateForm();}
+    if(this.action === ModalBtnAction.UPDATE) {
+      this.populateForm();
+    }
   }
 
   populateForm() { // to initialize fields for update form
@@ -33,6 +48,29 @@ export class CreateUpdateModalFormComponent implements OnInit {
       name: [this.data.name, Validators.required],
       teacher: [this.data.teacher, Validators.required],
       description: [this.data.description, Validators.required],
+      category: [this.data.category, Validators.required],
+      minAge: [this.dataDetails.minAge],
+      maxAge: [this.dataDetails.maxAge],
+      price: [this.dataDetails.price],
+      maxParticipantsNumber: [this.dataDetails.maxParticipantsNumber],
+      lessonDurationMinutes: [this.dataDetails.lessonDurationMinutes],
+      date: [this.dataDetails.date],
+      room: [this.dataDetails.roomId]
+    });
+  }
+
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+    this.showDetailsButtonText = this.showDetails ? 'Hide Course Details' : 'Show Course Details';
+    // Enable/disable validators based on showDetails
+    const detailsControls = ['minAge', 'maxAge', 'price', 'maxParticipantsNumber', 'lessonDurationMinutes', 'date', 'room'];
+    detailsControls.forEach(control => {
+      if (this.showDetails) {
+        this.form.get(control)!.setValidators([Validators.required]);
+      } else {
+        this.form.get(control)!.clearValidators();
+      }
+      this.form.get(control)!.updateValueAndValidity();
     });
   }
 
@@ -41,10 +79,37 @@ export class CreateUpdateModalFormComponent implements OnInit {
       this.data.name = this.form.value.name;
       this.data.teacher = this.form.value.teacher;
       this.data.description = this.form.value.description;
-      this.onUpdateSubmit.emit(this.data);
+      this.data.category = this.form.value.category;
+      if (!this.showDetails) {
+        this.onUpdateSubmit.emit({course: this.data, courseDetails: null});
+      } else {
+        this.dataDetails.minAge = this.form.value.minAge;
+        this.dataDetails.maxAge = this.form.value.maxAge;
+        this.dataDetails.price = this.form.value.price;
+        this.dataDetails.maxParticipantsNumber = this.form.value.maxParticipantsNumber;
+        this.dataDetails.lessonDurationMinutes = this.form.value.lessonDurationMinutes;
+        this.dataDetails.date = this.form.value.date;
+        this.dataDetails.roomId = this.form.value.room;
+        this.onUpdateSubmit.emit({course: this.data, courseDetails: this.dataDetails});
+      }
+
     }
     else { // CREATE
-      this.onCreateSubmit.emit(new Course(this.form.value.name, this.form.value.teacher, this.form.value.description));
+      let course: Course = new Course(this.form.value.name, this.form.value.teacher, this.form.value.description, this.form.value.category)
+      if(!this.showDetails) {
+        this.onCreateSubmit.emit({course: course, courseDetails: null});
+      } else {
+        let courseDetails: CourseDetails = {
+          minAge: this.form.value.minAge,
+          maxAge: this.form.value.maxAge,
+          price: this.form.value.price,
+          maxParticipantsNumber: this.form.value.maxParticipantsNumber,
+          lessonDurationMinutes: this.form.value.lessonDurationMinutes,
+          date: this.form.value.date,
+          roomId: this.form.value.room
+        }
+        this.onCreateSubmit.emit({course: course, courseDetails: courseDetails});
+      }
     }
   }
 }
