@@ -1,22 +1,33 @@
-<div class = "course-detail-container"
-     *ngIf="course$ | async as course">
-  <h2>{{course.name}}</h2>
-  <p>{{course.teacher}}</p>
-  <p>{{course.description}}</p>
-</div>
-<div class="course-detail-container2" *ngIf="courseDetails">
-  <p>{{courseDetails.minAge}}</p>
-  <p>{{courseDetails.maxAge}}</p>
-  <p>{{courseDetails.price}}</p>
-  <p>{{courseDetails.maxParticipantsNumber}}</p>
-  <p>{{courseDetails.lessonDurationMinutes}}</p>
-  <p>{{courseDetails.date}}</p>
-  <p>{{courseDetails.roomId}}</p>
+<div class = "course-detail-container" *ngIf="course$ | async as course">
+
+  <div class = "course-data">
+    <h2>{{course.name | uppercase}} </h2>
+    <p>Teacher: <b>{{course.teacher}}</b></p>
+    <p>{{course.description}}</p>
+  </div>
+
+  <div class="course-details-data-container" *ngIf="courseDetails">
+    <div class="course-details-data">
+      <p>Minimum participant age: {{courseDetails.minAge}} years</p>
+      <p>Maximum participant age: {{courseDetails.maxAge}} years</p>
+      <p>Price per month: {{courseDetails.price | currency: 'PLN'}}</p>
+      <p>Participants number: {{courseDetails.maxParticipantsNumber}}</p>
+      <p>Lesson duration: {{courseDetails.lessonDurationMinutes}} minutes</p>
+      <p>Class schedule: {{courseDetails.date}}</p>
+      <p>Place: room number {{courseDetails.roomId}}</p>
+    </div>
+    <div class="buttons-container">
+      <button-edit (onEditEvent)="updateDetails(courseDetails)"></button-edit>
+      <button-delete (onDeleteEvent)="deleteDetails(courseDetails.id!)"></button-delete>
+    </div>
+  </div>
+
+  <div class="no-details-message" *ngIf="courseDetails === null">
+    <p><i>There is no details for now.</i></p>
+    <button-add class="button-small" (onAddEvent)="addDetails()"></button-add>
+  </div>
 </div>
 
-<div class="no-details-message" *ngIf="courseDetails === null">
-  <p>There is no details for now.</p>
-</div>
 <!--<ng-template #noDetails>-->
 <!--  <p>There is no details for now.</p>-->
 <!--</ng-template>-->

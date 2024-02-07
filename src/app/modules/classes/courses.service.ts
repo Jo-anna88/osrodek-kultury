@@ -55,4 +55,7 @@ export class CoursesService {
     return this.http.delete(this.apiUrl + '/' + id);
   }
 
+  updateCourseDetails(updatedCourseDetails: CourseDetails): Observable<CourseDetails> {
+    return this.http.put<CourseDetails>(this.apiUrl + '/' + updatedCourseDetails.id + '/details', updatedCourseDetails)
+  }
 }

@@ -44,4 +44,14 @@ export class CourseDetailComponent implements OnInit {
   }
 
   protected readonly Object = Object;
+
+  addDetails() {
+
+  }
+  updateDetails(courseDetails: CourseDetails) {
+
+  }
+  deleteDetails(param: any) {
+
+  }
 }

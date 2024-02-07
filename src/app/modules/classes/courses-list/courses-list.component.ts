@@ -84,14 +84,14 @@ export class CoursesListComponent implements OnInit, OnDestroy {
       )
   }
 
-  updateCourse(updatedCourse:Course) { // when user click on 'submit' button in modal form
-    updatedCourse.id = this.selectedCourse.id;
-    this.coursesService.updateCourse(updatedCourse)
+  updateCourse({course, courseDetails}: {course: Course, courseDetails: CourseDetails | null}) { // when user click on 'submit' button in modal form
+    course.id = this.selectedCourse.id;
+    this.coursesService.updateCourse(course)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (uCourse) => {
-            let index = this.courses.findIndex(c => c.id === uCourse.id); // find index in an array
-            this.courses[index] = uCourse;
+        next: (updatedCourse) => {
+            let index = this.courses.findIndex(c => c.id === updatedCourse.id); // find index in an array
+            this.courses[index] = updatedCourse;
           },
         error: (err) => {
           if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
@@ -99,21 +99,36 @@ export class CoursesListComponent implements OnInit, OnDestroy {
         }
       }
     );
+    if (courseDetails !== null) {
+      courseDetails.id = course.id;
+      this.coursesService.updateCourseDetails(courseDetails)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (updatedCourseDetails) => {console.log(updatedCourseDetails)},
+          error: (err) => {
+            if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
+            this.alertService.error('An error occurred during updating the course details.');
+          }
+        })
+    }
+
+
   }
 
-  createCourse({newCourse, newCourseDetails}: {newCourse: Course, newCourseDetails: CourseDetails} ) { // when user click on 'submit' button in modal form
-    newCourse.imgSource = DEFAULT_IMG_SOURCE;
-    this.coursesService.addCourse(newCourse)
+  createCourse({course, courseDetails}: {course: Course, courseDetails: CourseDetails | null} ) { // when user click on 'submit' button in modal form
+    course.imgSource = DEFAULT_IMG_SOURCE;
+    this.coursesService.addCourse(course)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-          next: (nCourse: Course) => {
-            this.courses.unshift(nCourse); // unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
-            if (newCourseDetails !== null) {
-              newCourseDetails.id = newCourse.id;
-              this.coursesService.addCourseDetails(newCourseDetails)
+          next: (newCourse: Course) => {
+            this.courses.unshift(newCourse); // unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
+            if (courseDetails !== null) {
+              courseDetails.id = newCourse.id;
+              this.coursesService.addCourseDetails(courseDetails)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe({
-                  error: () => {
+                  error: (err) => {
+                    if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
                     this.alertService.error('An error occurred during adding the course details.')
                   }
                 })
