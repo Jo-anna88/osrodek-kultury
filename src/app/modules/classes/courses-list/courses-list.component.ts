@@ -23,7 +23,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   isModalOpen: boolean = false;
   modalTitle: string = "";
-  modalAction: string = "";
+  modalAction: ModalBtnAction = ModalBtnAction.NONE;
   spinnerNote: string = "Classes are loading...";
   appError: AppError = {status: -1, statusTxt: "", description: ""};
   selectedCourse: Course = {name: "", teacher: "", description: "", category: Category.default}; // needed form create/update form
@@ -60,12 +60,13 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   toggleModal() {this.isModalOpen = !this.isModalOpen;}
+  closeModal() {if(this.isModalOpen) this.isModalOpen=false;}
 
   openModalCreate() {
     //this.modalTestService.open('modal-add'); // for test purposes
     this.modalTitle = "Create a new course"
     this.modalAction = ModalBtnAction.CREATE;
-    this.toggleModal(); // to show modal form
+    this.toggleModal(); // to show modal form => isModalOpen = true
   }
   openModalUpdate(course: Course) {
     this.selectedCourse = course;
@@ -78,13 +79,14 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           this.selectedCourseDetails = value;
         },
         complete: () => {
-          this.toggleModal(); // to show modal form
+          this.toggleModal(); // to show modal form => isModalOpen = true
         }
         }
       )
   }
 
   updateCourse({course, courseDetails}: {course: Course, courseDetails: CourseDetails | null}) { // when user click on 'submit' button in modal form
+    // here isModalOpen is false when only course is updated and true if a course with courseDetails are updated(why?)
     course.id = this.selectedCourse.id;
     this.coursesService.updateCourse(course)
       .pipe(takeUntil(this.destroy$))
@@ -111,11 +113,11 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           }
         })
     }
-
-
+    if (this.isModalOpen) {this.toggleModal();} //because of this error described at the beginning
   }
 
   createCourse({course, courseDetails}: {course: Course, courseDetails: CourseDetails | null} ) { // when user click on 'submit' button in modal form
+    // here isModalOpen is false when only course is created and true if a course with courseDetails are created(why?)
     course.imgSource = DEFAULT_IMG_SOURCE;
     this.coursesService.addCourse(course)
       .pipe(takeUntil(this.destroy$))
@@ -137,20 +139,17 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           error: (err) => {
             if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
             this.alertService.error('An error occurred during creating the course.');
-          },
-          complete: () => {
-            console.log("complete");
-            this.toggleModal(); // to close the modal
           }
         }
       );
+    if (this.isModalOpen) {this.toggleModal();} //because of this error described at the beginning
   }
 
   // delete confirmation dialog
   openConfirmationDialog(courseId: string): void {
     const dialogRef = this.dialog.open(ModalUserConfirmationComponent, {
       width: '250px',
-      data: "course",
+      data: "course", // kind of item to be deleted
     });
     dialogRef.afterClosed().subscribe({
       next: (result) => { if (result) { this.deleteCourse(courseId); } }

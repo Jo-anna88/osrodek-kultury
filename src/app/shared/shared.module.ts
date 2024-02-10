@@ -6,6 +6,7 @@ import {RouterLink, RouterOutlet} from "@angular/router";
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatIconModule} from "@angular/material/icon";
 import { MatButtonModule} from "@angular/material/button";
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
@@ -15,7 +16,6 @@ import { ButtonDeleteComponent } from './components/button-delete/button-delete.
 import { ButtonAddComponent } from './components/button-add/button-add.component';
 import { ModalTestComponent } from './components/modal-test/modal-test.component';
 import { ModalUserConfirmationComponent } from './components/modal-user-confirmation/modal-user-confirmation.component';
-import {MatDialogModule} from "@angular/material/dialog";
 import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({

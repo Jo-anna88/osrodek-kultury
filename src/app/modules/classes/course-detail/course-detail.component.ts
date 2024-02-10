@@ -3,6 +3,8 @@ import {Course, CourseDetails} from "../course";
 import {catchError, Observable, switchMap, tap} from "rxjs";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CoursesService} from "../courses.service";
+import {ModalService} from "../../../core/services/modal.service";
+import {ModalConfiguration} from "../../../shared/components/modal/modal";
 
 @Component({
   selector: 'app-course-detail',
@@ -16,7 +18,8 @@ export class CourseDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private modalService: ModalService
   ) {}
   ngOnInit() {
     this.loadData();
@@ -46,10 +49,37 @@ export class CourseDetailComponent implements OnInit {
   protected readonly Object = Object;
 
   addDetails() {
-
+    this.modalService.setConfiguration({title: "Add Course Details"});
+    // this.router.navigate([{outlets: {modalOutlet: ['modal', 'delete']}}]);
+    // this.modalService.getEvent().subscribe({
+    //     next: ({user: newUser, password: pswd}) => {
+    //       this.authService.signUp(newUser, pswd)
+    //         .subscribe({
+    //           next: (nUser) => {
+    //             console.log("Response after signup: ", nUser);
+    //           }
+    //         })
+    //       this.modalService.close();
+    //     }
+    //   })
+    // )
   }
   updateDetails(courseDetails: CourseDetails) {
-
+    this.modalService.setConfiguration({title: "Update Course Details", data: courseDetails});
+    this.router.navigate([{outlets: {modalOutlet: ['modal', 'updateCourseDetails']}}]);
+    this.modalService.getEvent().subscribe({
+      next: (courseDetails: CourseDetails) => {
+        console.log(courseDetails);
+        this.coursesService.updateCourseDetails(courseDetails)
+          .subscribe({
+            next: (updatedCourseDetails) => {
+              console.log("Response after signup: ", updatedCourseDetails);
+            }
+          })
+        this.modalService.close();
+        this.loadData();
+      }
+    })
   }
   deleteDetails(param: any) {
 

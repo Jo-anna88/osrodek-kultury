@@ -2,18 +2,18 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Category, Course, CourseDetails} from "../course";
 import {ModalBtnAction} from "../../../shared/components/modal/modal";
-import {CoursesService} from "../courses.service";
+import {ModalService} from "../../../core/services/modal.service";
 
 @Component({
   selector: 'create-update-modal-form',
-  templateUrl: './create-update-modal-form.component.html',
-  styleUrls: ['./create-update-modal-form.component.scss']
+  templateUrl: './create-update-course-form.component.html',
+  styleUrls: ['./create-update-course-form.component.scss']
 })
-export class CreateUpdateModalFormComponent implements OnInit {
+export class CreateUpdateCourseFormComponent implements OnInit {
   @Input() modalTitle: string = "";
   @Input() data: Course = {name: "", teacher: "", description: "", category: Category.default}; // data to initialize a form in case of update action
   @Input() dataDetails: CourseDetails = {}
-  @Input() action: string = ""; // button action
+  @Input() action: ModalBtnAction = ModalBtnAction.NONE; // button action
   @Output() onCreateSubmit: EventEmitter<{course: Course, courseDetails: CourseDetails | null}> = new EventEmitter();
   @Output() onUpdateSubmit: EventEmitter<{course: Course, courseDetails: CourseDetails | null}> = new EventEmitter();
   //formFields = new Array<string>();
@@ -33,7 +33,7 @@ export class CreateUpdateModalFormComponent implements OnInit {
   categories: string[] = Object.values(Category); // e.g., 0:"ART"
   showDetails: boolean = false;
   showDetailsButtonText: string = "Show Course Details";
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private modalService: ModalService) {
     //console.log( "data in constructor: ", this.data) // here 'data' is still undefined
   }
   ngOnInit () {
@@ -111,5 +111,7 @@ export class CreateUpdateModalFormComponent implements OnInit {
         this.onCreateSubmit.emit({course: course, courseDetails: courseDetails});
       }
     }
+
+    this.modalService.close();
   }
 }

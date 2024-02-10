@@ -9,10 +9,4 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 export class ModalUserConfirmationComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: string) {}
-
-  @Output()
-  onConfirmEvent = new EventEmitter();
-  onConfirm(){
-    this.onConfirmEvent.emit();
-  }
 }

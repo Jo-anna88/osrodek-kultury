@@ -6,13 +6,15 @@ import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import {SharedModule} from "../../shared/shared.module";
 import { CourseDetailComponent } from './course-detail/course-detail.component';
-import { CreateUpdateModalFormComponent } from './create-update-modal-form/create-update-modal-form.component';
+import { CreateUpdateCourseFormComponent } from './create-update-course-form/create-update-course-form.component';
+import { UpdateCourseDetailsFormComponent } from './update-course-details-form/update-course-details-form.component';
 
 @NgModule({
   declarations: [
     CoursesListComponent,
     CourseDetailComponent,
-    CreateUpdateModalFormComponent
+    CreateUpdateCourseFormComponent,
+    UpdateCourseDetailsFormComponent
   ],
     imports: [
         CommonModule,

@@ -16,7 +16,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   title: string = "";
   isTitle: boolean = false;
   @Output()
-  onModalClose = new EventEmitter(); // it is not needed anymore
+  onModalClose = new EventEmitter(); // it is not needed anymore (only for courses list)
   subscription = new Subscription();
   constructor (private renderer: Renderer2,
                private router: Router,
@@ -35,6 +35,7 @@ export class ModalComponent implements OnInit, OnDestroy {
           this.title = config.title;
           this.isTitle = true;
         }
+        this.subscription.unsubscribe();
       }
     })
   }
@@ -51,13 +52,12 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.onModalClose.emit(); // it is not needed anymore
-    removeEventListener('click', () => {});
-    this.router.navigate([{ outlets: { modalOutlet: null } }]);
+    this.onModalClose.emit(); // it is not needed anymore ? (only for courses list)
+    this.modalService.close();
   }
 
   ngOnDestroy() {
     removeEventListener('click', () => {});
-    this.subscription.unsubscribe();
+    if(this.subscription) this.subscription.unsubscribe();
   }
 }
