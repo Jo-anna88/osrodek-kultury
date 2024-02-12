@@ -8,6 +8,7 @@ describe('CourseDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [],
       declarations: [ CourseDetailComponent ]
     })
     .compileComponents();

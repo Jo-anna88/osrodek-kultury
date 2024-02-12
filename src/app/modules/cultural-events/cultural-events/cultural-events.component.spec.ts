@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CulturalEventsComponent } from './cultural-events.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('CulturalEventsComponent', () => {
   let component: CulturalEventsComponent;
@@ -8,6 +9,7 @@ describe('CulturalEventsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [ CulturalEventsComponent ]
     })
     .compileComponents();

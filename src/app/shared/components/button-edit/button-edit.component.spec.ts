@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ButtonEditComponent } from './button-edit.component';
+import {MatIconModule} from "@angular/material/icon";
 
 describe('ButtonEditComponent', () => {
   let component: ButtonEditComponent;
@@ -8,6 +9,7 @@ describe('ButtonEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MatIconModule],
       declarations: [ ButtonEditComponent ]
     })
     .compileComponents();

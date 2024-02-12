@@ -13,7 +13,7 @@ import {
 import {ButtonAction} from "../../../shared/components/modal/modal";
 
 @Component({
-  selector: 'app-classes',
+  selector: 'app-courses',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss']
 })

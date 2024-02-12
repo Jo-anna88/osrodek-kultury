@@ -5,11 +5,8 @@ import { LoginComponent } from "./core/authorization/login/login.component";
 import { ModalComponent } from "./shared/components/modal/modal.component";
 import { SignUpModalFormComponent } from "./core/authorization/sign-up-modal-form/sign-up-modal-form.component";
 import {
-  ModalUserConfirmationComponent
-} from "./shared/components/modal-user-confirmation/modal-user-confirmation.component";
-import {
   UpdateCourseDetailsFormComponent
-} from "./modules/classes/update-course-details-form/update-course-details-form.component";
+} from "./modules/courses/update-course-details-form/update-course-details-form.component";
 import {
   DeleteConfirmationDialogComponent
 } from "./shared/components/delete-confirmation-dialog/delete-confirmation-dialog.component";
