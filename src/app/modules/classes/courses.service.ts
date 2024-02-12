@@ -14,14 +14,12 @@ export class CoursesService {
   constructor(private http: HttpClient) { }
 
   getCourses() : Observable<Array<Course>>{
-
     return this.http.get<Array<Course>>(this.apiUrl) //Observable<Object>
       .pipe(
         // retry(3), // to deal with slow connection,
         // catchError(), // then handle the error
         map(courses => courses.map(course => {return {...course}}))
       );
-
     //return of(mockCourses);
   }
 
@@ -51,11 +49,15 @@ export class CoursesService {
     return this.http.put<Course>(this.apiUrl, updatedCourse);
   }
 
+  updateCourseDetails(updatedCourseDetails: CourseDetails): Observable<CourseDetails> {
+    return this.http.put<CourseDetails>(this.apiUrl + '/' + updatedCourseDetails.id + '/details', updatedCourseDetails)
+  }
+
   deleteCourse(id: string): Observable<Object> {
     return this.http.delete(this.apiUrl + '/' + id);
   }
 
-  updateCourseDetails(updatedCourseDetails: CourseDetails): Observable<CourseDetails> {
-    return this.http.put<CourseDetails>(this.apiUrl + '/' + updatedCourseDetails.id + '/details', updatedCourseDetails)
+  deleteCourseDetails(id: string) {
+    return this.http.delete(this.apiUrl + '/' + id + '/details');
   }
 }

@@ -1,6 +1,6 @@
 <form [formGroup]="signUpForm" class="form-container">
   <fieldset class="form-group">
-    <legend class="h2">Create account</legend>
+<!--    <legend class="h2">Create account</legend>-->
     <div class="form-field">
       <label>First Name:</label>
       <input formControlName="firstName" class="form-control">
@@ -29,10 +29,10 @@
 
   <div class="form-buttons">
     <button class="button button-secondary"
-            (click)="close()">Cancel
+            (click)="close()">{{buttonAction.CANCEL}}
     </button>
     <button class="button button-primary"
-            (click)="submit()">Create
+            (click)="submit()">{{buttonAction.CREATE}}
     </button>
   </div>
 </form>

@@ -11,7 +11,7 @@ import {alerts} from "./modules/alert/alert-mock";
 export class AppComponent implements OnInit{
   title = 'osrodek-kultury';
 
-  constructor(private modalService: NgbModal, private alertService: AlertService) {
+  constructor(private ngbModalService: NgbModal, private alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
   }
 
   public open(modal: any): void {
-    this.modalService.open(modal);
+    this.ngbModalService.open(modal); // ng-bootstrap; TODO: is it needed?
   }
 
 

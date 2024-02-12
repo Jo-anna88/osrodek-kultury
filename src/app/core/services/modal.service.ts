@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Observable, BehaviorSubject} from "rxjs";
-import {ModalConfiguration} from "../../shared/components/modal/modal";
+import {ModalConfiguration, ModalType} from "../../shared/components/modal/modal";
 import {Router} from "@angular/router";
 
 @Injectable({
@@ -31,7 +31,11 @@ export class ModalService {
     return this.modalConfiguration$.asObservable();
   }
 
-  close() {
+  openModal(modalType: ModalType) {
+    this.router.navigate([{outlets: {modalOutlet: ['modal', modalType]}}]);
+  }
+
+  closeModal() {
     this.setConfiguration({});
     this.router.navigate([{ outlets: { modalOutlet: null } }]);
   }

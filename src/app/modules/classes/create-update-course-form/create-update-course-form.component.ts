@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Category, Course, CourseDetails} from "../course";
-import {ModalBtnAction} from "../../../shared/components/modal/modal";
+import {ButtonAction} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
 
 @Component({
@@ -13,7 +13,7 @@ export class CreateUpdateCourseFormComponent implements OnInit {
   @Input() modalTitle: string = "";
   @Input() data: Course = {name: "", teacher: "", description: "", category: Category.default}; // data to initialize a form in case of update action
   @Input() dataDetails: CourseDetails = {}
-  @Input() action: ModalBtnAction = ModalBtnAction.NONE; // button action
+  @Input() action: ButtonAction = ButtonAction.NONE; // button action
   @Output() onCreateSubmit: EventEmitter<{course: Course, courseDetails: CourseDetails | null}> = new EventEmitter();
   @Output() onUpdateSubmit: EventEmitter<{course: Course, courseDetails: CourseDetails | null}> = new EventEmitter();
   //formFields = new Array<string>();
@@ -38,7 +38,7 @@ export class CreateUpdateCourseFormComponent implements OnInit {
   }
   ngOnInit () {
     //this.formFields = Object.keys(this.data);
-    if(this.action === ModalBtnAction.UPDATE) {
+    if(this.action === ButtonAction.UPDATE) {
       this.populateForm();
     }
   }
@@ -75,7 +75,7 @@ export class CreateUpdateCourseFormComponent implements OnInit {
   }
 
   submit() {
-    if(this.action === ModalBtnAction.UPDATE) { // UPDATE
+    if(this.action === ButtonAction.UPDATE) { // UPDATE
       this.data.name = this.form.value.name;
       this.data.teacher = this.form.value.teacher;
       this.data.description = this.form.value.description;
@@ -112,6 +112,6 @@ export class CreateUpdateCourseFormComponent implements OnInit {
       }
     }
 
-    this.modalService.close();
+    this.modalService.closeModal();
   }
 }

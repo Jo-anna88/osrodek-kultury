@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ICulturalEvent} from "./cultural-event";
 import {CulturalEventService} from "../cultural-event.service";
-import {catchError, delay, map, of, Subject} from "rxjs";
+import {catchError, delay, map, of, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-cultural-events',
@@ -10,7 +10,7 @@ import {catchError, delay, map, of, Subject} from "rxjs";
 })
 export class CulturalEventsComponent implements OnInit, OnDestroy {
 
-  destroy$: Subject<any> = new Subject();
+  destroy$: Subject<void> = new Subject<void>();
 
   culturalEvents : ICulturalEvent[] = [];
   isLoading: boolean = false;
@@ -28,6 +28,7 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
     // first solution:
     this.culturalEventService.getEvents()
       //.pipe(delay(5000))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
         next: (value: ICulturalEvent[]) => {this.culturalEvents=value;},
         error: (err: any) => {
@@ -54,7 +55,7 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //this.destroy$.next();
+    this.destroy$.next();
     this.destroy$.complete();
   }
 }

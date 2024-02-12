@@ -1,4 +1,9 @@
-export enum ModalBtnAction {
+export enum ModalType {
+  DELETE_CONFIRMATION = "delete",
+  SIGNUP = "signup",
+  UPDATE_COURSE_DETAILS = "updateCourseDetails"
+}
+export enum ButtonAction {
   CREATE = "Create",
   UPDATE = "Update",
   DELETE = "Delete",

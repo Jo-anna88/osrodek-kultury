@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Role} from "../../../shared/models/user.model";
 import {UserService} from "../../../core/services/user.service";
 
@@ -7,7 +7,7 @@ import {UserService} from "../../../core/services/user.service";
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss']
 })
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit {
   currentUserRole : Role = Role.Client; // default
   Role = Role; // Make the enum accessible in the template
   constructor(private userService: UserService) {

@@ -17,6 +17,7 @@ import { ButtonAddComponent } from './components/button-add/button-add.component
 import { ModalTestComponent } from './components/modal-test/modal-test.component';
 import { ModalUserConfirmationComponent } from './components/modal-user-confirmation/modal-user-confirmation.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { DeleteConfirmationDialogComponent } from './components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { ModalComponent } from './components/modal/modal.component';
         ButtonAddComponent,
         ModalTestComponent,
         ModalUserConfirmationComponent,
-        ModalComponent
+        ModalComponent,
+        DeleteConfirmationDialogComponent
     ],
   exports: [
     //FontAwesomeModule,
@@ -41,7 +43,8 @@ import { ModalComponent } from './components/modal/modal.component';
     ButtonDeleteComponent,
     ButtonAddComponent,
     ModalTestComponent,
-    ModalComponent
+    ModalComponent,
+    DeleteConfirmationDialogComponent
   ],
     imports: [
         CommonModule,

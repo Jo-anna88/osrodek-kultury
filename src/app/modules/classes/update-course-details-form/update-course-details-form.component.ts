@@ -1,10 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ModalBtnAction, ModalConfiguration} from "../../../shared/components/modal/modal";
+import {ButtonAction, ModalConfiguration} from "../../../shared/components/modal/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ModalService} from "../../../core/services/modal.service";
 import {CourseDetails} from "../course";
-import {first, Subject, Subscription} from "rxjs";
-import {CoursesService} from "../courses.service";
+import {first, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-update-course-details-form',
@@ -12,13 +11,12 @@ import {CoursesService} from "../courses.service";
   styleUrls: ['./update-course-details-form.component.scss']
 })
 export class UpdateCourseDetailsFormComponent implements OnInit, OnDestroy {
-  destroy$ = new Subject<void>();
   title: string = "";
   data: CourseDetails = {};
-  protected readonly ModalBtnAction = ModalBtnAction;
+  protected readonly buttonAction = ButtonAction;
   updateCourseForm!: FormGroup;
   subscription = new Subscription();
-  constructor(private fb: FormBuilder, private modalService: ModalService, private courseService: CoursesService) {
+  constructor(private fb: FormBuilder, private modalService: ModalService) {
   }
 
   ngOnInit() {

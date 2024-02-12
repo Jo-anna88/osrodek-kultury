@@ -7,14 +7,16 @@ import {MatButtonModule} from "@angular/material/button";
 import {FooterComponent} from "./footer/footer.component";
 import {HeaderComponent} from "./header/header.component";
 import {LoginComponent} from './authorization/login/login.component';
+import {SignUpModalFormComponent} from "./authorization/sign-up-modal-form/sign-up-modal-form.component";
+
 import {SharedModule} from "../shared/shared.module";
-import {SignUpModule} from "../modules/sign-up/sign-up.module";
 
 @NgModule({
     declarations: [
         FooterComponent,
         HeaderComponent,
-        LoginComponent
+        LoginComponent,
+        SignUpModalFormComponent
     ],
   imports: [
     MatButtonModule,
@@ -23,11 +25,10 @@ import {SignUpModule} from "../modules/sign-up/sign-up.module";
     RouterLinkActive,
     ReactiveFormsModule,
     SharedModule,
-    SignUpModule,
   ],
     exports: [
         FooterComponent,
-        HeaderComponent
+        HeaderComponent,
     ]
 })
 export class CoreModule{}

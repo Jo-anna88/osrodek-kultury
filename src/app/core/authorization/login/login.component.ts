@@ -3,10 +3,11 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
-import {User, Role, Credentials} from "../../../shared/models/user.model";
-import {delay, Subscription} from "rxjs";
+import {Credentials} from "../../../shared/models/user.model";
+import {first, Subject, Subscription, takeUntil} from "rxjs";
 import {ModalService} from "../../services/modal.service";
 import {AlertService} from "../../../modules/alert/alert.service";
+import {ModalType} from "../../../shared/components/modal/modal";
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,9 @@ import {AlertService} from "../../../modules/alert/alert.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject<void>();
   form: FormGroup;
-  subscriptions = new Array<Subscription>;
+  subscription = new Subscription();
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -45,49 +47,53 @@ export class LoginComponent implements OnInit, OnDestroy {
     const val = this.form.value;
     if (val.email && val.password) {
       let credentials: Credentials = {username: val.email, password: val.password}
-      this.subscriptions.push(
-        this.authService.logIn(credentials)
-          .subscribe({
-              next: (user) => {
-                console.log("Response after login: ", user)
-                if (user) {
-                  this.userService.setCurrentUser({...user});
-                }
-                else this.userService.setCurrentUserToNull();
-                //const url = this.route.snapshot.queryParams['requested'];
-                //url ? this.router.navigateByUrl(url) :
-                  this.router.navigate(['landing-page']);
-              },
-              // error: (err) => { //todo: change this handling errors!
-              //   //if(err.status == '403') this.alertService.error("Sorry, the login or password is incorrect.")
-              //   //else this.alertService.error("error description")
-              //   this.form.reset();
-              // }
-            }
-          )
-      )
+      this.authService.logIn(credentials)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+            next: (user) => {
+              console.log("Response after login: ", user)
+              if (user) {
+                this.userService.setCurrentUser({...user});
+              } else this.userService.setCurrentUserToNull();
+              //const url = this.route.snapshot.queryParams['requested'];
+              //url ? this.router.navigateByUrl(url) :
+              this.router.navigate(['landing-page']);
+            },
+            // error: (err) => { //todo: change this handling errors!
+            //   //if(err.status == '403') this.alertService.error("Sorry, the login or password is incorrect.")
+            //   //else this.alertService.error("error description")
+            //   this.form.reset();
+            // }
+          }
+        )
       this.form.reset();
     }
   }
 
   signUp() {
-    this.router.navigate([{outlets: {modalOutlet: ['modal', 'signup']}}]);
-    this.subscriptions.push(
-      this.modalService.getEvent().subscribe({
+    this.modalService.setConfiguration({title: "Create account"});
+    this.modalService.openModal(ModalType.SIGNUP);
+
+    this.subscription = this.modalService.getEvent()
+      .pipe(first())
+      .subscribe({
         next: ({user: newUser, password: pswd}) => {
           this.authService.signUp(newUser, pswd)
-            .subscribe({
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({ // todo: is this subscription is on the subscription list?
               next: (nUser) => {
                 console.log("Response after signup: ", nUser);
               }
             })
-          this.modalService.close();
+          this.subscription.unsubscribe();
+          this.modalService.closeModal();
         }
       })
-    )
   }
 
   ngOnDestroy() {
-    this.subscriptions.map((subs: Subscription) => subs.unsubscribe());
+    this.destroy$.next();
+    this.destroy$.complete();
+    //this.subscriptions.map((subs: Subscription) => subs.unsubscribe());
   }
 }

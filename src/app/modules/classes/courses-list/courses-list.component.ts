@@ -10,7 +10,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {
   ModalUserConfirmationComponent
 } from "../../../shared/components/modal-user-confirmation/modal-user-confirmation.component";
-import {ModalBtnAction} from "../../../shared/components/modal/modal";
+import {ButtonAction} from "../../../shared/components/modal/modal";
 
 @Component({
   selector: 'app-classes',
@@ -23,7 +23,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   isModalOpen: boolean = false;
   modalTitle: string = "";
-  modalAction: ModalBtnAction = ModalBtnAction.NONE;
+  modalAction: ButtonAction = ButtonAction.NONE;
   spinnerNote: string = "Classes are loading...";
   appError: AppError = {status: -1, statusTxt: "", description: ""};
   selectedCourse: Course = {name: "", teacher: "", description: "", category: Category.default}; // needed form create/update form
@@ -65,13 +65,13 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   openModalCreate() {
     //this.modalTestService.open('modal-add'); // for test purposes
     this.modalTitle = "Create a new course"
-    this.modalAction = ModalBtnAction.CREATE;
+    this.modalAction = ButtonAction.CREATE;
     this.toggleModal(); // to show modal form => isModalOpen = true
   }
   openModalUpdate(course: Course) {
     this.selectedCourse = course;
     this.modalTitle = "Update " + course.name + " course"
-    this.modalAction = ModalBtnAction.UPDATE;
+    this.modalAction = ButtonAction.UPDATE;
     this.coursesService.getCourseDetailsById(course.id!)
       .pipe(takeUntil(this.destroy$))
       .subscribe({

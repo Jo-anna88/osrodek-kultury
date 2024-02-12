@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ModalService} from "../../../core/services/modal.service";
+import {ModalService} from "../../services/modal.service";
 import {User, Role} from "../../../shared/models/user.model";
+import {ButtonAction} from "../../../shared/components/modal/modal";
 
 @Component({
   selector: 'app-sign-up-modal-form',
@@ -16,7 +17,8 @@ export class SignUpModalFormComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]]
-  })
+  });
+  protected readonly buttonAction = ButtonAction;
   constructor (private fb: FormBuilder, private modalService: ModalService) {}
 
   submit() {
@@ -32,7 +34,6 @@ export class SignUpModalFormComponent {
     this.modalService.emitEvent({user: newUser, password: pswd});
   }
   close() {
-    this.modalService.close();
+    this.modalService.closeModal();
   }
-
 }

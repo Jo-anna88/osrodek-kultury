@@ -53,7 +53,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   close() {
     this.onModalClose.emit(); // it is not needed anymore ? (only for courses list)
-    this.modalService.close();
+    this.modalService.closeModal();
   }
 
   ngOnDestroy() {

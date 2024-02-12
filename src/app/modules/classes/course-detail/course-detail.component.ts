@@ -1,16 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {Course, CourseDetails} from "../course";
-import {catchError, Observable, switchMap, tap} from "rxjs";
+import {Observable, Subscription, switchMap} from "rxjs";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CoursesService} from "../courses.service";
 import {ModalService} from "../../../core/services/modal.service";
-import {ModalConfiguration} from "../../../shared/components/modal/modal";
+import {ModalType} from "../../../shared/components/modal/modal";
 
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
   styleUrls: ['./course-detail.component.scss']
 })
+// TODO: unsubscribe subscriptions!
 export class CourseDetailComponent implements OnInit {
   course$! : Observable<Course>; // the exclamation mark acts as a non-null assertion operator
   courseDetails : CourseDetails | null | undefined = undefined;
@@ -66,7 +67,7 @@ export class CourseDetailComponent implements OnInit {
   }
   updateDetails(courseDetails: CourseDetails) {
     this.modalService.setConfiguration({title: "Update Course Details", data: courseDetails});
-    this.router.navigate([{outlets: {modalOutlet: ['modal', 'updateCourseDetails']}}]);
+    this.modalService.openModal(ModalType.UPDATE_COURSE_DETAILS);
     this.modalService.getEvent().subscribe({
       next: (courseDetails: CourseDetails) => {
         console.log(courseDetails);
@@ -75,13 +76,26 @@ export class CourseDetailComponent implements OnInit {
             next: (updatedCourseDetails) => {
               console.log("Response after signup: ", updatedCourseDetails);
             }
-          })
-        this.modalService.close();
+          });
+        this.modalService.closeModal();
         this.loadData();
       }
     })
   }
-  deleteDetails(param: any) {
-
+  deleteDetails(id: string) {
+    this.modalService.setConfiguration({title:"Delete Confirmation", data: "details"});
+    this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
+    this.modalService.getEvent().subscribe({
+      next: (isConfirmed: boolean) => {
+        if(isConfirmed) {
+          this.coursesService.deleteCourseDetails(id)
+            .subscribe({
+              next: () => {console.log("Deleted successfully")}
+            });
+          this.modalService.closeModal();
+          this.loadData();
+        }
+      }
+    })
   }
 }
