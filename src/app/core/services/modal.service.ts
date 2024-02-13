@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Observable, BehaviorSubject} from "rxjs";
+import {Observable, BehaviorSubject, Subject} from "rxjs";
 import {ModalConfiguration, ModalType} from "../../shared/components/modal/modal";
 import {Router} from "@angular/router";
 
@@ -8,18 +8,18 @@ import {Router} from "@angular/router";
 })
 export class ModalService {
   private modalConfiguration$ = new BehaviorSubject<ModalConfiguration>({});
-  private eventEmitter: EventEmitter<any> = new EventEmitter<any>(); // TODO: może lepiej zmienić to na Subject?
+  private modalEvent$ = new Subject<any>();
 
   constructor (private router: Router){}
 
   /* Pozwala wysyłać dane z formularzy np. po 'submit'*/
   emitEvent(data: any) {
-    this.eventEmitter.emit(data);
+    this.modalEvent$.next(data);
   }
 
   /* Pozwala odbierać dane z formularzy np. w komponentach, w których wywołano otwarcie formularza w oknie modalnym */
-  getEvent(): Observable<any> {
-    return this.eventEmitter.asObservable();
+  getModalEvent(): Observable<any> {
+    return this.modalEvent$.asObservable();
   }
 
   setConfiguration(config: ModalConfiguration) {
@@ -36,7 +36,7 @@ export class ModalService {
   }
 
   closeModal() {
-    this.setConfiguration({});
+    //this.setConfiguration({});
     this.router.navigate([{ outlets: { modalOutlet: null } }]);
   }
 }

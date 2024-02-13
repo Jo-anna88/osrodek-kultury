@@ -73,19 +73,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   signUp() {
     this.modalService.setConfiguration({title: "Create account"});
     this.modalService.openModal(ModalType.SIGNUP);
-
-    this.subscription = this.modalService.getEvent()
-      .pipe(first())
+    this.subscription = this.modalService.getModalEvent()
+      .pipe(first()) // it is needed because without it, it sends request many times from modal (?) // first() is null!
       .subscribe({
         next: ({user: newUser, password: pswd}) => {
           this.authService.signUp(newUser, pswd)
             .pipe(takeUntil(this.destroy$))
-            .subscribe({ // todo: is this subscription is on the subscription list?
+            .subscribe({
               next: (nUser) => {
                 console.log("Response after signup: ", nUser);
               }
             })
-          this.subscription.unsubscribe();
+          //this.subscription.unsubscribe(); // it is needed because without it, it sends request many times from modal (???)
           this.modalService.closeModal();
         }
       })
@@ -94,6 +93,5 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-    //this.subscriptions.map((subs: Subscription) => subs.unsubscribe());
   }
 }

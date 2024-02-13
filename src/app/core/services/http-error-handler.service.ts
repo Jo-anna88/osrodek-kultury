@@ -24,6 +24,7 @@ export class HttpErrorHandlerService  implements ErrorHandler {
     }
 
     else {
+      console.log(error);
       alertService.error('An unknown error occurred');
     }
   }
