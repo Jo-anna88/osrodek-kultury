@@ -10,19 +10,19 @@ import {Subscription, take} from "rxjs";
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit, OnDestroy {
-  @Input()
   isClosable: boolean = true;
-  @Input()
   title: string = "";
   isTitle: boolean = false;
-  @Output()
-  onModalClose = new EventEmitter(); // it is not needed anymore (only for courses list)
   subscription = new Subscription();
+  private handleDocumentClick = (event: MouseEvent) => {
+    console.log("event target: ", event.target);
+    if ((event.target as HTMLElement).localName === 'app-modal') {
+      this.close();
+      // this.renderer.setStyle(el.target, 'display', 'none'); // renderer: Renderer2
+    }
+  };
 
-  constructor(private renderer: Renderer2,
-              private router: Router,
-              private modalService: ModalService,
-              private route: ActivatedRoute) {
+  constructor(private modalService: ModalService) {
   }
 
   ngOnInit() {
@@ -33,14 +33,13 @@ export class ModalComponent implements OnInit, OnDestroy {
         next: (config: ModalConfiguration) => { // if there is no configuration config = {}
           if (config.isClosable === false) {
             this.isClosable = false;
-            removeEventListener('click', () => {
-            });
+            removeEventListener('click', this.handleDocumentClick);
           }
           if (config.title) {
             this.title = config.title;
             this.isTitle = true;
           }
-          this.subscription.unsubscribe();
+          //this.subscription.unsubscribe();
         },
         complete: () => {
           console.log("modal component - getConfiguration complete")
@@ -50,23 +49,17 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   setClickOutsideModalListener() {
     if (this.isClosable) {
-      addEventListener('click', (el: any) => {
-        if (el.target!.localName === 'app-modal') {
-          this.close();
-          // this.renderer.setStyle(el.target, 'display', 'none');
-        }
-      });
+      addEventListener('click', this.handleDocumentClick);
     }
   }
 
   close() {
-    this.onModalClose.emit(); // it is not needed anymore ? (only for courses list)
     this.modalService.closeModal();
   }
 
   ngOnDestroy() {
-    removeEventListener('click', () => {
-    });
-    if (this.subscription) this.subscription.unsubscribe();
+    console.log("Remove event listener")
+    removeEventListener('click', this.handleDocumentClick);
+//    if (this.subscription) this.subscription.unsubscribe();
   }
 }
