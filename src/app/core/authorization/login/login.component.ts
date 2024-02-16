@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
-import {Credentials} from "../../../shared/models/user.model";
+import {Credentials, User} from "../../../shared/models/user.model";
 import {first, Subject, Subscription, takeUntil} from "rxjs";
 import {ModalService} from "../../services/modal.service";
 import {AlertService} from "../../../modules/alert/alert.service";
@@ -76,9 +76,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscription = this.modalService.getModalEvent()
       .pipe(first()) // it is needed because without it, it sends request many times from modal (?) // first() is null!
       .subscribe({
-        next: ({user: newUser, password: pswd}) => {
-          this.authService.signUp(newUser, pswd)
-            .pipe(takeUntil(this.destroy$))
+        next: (data: {user: User, password: string}) => {
+          this.authService.signUp(data.user, data.password)
+            //.pipe(takeUntil(this.destroy$))
             .subscribe({
               next: (nUser) => {
                 console.log("Response after signup: ", nUser);

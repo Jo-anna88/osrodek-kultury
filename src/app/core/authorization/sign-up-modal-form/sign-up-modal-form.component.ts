@@ -31,7 +31,8 @@ export class SignUpModalFormComponent {
       role: Role.Client
     }
     let pswd = value.password; // todo: first we need to validate if password is equal to confirmPassword
-    this.modalService.emitModalEvent({user: newUser, password: pswd});
+    let data: {user: User, password: string} = {user: newUser, password: pswd}
+    this.modalService.emitModalEvent(data);
   }
   close() {
     this.modalService.closeModal();
