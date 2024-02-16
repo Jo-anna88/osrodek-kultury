@@ -35,7 +35,7 @@ export class CreateCourseFormComponent {
     this.showDetails = !this.showDetails;
     this.showDetailsButtonText = this.showDetails ? 'Hide Course Details' : 'Show Course Details';
     // Enable/disable validators based on showDetails
-    const detailsControls = ['minAge', 'maxAge', 'price', 'maxParticipantsNumber', 'lessonDurationMinutes', 'date', 'room'];
+    const detailsControls = ['minAge', 'maxAge', 'price', 'maxParticipantsNumber', 'lessonDurationMinutes', 'date', 'roomId'];
     detailsControls.forEach(control => {
       if (this.showDetails) {
         this.createCourseForm.get(control)!.setValidators([Validators.required]);
