@@ -11,10 +11,9 @@ import {first, Subscription} from "rxjs";
   styleUrls: ['./update-course-details-form.component.scss']
 })
 export class UpdateCourseDetailsFormComponent implements OnInit, OnDestroy {
-  title: string = "";
   data: CourseDetails = {};
   protected readonly buttonAction = ButtonAction;
-  updateCourseForm!: FormGroup;
+  updateCourseDetailsForm!: FormGroup;
   subscription = new Subscription();
   constructor(private fb: FormBuilder, private modalService: ModalService) {
   }
@@ -26,7 +25,6 @@ export class UpdateCourseDetailsFormComponent implements OnInit, OnDestroy {
         {
           next: (config: ModalConfiguration) => {
             this.data = config.data;
-            if(config.title) this.title = config.title;
             this.populateForm();
             this.subscription.unsubscribe();
           }
@@ -35,20 +33,20 @@ export class UpdateCourseDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   private populateForm() {
-    this.updateCourseForm = this.fb.group({
+    this.updateCourseDetailsForm = this.fb.group({
       minAge: [this.data.minAge, Validators.required],
       maxAge: [this.data.maxAge, Validators.required],
       price: [this.data.price, Validators.required],
       maxParticipantsNumber: [this.data.maxParticipantsNumber, Validators.required],
       lessonDurationMinutes: [this.data.lessonDurationMinutes, Validators.required],
       date: [this.data.date, Validators.required],
-      room: [this.data.roomId, Validators.required]
+      roomId: [this.data.roomId, Validators.required]
     });
   }
 
 
   submit() {
-    this.modalService.emitEvent({id: this.data.id, ...this.updateCourseForm.value} as CourseDetails);
+    this.modalService.emitModalEvent({id: this.data.id, ...this.updateCourseDetailsForm.value} as CourseDetails);
   }
   ngOnDestroy(): void {
     if (this.subscription) {

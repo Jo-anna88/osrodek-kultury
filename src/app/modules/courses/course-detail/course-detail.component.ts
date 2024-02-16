@@ -68,7 +68,7 @@ export class CourseDetailComponent implements OnInit {
   updateDetails(courseDetails: CourseDetails) {
     this.modalService.setConfiguration({title: "Update Course Details", data: courseDetails});
     this.modalService.openModal(ModalType.UPDATE_COURSE_DETAILS);
-    this.modalService.getEvent().subscribe({
+    this.modalService.getModalEvent().subscribe({
       next: (courseDetails: CourseDetails) => {
         console.log(courseDetails);
         this.coursesService.updateCourseDetails(courseDetails)
@@ -85,7 +85,7 @@ export class CourseDetailComponent implements OnInit {
   deleteDetails(id: string) {
     this.modalService.setConfiguration({title:"Delete Confirmation", data: "details"});
     this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
-    this.modalService.getEvent().subscribe({
+    this.modalService.getModalEvent().subscribe({
       next: (isConfirmed: boolean) => {
         if(isConfirmed) {
           this.coursesService.deleteCourseDetails(id)

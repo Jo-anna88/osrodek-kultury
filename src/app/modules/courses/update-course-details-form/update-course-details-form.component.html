@@ -1,4 +1,4 @@
-<form [formGroup]="updateCourseForm">
+<form [formGroup]="updateCourseDetailsForm">
   <fieldset class="form-group">
       <div class="form-field">
         <label>Min Age:</label>
@@ -26,13 +26,13 @@
       </div>
       <div class="form-field">
         <label>Room:</label>
-        <input formControlName="room">
+        <input formControlName="roomId">
       </div>
   </fieldset>
 
   <div class="form-buttons">
     <button class="button button-primary"
-            (click)="submit()" [disabled]="updateCourseForm.untouched || (updateCourseForm.dirty && updateCourseForm.invalid)">{{buttonAction.UPDATE}}</button>
+            (click)="submit()" [disabled]="updateCourseDetailsForm.untouched || (updateCourseDetailsForm.dirty && updateCourseDetailsForm.invalid)">{{buttonAction.UPDATE}}</button>
   </div>
 </form>
 

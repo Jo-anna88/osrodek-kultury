@@ -13,7 +13,7 @@ export class ModalService {
   constructor (private router: Router){}
 
   /* Pozwala wysyłać dane z formularzy np. po 'submit'*/
-  emitEvent(data: any) {
+  emitModalEvent(data: any) {
     this.modalEvent$.next(data);
   }
 

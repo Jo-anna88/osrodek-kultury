@@ -9,8 +9,8 @@ import {ModalService} from "../../../core/services/modal.service";
   styleUrls: ['./delete-confirmation-dialog.component.scss']
 })
 export class DeleteConfirmationDialogComponent implements OnInit, OnDestroy {
-  title: string = "";
-  data: string = "";
+  title: string = "Delete Confirmation"; // default title
+  data: string = ""; // a kind of item/data to be deleted
   protected readonly buttonAction = ButtonAction;
   subscription = new Subscription();
   constructor(private modalService: ModalService) {
@@ -30,11 +30,11 @@ export class DeleteConfirmationDialogComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
-    this.modalService.emitEvent(false);
+    this.modalService.emitModalEvent(false);
   }
 
   confirm() {
-    this.modalService.emitEvent(true);
+    this.modalService.emitModalEvent(true);
   }
   ngOnDestroy() {
     if (this.subscription) {
