@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 export class ModalService {
   private modalConfiguration$ = new BehaviorSubject<ModalConfiguration>({});
   private modalEvent$ = new Subject<any>();
+  public isModalOpen: boolean = false;
 
   constructor (private router: Router){}
 
@@ -32,11 +33,13 @@ export class ModalService {
   }
 
   openModal(modalType: ModalType) {
+    this.isModalOpen = true;
     this.router.navigate([{outlets: {modalOutlet: ['modal', modalType]}}]);
   }
 
   closeModal() {
     //this.setConfiguration({});
+    this.isModalOpen = false;
     this.router.navigate([{ outlets: { modalOutlet: null } }]);
   }
 }

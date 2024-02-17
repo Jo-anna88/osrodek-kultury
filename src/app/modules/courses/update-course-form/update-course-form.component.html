@@ -23,18 +23,8 @@
       </select>
     </div>
 
-    <div class="form-buttons">
-      <button class="button button-secondary" (click)="toggleDetails()">{{showDetailsButtonText}}</button>
-    </div>
-
-    <!--    it does NOT work in such case:
-    TODO: if user click UPDATE course and there is NO details for this course for now, he/she should first create details -->
-    <!--    solutions:
-    - there should be an info that there is no details for this course now (but then there should be an additional request to backend)
-    - change database association from unidirectional to bidirectional
-    - remove the functionality where user can do CRUD operations on course and courseDetails together (except 'delete' where it is obvious that it is connected)
-    -->
-    <div *ngIf="showDetails">
+    <div *ngIf="showDetails; else noDetailsTemplate">
+      Details:
       <div class="form-field">
         <label>Min Age:</label>
         <input formControlName="minAge">
@@ -71,6 +61,12 @@
             (click)="submit()" [disabled]="updateCourseForm.untouched || (updateCourseForm.dirty && updateCourseForm.invalid)">{{buttonAction.UPDATE}}</button>
   </div>
 </form>
+
+<ng-template #noDetailsTemplate>
+  <div><i>There is no details for this course now. You can add them
+    <a [routerLink]="['/classes', data.course.id]">here</a>.</i>
+  </div>
+</ng-template>
 
 
 

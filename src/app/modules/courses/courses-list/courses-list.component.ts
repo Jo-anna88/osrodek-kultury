@@ -1,16 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subject, takeUntil} from "rxjs";
+import {first, Subject, take, takeUntil} from "rxjs";
 import {Category, Course, CourseDetails, DEFAULT_IMG_SOURCE} from "../course";
 import {CoursesService} from "../courses.service";
-import {Router} from "@angular/router";
 import {AlertService} from "../../alert/alert.service";
 import {AppError, errorStatusToAppErrorMapping} from "../../../shared/models/app-error.model";
-import {ModalTestService} from "../../../shared/components/modal-test/modal-test.service";
-import {MatDialog} from "@angular/material/dialog";
-import {
-  ModalUserConfirmationComponent
-} from "../../../shared/components/modal-user-confirmation/modal-user-confirmation.component";
-import {ButtonAction} from "../../../shared/components/modal/modal";
+import {ModalType} from "../../../shared/components/modal/modal";
+import {ModalService} from "../../../core/services/modal.service";
 
 @Component({
   selector: 'app-courses',
@@ -21,9 +16,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
   courses: Course[] = [];
   isLoading: boolean = false;
-  isModalOpen: boolean = false;
-  modalTitle: string = "";
-  modalAction: ButtonAction = ButtonAction.NONE;
   spinnerNote: string = "Classes are loading...";
   appError: AppError = {status: -1, statusTxt: "", description: ""};
   selectedCourse: Course = {name: "", teacher: "", description: "", category: Category.default}; // needed form create/update form
@@ -31,9 +23,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   constructor(private coursesService: CoursesService,
               private alertService: AlertService,
-              public dialog: MatDialog,
-              protected modalTestService: ModalTestService,
-              private router: Router) {}
+              private modalService: ModalService) {}
   ngOnInit(): void {
     this.loadData();
   }
@@ -43,7 +33,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.coursesService.getCourses()
       //.pipe(delay(5000))
       //.pipe(retry(3)) // to deal with slow connection
-      .pipe(takeUntil(this.destroy$))
+      //.pipe(takeUntil(this.destroy$))
       .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
         next: (value: Course[]) => {
           this.courses = value;
@@ -59,75 +49,69 @@ export class CoursesListComponent implements OnInit, OnDestroy {
       })
   }
 
-  toggleModal() {this.isModalOpen = !this.isModalOpen;}
-  closeModal() {if(this.isModalOpen) this.isModalOpen=false;}
-
+// it opens modal with form to create new course with courseDetails as optional
   openModalCreate() {
-    //this.modalTestService.open('modal-add'); // for test purposes
-    this.modalTitle = "Create a new course"
-    this.modalAction = ButtonAction.CREATE;
-    this.toggleModal(); // to show modal form => isModalOpen = true
+    this.modalService.setConfiguration({title: "Add a new course"});
+    this.modalService.openModal(ModalType.CREATE_COURSE);
+    this.modalService.getModalEvent()
+      .pipe(first())
+      .subscribe({
+        next: (data: {course: Course, courseDetails: CourseDetails | null}) => {
+          this.createCourse(data.course, data.courseDetails);
+          //this.subscription.unsubscribe();
+          this.modalService.closeModal();
+        }
+      });
   }
+  // it opens modal with form to update a course with courseDetails as optional
   openModalUpdate(course: Course) {
     this.selectedCourse = course;
-    this.modalTitle = "Update " + course.name + " course"
-    this.modalAction = ButtonAction.UPDATE;
-    this.coursesService.getCourseDetailsById(course.id!)
-      .pipe(takeUntil(this.destroy$))
+    this.coursesService.getCourseDetailsById(course.id!) // get selected course details
       .subscribe({
-        next: (value: CourseDetails) => {
-          this.selectedCourseDetails = value;
-        },
-        complete: () => {
-          this.toggleModal(); // to show modal form => isModalOpen = true
-        }
+          next: (value: CourseDetails) => { // value === {} if courseDetails does not exist
+            this.selectedCourseDetails = value;
+            this.modalService.setConfiguration({title: "Update " + course.name + " course",
+              data: {course: course, courseDetails: value}})
+            this.modalService.openModal(ModalType.UPDATE_COURSE);
+            this.modalService.getModalEvent()
+              .pipe(first())
+              .subscribe({
+                next: (data: {course: Course, courseDetails: CourseDetails | null}) => {
+                  this.updateCourse(data.course, data.courseDetails);
+                  this.modalService.closeModal();
+                }
+              })
+          }
         }
       )
   }
 
-  updateCourse({course, courseDetails}: {course: Course, courseDetails: CourseDetails | null}) { // when user click on 'submit' button in modal form
-    // here isModalOpen is false when only course is updated and true if a course with courseDetails are updated(why?)
-    course.id = this.selectedCourse.id;
-    this.coursesService.updateCourse(course)
-      .pipe(takeUntil(this.destroy$))
+  // open delete confirmation dialog
+  openModalDelete(courseId: string) {
+    this.modalService.setConfiguration({title: "Delete Confirmation", data: "course"});
+    this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
+    this.modalService.getModalEvent()
+      .pipe(first())
       .subscribe({
-        next: (updatedCourse) => {
-            let index = this.courses.findIndex(c => c.id === updatedCourse.id); // find index in an array
-            this.courses[index] = updatedCourse;
-          },
-        error: (err) => {
-          if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
-          this.alertService.error('An error occurred during updating the course.');
+        next: (result: boolean) => {
+          if(result) {this.deleteCourse(courseId);}
+          this.modalService.closeModal();
         }
-      }
-    );
-    if (courseDetails !== null) {
-      courseDetails.id = course.id;
-      this.coursesService.updateCourseDetails(courseDetails)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (updatedCourseDetails) => {console.log(updatedCourseDetails)},
-          error: (err) => {
-            if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
-            this.alertService.error('An error occurred during updating the course details.');
-          }
-        })
-    }
-    if (this.isModalOpen) {this.toggleModal();} //because of this error described at the beginning
+      });
   }
 
-  createCourse({course, courseDetails}: {course: Course, courseDetails: CourseDetails | null} ) { // when user click on 'submit' button in modal form
+  createCourse(course: Course, courseDetails: CourseDetails | null) { // when user click on 'submit' button in modal form
     // here isModalOpen is false when only course is created and true if a course with courseDetails are created(why?)
     course.imgSource = DEFAULT_IMG_SOURCE;
     this.coursesService.addCourse(course)
-      .pipe(takeUntil(this.destroy$))
+      //.pipe(takeUntil(this.destroy$))
       .subscribe({
           next: (newCourse: Course) => {
             this.courses.unshift(newCourse); // unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
             if (courseDetails !== null) {
               courseDetails.id = newCourse.id;
               this.coursesService.addCourseDetails(courseDetails)
-                .pipe(takeUntil(this.destroy$))
+                //.pipe(takeUntil(this.destroy$))
                 .subscribe({
                   error: (err) => {
                     if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
@@ -142,23 +126,41 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           }
         }
       );
-    if (this.isModalOpen) {this.toggleModal();} //because of this error described at the beginning
   }
 
-  // delete confirmation dialog
-  openConfirmationDialog(courseId: string): void {
-    const dialogRef = this.dialog.open(ModalUserConfirmationComponent, {
-      width: '250px',
-      data: "course", // kind of item to be deleted
-    });
-    dialogRef.afterClosed().subscribe({
-      next: (result) => { if (result) { this.deleteCourse(courseId); } }
-    });
+  updateCourse(course: Course, courseDetails: CourseDetails | null) { // when user click on 'submit' button in modal form
+    // here isModalOpen is false when only course is updated and true if a course with courseDetails are updated(why?)
+    course.id = this.selectedCourse.id;
+    this.coursesService.updateCourse(course)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+          next: (updatedCourse) => {
+            let index = this.courses.findIndex(c => c.id === updatedCourse.id); // find index in an array
+            this.courses[index] = updatedCourse;
+          },
+          error: (err) => {
+            if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
+            this.alertService.error('An error occurred during updating the course.');
+          }
+        }
+      );
+    if (courseDetails !== null) {
+      courseDetails.id = course.id;
+      this.coursesService.updateCourseDetails(courseDetails)
+        //.pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (updatedCourseDetails) => {console.log("updated course details: ", updatedCourseDetails)},
+          error: (err) => {
+            if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
+            this.alertService.error('An error occurred during updating the course details.');
+          }
+        })
+    }
   }
 
   deleteCourse(courseId: string){
     this.coursesService.deleteCourse(courseId)
-      .pipe(takeUntil(this.destroy$))
+      //.pipe(takeUntil(this.destroy$))
       .subscribe(
         {
           next: (id) => {

@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Category, Course, CourseDetails} from "../course";
 import {ButtonAction, ModalConfiguration} from "../../../shared/components/modal/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -10,7 +10,7 @@ import {ModalService} from "../../../core/services/modal.service";
   templateUrl: './update-course-form.component.html',
   styleUrls: ['./update-course-form.component.scss']
 })
-export class UpdateCourseFormComponent implements OnDestroy {
+export class UpdateCourseFormComponent implements OnInit, OnDestroy {
   data: {course: Course, courseDetails: CourseDetails} = {
     course: {name: "", teacher: "", description: "", category: Category.default},
     courseDetails: {}
@@ -19,7 +19,6 @@ export class UpdateCourseFormComponent implements OnDestroy {
   updateCourseForm!: FormGroup;
   categories: string[] = Object.values(Category); // e.g., 0:"ART"
   showDetails: boolean = false;
-  showDetailsButtonText: string = "Show Course Details";
   subscription = new Subscription();
   constructor(private fb: FormBuilder, private modalService: ModalService) {
   }
@@ -31,6 +30,7 @@ export class UpdateCourseFormComponent implements OnDestroy {
         {
           next: (config: ModalConfiguration) => {
             this.data = config.data;
+            this.showDetails = Object.keys(this.data.courseDetails).length !== 0; // check if details exists
             this.populateForm();
             this.subscription.unsubscribe();
           }
@@ -39,34 +39,28 @@ export class UpdateCourseFormComponent implements OnDestroy {
   }
 
   private populateForm() {
-    this.updateCourseForm = this.fb.group({
-      name: [this.data.course.name, Validators.required],
-      teacher: [this.data.course.teacher, Validators.required],
-      description: [this.data.course.description, Validators.required],
-      category: [this.data.course.category, Validators.required],
-      minAge: [this.data.courseDetails.minAge],
-      maxAge: [this.data.courseDetails.maxAge],
-      price: [this.data.courseDetails.price],
-      maxParticipantsNumber: [this.data.courseDetails.maxParticipantsNumber],
-      lessonDurationMinutes: [this.data.courseDetails.lessonDurationMinutes],
-      date: [this.data.courseDetails.date],
-      roomId: [this.data.courseDetails.roomId]
-    });
-  }
-
-  toggleDetails() {
-    this.showDetails = !this.showDetails;
-    this.showDetailsButtonText = this.showDetails ? 'Hide Course Details' : 'Show Course Details';
-    // Enable/disable validators based on showDetails
-    const detailsControls = ['minAge', 'maxAge', 'price', 'maxParticipantsNumber', 'lessonDurationMinutes', 'date', 'roomId'];
-    detailsControls.forEach(control => {
-      if (this.showDetails) {
-        this.updateCourseForm.get(control)!.setValidators([Validators.required]);
-      } else {
-        this.updateCourseForm.get(control)!.clearValidators();
-      }
-      this.updateCourseForm.get(control)!.updateValueAndValidity();
-    });
+    if(this.showDetails) {
+      this.updateCourseForm = this.fb.group({
+        name: [this.data.course.name, Validators.required],
+        teacher: [this.data.course.teacher, Validators.required],
+        description: [this.data.course.description, Validators.required],
+        category: [this.data.course.category, Validators.required],
+        minAge: [this.data.courseDetails.minAge, Validators.required],
+        maxAge: [this.data.courseDetails.maxAge, Validators.required],
+        price: [this.data.courseDetails.price, Validators.required],
+        maxParticipantsNumber: [this.data.courseDetails.maxParticipantsNumber, Validators.required],
+        lessonDurationMinutes: [this.data.courseDetails.lessonDurationMinutes, Validators.required],
+        date: [this.data.courseDetails.date, Validators.required],
+        roomId: [this.data.courseDetails.roomId, Validators.required]
+      });
+    } else {
+      this.updateCourseForm = this.fb.group({
+        name: [this.data.course.name, Validators.required],
+        teacher: [this.data.course.teacher, Validators.required],
+        description: [this.data.course.description, Validators.required],
+        category: [this.data.course.category, Validators.required]
+      });
+    }
   }
 
   submit() {
@@ -86,6 +80,10 @@ export class UpdateCourseFormComponent implements OnDestroy {
       }
       this.modalService.emitModalEvent({course: updatedCourse, courseDetails: updatedCourseDetails});
     }
+  }
+
+  closeModal() {
+    this.modalService.closeModal();
   }
 
   ngOnDestroy(): void {

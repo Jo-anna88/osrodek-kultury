@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading else spinner">
+<ng-container *ngIf="!isLoading; else spinner">
   <ng-container *ngIf="courses.length; else noDataTemplate">
     <ul class="courses-list">
       <li>
@@ -16,7 +16,7 @@
         <!--        link to teacher page or some pop-up window / profile card about him/her-->
         <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
         <button-edit (onEditEvent)="openModalUpdate(course)"></button-edit>
-        <button-delete (onDeleteEvent)="openConfirmationDialog(course.id!)"></button-delete>
+        <button-delete (onDeleteEvent)="openModalDelete(course.id!)"></button-delete>
       </li>
     </ul>
   <div class="source-link">
@@ -33,20 +33,3 @@
   <app-error [error]=appError></app-error>
 <!--  <p>Oops! No data available at that moment. Please, try again later.</p>-->
 </ng-template>
-
-<app-modal *ngIf="isModalOpen" [title]="modalTitle" (onModalClose)="closeModal()">
-  <create-update-modal-form
-    [modalTitle]="modalTitle"
-    [data]="selectedCourse"
-    [dataDetails]="selectedCourseDetails"
-    [action]="modalAction"
-    (onCreateSubmit)="createCourse($event)"
-    (onUpdateSubmit)="updateCourse($event)">
-  </create-update-modal-form>
-</app-modal>
-
-<!--<app-modal-test id="modal-add">-->
-<!--  <h1>A custom modal popup</h1>-->
-<!--  <p>Home page text: <input type="text"/></p>-->
-<!--  <button (click)="modalTestService.close();">Close</button>-->
-<!--</app-modal-test>-->

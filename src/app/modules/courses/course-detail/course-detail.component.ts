@@ -27,6 +27,7 @@ export class CourseDetailComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id')!;
     this.course$ = this.coursesService.getCourseById(this.id);
     this.loadData();
+    if(this.modalService.isModalOpen) this.modalService.closeModal(); // because of redirection from update course form
   }
   loadData() {
     //this.isLoading = true;
