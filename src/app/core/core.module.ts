@@ -10,13 +10,15 @@ import {LoginComponent} from './authorization/login/login.component';
 import {SignUpModalFormComponent} from "./authorization/sign-up-modal-form/sign-up-modal-form.component";
 
 import {SharedModule} from "../shared/shared.module";
+import { UserDropdownComponent } from './user-dropdown/user-dropdown.component';
 
 @NgModule({
     declarations: [
         FooterComponent,
         HeaderComponent,
         LoginComponent,
-        SignUpModalFormComponent
+        SignUpModalFormComponent,
+        UserDropdownComponent
     ],
   imports: [
     MatButtonModule,

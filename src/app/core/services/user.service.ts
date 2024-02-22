@@ -1,14 +1,19 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
-import {Role, User} from "../../shared/models/user.model";
+import {BehaviorSubject, Observable} from "rxjs";
+import {User} from "../../shared/models/user.model";
+import {StorageService} from "./storage.service";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
+import {AuthService} from "../authorization/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private apiUrl: string = environment.baseUrl + '/api/user';
   // inital _value: undefined (it means we are not fetching the user yet)
   user$ = new BehaviorSubject<User | null | undefined>(undefined);
-  constructor() {
+  constructor(private http: HttpClient) {
     // this.user$.next(null); // to test a situation when user or password are incorrect (user = null)
 
     // this.user$.next({ // to test a situation when there is a user
@@ -23,18 +28,11 @@ export class UserService {
     // })
   }
 
-  setCurrentUser(currentUser: User) {
-    this.user$.next(currentUser);
-    console.log(this.user$.value);
+  getUserBasicData(): Observable<{firstName: string, lastName: string}> {
+    return this.http.get<{firstName: string, lastName: string}>(this.apiUrl +'/userBasicData', {withCredentials: true});
   }
-  setCurrentUserToNull() {
-    this.user$.next(null);
-    console.log(this.user$.value);
+
+  getUserProfile(): Observable<User> {
+    return this.http.get<User>(this.apiUrl +'/profile', {withCredentials: true});
   }
-  /*
-  setCurrentUser() {
-    if(localStorage.getItem('token')){
-    or rather make an API call to get currentUser
-  }
-  */
 }

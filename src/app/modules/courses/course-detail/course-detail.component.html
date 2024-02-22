@@ -20,6 +20,9 @@
       <button-edit (onEditEvent)="updateDetails()"></button-edit>
       <button-delete (onDeleteEvent)="deleteDetails(courseDetails.id!)"></button-delete>
     </div>
+    <div class="button-right">
+      <button class="button-primary" (click) = "openJoinDialog(course.name)">JOIN</button>
+    </div>
   </div>
 
   <div class="no-details-message" *ngIf="courseDetails === null">
@@ -27,9 +30,10 @@
     <button-add class="button-small" (onAddEvent)="addDetails()"></button-add>
   </div>
 
-  <div class="button-right">
-    <button class="button-primary">JOIN</button>
-  </div>
+<!--  todo: czy udostępnić tą opcję, gdy nie ma courseDetails? - czy taki scenariusz jest możliwy?-->
+<!--  <div class="button-right">-->
+<!--    <button class="button-primary">JOIN</button>-->
+<!--  </div>-->
 </div>
 
 <!--<ng-template #noDetails>-->

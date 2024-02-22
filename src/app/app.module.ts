@@ -20,6 +20,7 @@ import { CoursesModule } from "./modules/courses/courses.module";
 import { SharedModule } from "./shared/shared.module";
 import { LandingPageModule } from "./modules/landing-page/landing-page.module";
 import { AlertModule } from "./modules/alert/alert.module";
+import { ProfileModule } from "./modules/profile/profile.module";
 import {httpInterceptorProviders} from "./core/interceptors/http-interceptors";
 import {HttpErrorHandlerService} from "./core/services/http-error-handler.service";
 
@@ -46,6 +47,7 @@ registerLocaleData(localePl);
     CoursesModule,
     LandingPageModule,
     AlertModule,
+    ProfileModule,
     SharedModule,
     AppRoutingModule // it should be the last imported module (because there are routing files in other modules)
   ],

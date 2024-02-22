@@ -97,9 +97,24 @@ export class CourseDetailComponent implements OnInit {
                   this.courseDetails = null;
                 }
               });
-            this.modalService.closeModal();
           }
-        }
-      })
+        },
+        complete: () => {this.modalService.closeModal();}
+      });
+  }
+
+  openJoinDialog(courseName: string) {
+    this.modalService.setConfiguration({title: "Confirm your choice", data: courseName});
+    this.modalService.openModal(ModalType.JOIN_CONFIRMATION);
+    this.modalService.getModalEvent()
+      .pipe(take(1))
+      .subscribe({
+        next: (isConfirmed: boolean) => {
+          if (isConfirmed) {
+           console.log("Confirmed");
+          }
+        },
+        complete: () => {this.modalService.closeModal();}
+      });
   }
 }

@@ -22,10 +22,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private alertService: AlertService,
-              private userService: UserService,
               private modalService: ModalService,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private router: Router) {
 
     this.form = this.fb.group({
       email: ['', Validators.required],
@@ -53,8 +51,12 @@ export class LoginComponent implements OnInit, OnDestroy {
             next: (user) => {
               console.log("Response after login: ", user)
               if (user) {
-                this.userService.setCurrentUser({...user});
-              } else this.userService.setCurrentUserToNull();
+                this.authService.setAuthenticated();
+                this.authService.setRole();
+              } else {
+                this.authService.setNotAuthenticated();
+                this.authService.setRoleToNull();
+              }
               //const url = this.route.snapshot.queryParams['requested'];
               //url ? this.router.navigateByUrl(url) :
               this.router.navigate(['landing-page']);

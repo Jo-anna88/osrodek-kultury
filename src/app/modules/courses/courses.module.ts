@@ -11,6 +11,7 @@ import { UpdateCourseDetailsFormComponent } from './update-course-details-form/u
 import { CreateCourseDetailsFormComponent } from './create-course-details-form/create-course-details-form.component';
 import { CreateCourseFormComponent } from './create-course-form/create-course-form.component';
 import { UpdateCourseFormComponent } from './update-course-form/update-course-form.component';
+import { JoinConfirmationDialogComponent } from './join-confirmation-dialog/join-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { UpdateCourseFormComponent } from './update-course-form/update-course-fo
     UpdateCourseDetailsFormComponent,
     CreateCourseDetailsFormComponent,
     CreateCourseFormComponent,
-    UpdateCourseFormComponent
+    UpdateCourseFormComponent,
+    JoinConfirmationDialogComponent
   ],
     imports: [
         CommonModule,

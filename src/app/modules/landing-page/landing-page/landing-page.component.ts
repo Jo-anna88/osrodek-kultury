@@ -1,23 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Role} from "../../../shared/models/user.model";
-import {UserService} from "../../../core/services/user.service";
+import {AuthService} from "../../../core/authorization/auth.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss']
 })
-export class LandingPageComponent implements OnInit {
-  currentUserRole : Role = Role.Client; // default
+export class LandingPageComponent implements OnInit, OnDestroy {
+  currentUserRole: Role | null = null;
   Role = Role; // Make the enum accessible in the template
-  constructor(private userService: UserService) {
-    console.log("Landing Page")
+  subscription: Subscription = new Subscription();
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
-    let user = this.userService.user$.getValue();
-    if (user?.role) {
-      this.currentUserRole = user.role;
-    }
+    this.subscription = this.authService.role$.subscribe({
+      next: (role: Role | null) => {
+          this.currentUserRole = role;
+      }
+    })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

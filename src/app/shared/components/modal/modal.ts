@@ -1,16 +1,18 @@
 export enum ModalType {
-  DELETE_CONFIRMATION = "delete",
   SIGNUP = "signup",
+  DELETE_CONFIRMATION = "delete",
+  JOIN_CONFIRMATION = "joinCourse",
   CREATE_COURSE = "createCourse",
   UPDATE_COURSE = "updateCourse",
   CREATE_COURSE_DETAILS = "createCourseDetails",
-  UPDATE_COURSE_DETAILS = "updateCourseDetails"
+  UPDATE_COURSE_DETAILS = "updateCourseDetails",
 }
 export enum ButtonAction {
   CREATE = "Create",
   UPDATE = "Update",
   DELETE = "Delete",
   CANCEL = "Cancel",
+  REGISTER = "Register",
   NONE = ""
 }
 

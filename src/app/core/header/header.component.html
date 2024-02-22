@@ -9,8 +9,17 @@
     </ul>
   </nav>
 <!--  <button mat-fab class="button-login" (click)="showPopUp()">-->
-  <button mat-fab class="button-login" routerLink="/login">
+  <button *ngIf="!isUser" mat-fab class="button-login" routerLink="/login">
     <i class="bi bi-box-arrow-in-right"></i>
-<!--    <i class="bi bi-person-circle"></i>-->
+  </button>
+
+  <button *ngIf="isUser" mat-fab class="button-login" (click)="toggleProfileDropdown()">
+    <i class="bi bi-person-circle"></i>
   </button>
 </header>
+
+<app-user-dropdown *ngIf="isProfileDropdown"
+                      [title] = dropdownTitle
+                      (navToProfileEvent) = "navigateToProfile()"
+                      (logOutEvent)="logOut()"
+></app-user-dropdown>

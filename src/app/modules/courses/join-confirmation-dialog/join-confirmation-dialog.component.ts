@@ -1,16 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ButtonAction, ModalConfiguration} from "../modal/modal";
-import {first, Subscription} from "rxjs";
+import {ButtonAction, ModalConfiguration} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
+import {first, Subscription} from "rxjs";
 
 @Component({
-  selector: 'app-delete-confirmation-dialog',
-  templateUrl: './delete-confirmation-dialog.component.html',
-  styleUrls: ['./delete-confirmation-dialog.component.scss']
+  selector: 'app-join-confirmation-dialog',
+  templateUrl: './join-confirmation-dialog.component.html',
+  styleUrls: ['./join-confirmation-dialog.component.scss']
 })
-export class DeleteConfirmationDialogComponent implements OnInit, OnDestroy {
-  title: string = "Delete Confirmation"; // default title
-  data: string = ""; // a kind of item/data to be deleted
+export class JoinConfirmationDialogComponent implements OnInit, OnDestroy {
+  courseName: string = "";
   protected readonly buttonAction = ButtonAction;
   subscription: Subscription = new Subscription();
   constructor(private modalService: ModalService) {
@@ -21,8 +20,7 @@ export class DeleteConfirmationDialogComponent implements OnInit, OnDestroy {
       .subscribe(
         {
           next: (config: ModalConfiguration) => {
-            this.data = config.data;
-            if(config.title) this.title = config.title;
+            this.courseName = config.data;
             this.subscription.unsubscribe();
           }
         }
@@ -32,10 +30,10 @@ export class DeleteConfirmationDialogComponent implements OnInit, OnDestroy {
   cancel() {
     this.modalService.emitModalEvent(false);
   }
-
   confirm() {
     this.modalService.emitModalEvent(true);
   }
+
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();

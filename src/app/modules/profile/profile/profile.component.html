@@ -1,0 +1,12 @@
+<p>Your Profile:</p>
+<p>{{user.firstName}} {{user.lastName}}</p>
+<p>Phone: {{user.phone}}</p>
+<p>Username: {{user.username}}</p>
+<p>Your Classes:</p>
+<p>Your Events:</p>
+<div *ngIf = isClient>
+<p>Your Children:</p>
+  <button>Add children</button>
+  <button>Update children</button>
+  <button>Remove children</button>
+</div>

@@ -16,6 +16,9 @@ import {UpdateCourseFormComponent} from "./modules/courses/update-course-form/up
 import {
   CreateCourseDetailsFormComponent
 } from "./modules/courses/create-course-details-form/create-course-details-form.component";
+import {
+  JoinConfirmationDialogComponent
+} from "./modules/courses/join-confirmation-dialog/join-confirmation-dialog.component";
 
 const ROUTES: Routes = [
   {path: 'login', component: LoginComponent}, // for PRIMARY_OUTLET (default router with name 'primary')
@@ -26,7 +29,8 @@ const ROUTES: Routes = [
       {path: ModalType.CREATE_COURSE, component: CreateCourseFormComponent},
       {path: ModalType.UPDATE_COURSE, component: UpdateCourseFormComponent},
       {path: ModalType.CREATE_COURSE_DETAILS, component: CreateCourseDetailsFormComponent},
-      {path: ModalType.UPDATE_COURSE_DETAILS, component: UpdateCourseDetailsFormComponent}
+      {path: ModalType.UPDATE_COURSE_DETAILS, component: UpdateCourseDetailsFormComponent},
+      {path: ModalType.JOIN_CONFIRMATION, component: JoinConfirmationDialogComponent}
     ]
   }, // for named router outlet
   {path: '', redirectTo: '/home', pathMatch: 'full'},
