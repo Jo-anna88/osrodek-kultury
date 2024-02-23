@@ -20,6 +20,7 @@
 
 <app-user-dropdown *ngIf="isProfileDropdown"
                       [title] = dropdownTitle
+                      (onTitleClickEvent) = "navigateToLandingPage()"
                       (navToProfileEvent) = "navigateToProfile()"
                       (logOutEvent)="logOut()"
 ></app-user-dropdown>

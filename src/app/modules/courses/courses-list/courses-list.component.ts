@@ -1,11 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {first, Subject, take, takeUntil} from "rxjs";
+import {first, Subject, Subscription, take, takeUntil} from "rxjs";
 import {Category, Course, CourseDetails, DEFAULT_IMG_SOURCE} from "../course";
 import {CoursesService} from "../courses.service";
 import {AlertService} from "../../alert/alert.service";
 import {AppError, errorStatusToAppErrorMapping} from "../../../shared/models/app-error.model";
 import {ModalType} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
+import {AuthService} from "../../../core/authorization/auth.service";
+import {Role} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'app-courses',
@@ -20,12 +22,26 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   appError: AppError = {status: -1, statusTxt: "", description: ""};
   selectedCourse: Course = {name: "", teacher: "", description: "", category: Category.default}; // needed form create/update form
   selectedCourseDetails: CourseDetails = {}
+  isAuthorized: boolean = false;
 
   constructor(private coursesService: CoursesService,
               private alertService: AlertService,
-              private modalService: ModalService) {}
+              private modalService: ModalService,
+              private authService: AuthService) {}
   ngOnInit(): void {
     this.loadData();
+    this.setIsAuthorized();
+  }
+
+  setIsAuthorized() {
+    //this.authService.initAuthStatus(); // for browser refresh
+    this.authService.role$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+      next: (value) => {
+        this.isAuthorized = (value !== null && value !== Role.Client);
+      }
+    })
   }
 
   loadData() {

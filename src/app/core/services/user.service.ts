@@ -29,7 +29,7 @@ export class UserService {
   }
 
   getUserBasicData(): Observable<{firstName: string, lastName: string}> {
-    return this.http.get<{firstName: string, lastName: string}>(this.apiUrl +'/userBasicData', {withCredentials: true});
+    return this.http.get<{firstName: string, lastName: string}>(this.apiUrl +'/user-basic-data', {withCredentials: true});
   }
 
   getUserProfile(): Observable<User> {

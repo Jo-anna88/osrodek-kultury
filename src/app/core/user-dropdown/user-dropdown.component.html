@@ -1,5 +1,5 @@
 <div class = "dropdown-profile">
-  <p class = "dropdown-title">{{title}}</p>
+  <p class = "dropdown-title" (click)="onTitleClick()">{{title}}</p>
   <div class = "dropdown-divider"> </div>
   <ul class="dropdown-menu-items">
     <li (click) = "navigateToProfile()">Profile</li>

@@ -1,3 +1,5 @@
+@import 'src/styles';
+
 .course-detail-container {
   margin: 1.5rem;
 }
@@ -5,16 +7,13 @@
 .course-details-data-container {
   display: flex;
   gap: 10%;
-}
-
-.buttons-container {
-  display: flex;
-  align-items: center;
+  margin-top: 1rem;
 }
 
 .no-details-message {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  margin-top: 1rem;
 }
 
 .button-right {

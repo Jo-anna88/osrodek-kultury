@@ -44,6 +44,11 @@ export class HeaderComponent {
     )
   }
 
+  navigateToLandingPage() {
+    this.isProfileDropdown = false;
+    this.router.navigate(['landing-page']);
+  }
+
   navigateToProfile() {
     this.isProfileDropdown = false;
     this.router.navigate(['user/profile']);

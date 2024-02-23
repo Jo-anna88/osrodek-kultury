@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else spinner">
   <ng-container *ngIf="courses.length; else noDataTemplate">
     <ul class="courses-list">
-      <li>
+      <li *ngIf="isAuthorized">
         <button-add (onAddEvent)="openModalCreate()"></button-add>
       </li>
       <li class="course-card" *ngFor="let course of courses">
@@ -15,8 +15,10 @@
         <p class="course-description-divider">|</p>
         <!--        link to teacher page or some pop-up window / profile card about him/her-->
         <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
-        <button-edit (onEditEvent)="openModalUpdate(course)"></button-edit>
-        <button-delete (onDeleteEvent)="openModalDelete(course.id!)"></button-delete>
+        <div class="buttons-container" *ngIf="isAuthorized">
+          <button-edit (onEditEvent)="openModalUpdate(course)"></button-edit>
+          <button-delete (onDeleteEvent)="openModalDelete(course.id!)"></button-delete>
+        </div>
       </li>
     </ul>
   <div class="source-link">

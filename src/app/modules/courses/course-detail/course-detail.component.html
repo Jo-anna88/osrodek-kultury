@@ -7,27 +7,28 @@
   </div>
 
   <div class="course-details-data-container" *ngIf="courseDetails">
-    <div class="course-details-data">
-      <p>Minimum participant age: {{courseDetails.minAge}} years</p>
-      <p>Maximum participant age: {{courseDetails.maxAge}} years</p>
-      <p>Price per month: {{courseDetails.price | currency: 'PLN'}}</p>
-      <p>Participants number: {{courseDetails.maxParticipantsNumber}}</p>
-      <p>Lesson duration: {{courseDetails.lessonDurationMinutes}} minutes</p>
-      <p>Class schedule: {{courseDetails.date}}</p>
-      <p>Place: Room nr {{courseDetails.roomId}}</p>
-    </div>
-    <div class="buttons-container">
+    <ul class="course-details-data">
+      <li>COURSE DETAILS:</li>
+      <li>Minimum participant age: {{courseDetails.minAge}} years</li>
+      <li>Maximum participant age: {{courseDetails.maxAge}} years</li>
+      <li>Price per month: {{courseDetails.price | currency: 'PLN'}}</li>
+      <li>Participants number: {{courseDetails.maxParticipantsNumber}}</li>
+      <li>Lesson duration: {{courseDetails.lessonDurationMinutes}} minutes</li>
+      <li>Class schedule: {{courseDetails.date}}</li>
+      <li>Place: Room nr {{courseDetails.roomId}}</li>
+    </ul>
+    <div class="buttons-container" *ngIf="isAuthorized">
       <button-edit (onEditEvent)="updateDetails()"></button-edit>
       <button-delete (onDeleteEvent)="deleteDetails(courseDetails.id!)"></button-delete>
     </div>
-    <div class="button-right">
+    <div class="button-right" *ngIf="isClient">
       <button class="button-primary" (click) = "openJoinDialog(course.name)">JOIN</button>
     </div>
   </div>
 
   <div class="no-details-message" *ngIf="courseDetails === null">
     <p><i>There is no details for now.</i></p>
-    <button-add class="button-small" (onAddEvent)="addDetails()"></button-add>
+    <button-add *ngIf = "isAuthorized" class="button-small" (onAddEvent)="addDetails()"></button-add>
   </div>
 
 <!--  todo: czy udostępnić tą opcję, gdy nie ma courseDetails? - czy taki scenariusz jest możliwy?-->

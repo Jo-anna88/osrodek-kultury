@@ -9,10 +9,15 @@ export class UserDropdownComponent {
   @Input()
   title: string = "";
   @Output()
+  onTitleClickEvent = new EventEmitter();
+  @Output()
   navToProfileEvent = new EventEmitter();
   @Output()
   logOutEvent = new EventEmitter();
 
+  onTitleClick() {
+    this.onTitleClickEvent.emit();
+  }
   navigateToProfile() {
     this.navToProfileEvent.emit();
   }

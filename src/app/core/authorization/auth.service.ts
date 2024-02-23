@@ -24,7 +24,7 @@ export class AuthService { // authentication && authorization
   }
 
   logout():Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/logout', {});
+    return this.http.post<any>(this.apiUrl + '/logout', {}, {withCredentials: true});
   }
 
   setAuthenticated() {
@@ -54,10 +54,10 @@ export class AuthService { // authentication && authorization
   }
 
   initAuthStatus() { // for browser refresh (check if user has been already authenticated and set up user's role)
-    this.http.get<boolean>(this.apiUrl + '/status', {withCredentials: true}).subscribe({
+    this.http.get<{ result: boolean }>(this.apiUrl + '/status', {withCredentials: true}).subscribe({
       next: (value) => {
-        this.isAuthenticated$.next(value);
-        if (value) {
+        this.isAuthenticated$.next(value.result);
+        if (value.result) {
           this.setRole();
         }
       }

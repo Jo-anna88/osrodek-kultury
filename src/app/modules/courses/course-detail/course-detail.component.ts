@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Course, CourseDetails} from "../course";
-import {Observable, Subscription, switchMap, take} from "rxjs";
+import {Observable, Subject, Subscription, switchMap, take, takeUntil} from "rxjs";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CoursesService} from "../courses.service";
 import {ModalService} from "../../../core/services/modal.service";
 import {ModalType} from "../../../shared/components/modal/modal";
+import {Role} from "../../../shared/models/user.model";
+import {AuthService} from "../../../core/authorization/auth.service";
 
 @Component({
   selector: 'app-course-detail',
@@ -12,23 +14,41 @@ import {ModalType} from "../../../shared/components/modal/modal";
   styleUrls: ['./course-detail.component.scss']
 })
 // TODO: unsubscribe subscriptions!
-export class CourseDetailComponent implements OnInit {
+export class CourseDetailComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject<void>();
   course$! : Observable<Course>; // the exclamation mark acts as a non-null assertion operator
   courseDetails : CourseDetails | null | undefined = undefined;
   id: string = "-1";
   protected readonly Object = Object;
+  isAuthorized: boolean = false;
+  isClient: boolean = false;
   //isLoading: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private coursesService: CoursesService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private authService: AuthService
   ) {}
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id')!;
     this.course$ = this.coursesService.getCourseById(this.id);
     this.loadData();
+    this.setIsAuthorized();
     if(this.modalService.isModalOpen) this.modalService.closeModal(); // because of redirection from update course form
   }
+
+  setIsAuthorized() {
+    //this.authService.initAuthStatus(); // for browser refresh
+    this.authService.role$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (value) => {
+          this.isAuthorized = (value !== null && value !== Role.Client);
+          this.isClient = (value !== null && value === Role.Client);
+        }
+      })
+  }
+
   loadData() {
     //this.isLoading = true;
     this.coursesService.getCourseDetailsById(this.id)
@@ -116,5 +136,10 @@ export class CourseDetailComponent implements OnInit {
         },
         complete: () => {this.modalService.closeModal();}
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
