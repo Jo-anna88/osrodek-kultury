@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Course, CourseDetails} from "../course";
-import {Observable, Subject, Subscription, switchMap, take, takeUntil} from "rxjs";
+import {first, Observable, Subject, Subscription, switchMap, take, takeUntil} from "rxjs";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CoursesService} from "../courses.service";
 import {ModalService} from "../../../core/services/modal.service";
@@ -54,16 +54,16 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     this.coursesService.getCourseDetailsById(this.id)
       .subscribe({
         next: (value: CourseDetails) => {
-          this.courseDetails = Object.keys(value).length !== 0 ? value : null;
+          this.courseDetails = value.id !== null ? value : null;
         }
       })
   }
 
   addDetails() {
     this.modalService.setConfiguration({title: "Add Course Details"});
-    this.modalService.openModal(ModalType.CREATE_COURSE_DETAILS);
-    this.modalService.getModalEvent()
-      .pipe(take(1))
+    //this.modalService.openModal(ModalType.CREATE_COURSE_DETAILS);
+    let subscription = this.modalService.getModalEvent()
+      .pipe(first())
       .subscribe({
         next: (courseDetails: CourseDetails) => {
           courseDetails.id = this.id; //courseId;
@@ -80,12 +80,13 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
           this.modalService.closeModal();
         }
       });
+    this.modalService.openModal(ModalType.CREATE_COURSE_DETAILS, subscription);
   }
   updateDetails() {
     this.modalService.setConfiguration({title: "Update Course Details", data: this.courseDetails});
-    this.modalService.openModal(ModalType.UPDATE_COURSE_DETAILS);
-    this.modalService.getModalEvent()
-      .pipe(take(1))
+    //this.modalService.openModal(ModalType.UPDATE_COURSE_DETAILS);
+    let subscription = this.modalService.getModalEvent()
+      .pipe(first())
       .subscribe({
         next: (courseDetails: CourseDetails) => {
           console.log("Course Details to update: ", courseDetails);
@@ -100,12 +101,13 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
           this.modalService.closeModal();
         }
       })
+    this.modalService.openModal(ModalType.UPDATE_COURSE_DETAILS, subscription);
   }
   deleteDetails(id: string) {
     this.modalService.setConfiguration({title: "Delete Confirmation", data: "details"});
-    this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
-    this.modalService.getModalEvent()
-      .pipe(take(1))
+    //this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
+    let subscription = this.modalService.getModalEvent()
+      .pipe(first())
       .subscribe({
         next: (isConfirmed: boolean) => {
           if (isConfirmed) {
@@ -121,13 +123,14 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
         },
         complete: () => {this.modalService.closeModal();}
       });
+    this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
   }
 
   openJoinDialog(courseName: string) {
     this.modalService.setConfiguration({title: "Confirm your choice", data: courseName});
-    this.modalService.openModal(ModalType.JOIN_CONFIRMATION);
-    this.modalService.getModalEvent()
-      .pipe(take(1))
+    //this.modalService.openModal(ModalType.JOIN_CONFIRMATION);
+    let subscription = this.modalService.getModalEvent()
+      .pipe(first())
       .subscribe({
         next: (isConfirmed: boolean) => {
           if (isConfirmed) {
@@ -136,6 +139,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
         },
         complete: () => {this.modalService.closeModal();}
       });
+    this.modalService.openModal(ModalType.JOIN_CONFIRMATION, subscription);
   }
 
   ngOnDestroy(): void {

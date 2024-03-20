@@ -1,71 +1,92 @@
-<form [formGroup]="updateCourseForm">
-  <fieldset class="form-group">
-    <div class="form-field">
-      <label>Name:</label>
-      <input formControlName="name">
-      <!--    <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)">-->
-      <!--      Please provide a course name.-->
-      <!--    </div>-->
-    </div>
-    <div class="form-field">
-      <label>Teacher:</label>
-      <input formControlName="teacher">
-    </div>
-    <div class="form-field">
-      <label>Description:</label>
-      <input formControlName="description">
-    </div>
-    <div class="form-field">
-      <label>Category:</label>
-      <select formControlName="category">
-        <option value="">--Please choose an option--</option>
-        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
-      </select>
-    </div>
+<ng-container *ngIf="!isLoading; else spinner">
+  <form [formGroup]="updateCourseForm">
+    <fieldset class="form-group">
 
-    <div *ngIf="showDetails; else noDetailsTemplate">
-      Details:
       <div class="form-field">
-        <label>Min Age:</label>
-        <input formControlName="minAge">
+        <label>Name:</label>
+        <input formControlName="name">
+        <!--    <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)">-->
+        <!--      Please provide a course name.-->
+        <!--    </div>-->
       </div>
+
       <div class="form-field">
-        <label>Max Age:</label>
-        <input formControlName="maxAge">
+        <label>Teacher:</label>
+        <select formControlName="teacher">
+          <option [value]="''" [disabled]="true">--Please choose an option--</option>
+          <option *ngFor="let teacher of teachers; index as i"
+                  [value]="i">{{ teacher.firstName }} {{ teacher.lastName }}
+          </option>
+        </select>
       </div>
+
       <div class="form-field">
-        <label>Price:</label>
-        <input formControlName="price">
+        <label>Description:</label>
+        <input formControlName="description">
       </div>
+
+      <div class="form-field">
+        <label>Category:</label>
+        <select formControlName="category">
+          <option [value]="''" [disabled]="true">--Please choose an option--</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+      </div>
+
       <div class="form-field">
         <label>Max Participants Number:</label>
         <input formControlName="maxParticipantsNumber">
       </div>
-      <div class="form-field">
-        <label>Lesson Duration in Minutes:</label>
-        <input formControlName="lessonDurationMinutes">
-      </div>
-      <div class="form-field">
-        <label>Date in format Mon 13:00-13:45:</label>
-        <input formControlName="date">
-      </div>
-      <div class="form-field">
-        <label>Room:</label>
-        <input formControlName="roomId">
-      </div>
-    </div>
-  </fieldset>
 
-  <div class="form-buttons">
-    <button class="button button-primary"
-            (click)="submit()" [disabled]="updateCourseForm.untouched || (updateCourseForm.dirty && updateCourseForm.invalid)">{{buttonAction.UPDATE}}</button>
-  </div>
-</form>
+      <div *ngIf="showDetails; else noDetailsTemplate">
+        Details:
+        <div class="form-field">
+          <label>Min Age:</label>
+          <input formControlName="minAge">
+        </div>
+        <div class="form-field">
+          <label>Max Age:</label>
+          <input formControlName="maxAge">
+        </div>
+        <div class="form-field">
+          <label>Price:</label>
+          <input formControlName="price">
+        </div>
+        <div class="form-field">
+          <label>Lesson Duration in Minutes:</label>
+          <input formControlName="lessonDurationMinutes">
+        </div>
+        <div class="form-field">
+          <label>Date in format Mon 13:00-13:45:</label>
+          <input formControlName="date">
+        </div>
+        <div class="form-field">
+          <label>Address:</label>
+          <select formControlName="location">
+            <option [value]="''" [disabled]="true">--Please choose an option--</option>
+            <option *ngFor="let location of locations; index as i" [value]="i">{{ location.location }}</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="form-buttons">
+      <button class="button button-primary"
+              (click)="submit()"
+              [disabled]="updateCourseForm.untouched || (updateCourseForm.dirty && updateCourseForm.invalid)">{{ buttonAction.UPDATE }}
+      </button>
+    </div>
+  </form>
+</ng-container>
 
 <ng-template #noDetailsTemplate>
   <div><i>There is no details for this course now. You can add them
     <a [routerLink]="['/classes', data.course.id]">here</a>.</i>
   </div>
+</ng-template>
+
+<ng-template #spinner>
+  <app-spinner [note]="''"></app-spinner>
 </ng-template>
 
 

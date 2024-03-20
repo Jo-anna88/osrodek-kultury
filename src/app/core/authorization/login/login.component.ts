@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   signUp() {
     this.modalService.setConfiguration({title: "Create account"});
-    this.modalService.openModal(ModalType.SIGNUP);
+    //this.modalService.openModal(ModalType.SIGNUP);
     this.subscription = this.modalService.getModalEvent()
       .pipe(first()) // it is needed because without it, it sends request many times from modal (?) // first() is null!
       .subscribe({
@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.modalService.closeModal();
         }
       })
+    this.modalService.openModal(ModalType.SIGNUP, this.subscription);
   }
 
   ngOnDestroy() {

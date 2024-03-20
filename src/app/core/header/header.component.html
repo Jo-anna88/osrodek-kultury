@@ -2,9 +2,28 @@
   <img class="logo" src = "assets/images/logo-demo.jpg" alt = "Cultural Centre - Wieliszew" routerLink="home">
   <nav class = "header-navigation">
     <ul>
-      <li *ngFor = "let item of items">
-        <a routerLink="{{item | lowercase}}"
-           routerLinkActive="active"> {{item}} </a>
+<!--      <li *ngFor = "let item of items">-->
+<!--        <a routerLink="{{item | lowercase}}"-->
+<!--           routerLinkActive="active"> {{item}} </a>-->
+<!--      </li>-->
+      <li>
+        <a routerLink="home"
+           routerLinkActive="active"> Home </a>
+      </li>
+      <li (click)="toggleAboutDropdown()">
+        About <i class="bi bi-caret-down-fill" [ngClass]="{'rotated': isAboutDropdown}"></i>
+      </li>
+      <li>
+        <a routerLink="events"
+           routerLinkActive="active"> Events </a>
+      </li>
+      <li>
+        <a routerLink="classes"
+           routerLinkActive="active"> Classes </a>
+      </li>
+      <li>
+        <a routerLink="contact"
+           routerLinkActive="active"> Contact </a>
       </li>
     </ul>
   </nav>
@@ -19,8 +38,13 @@
 </header>
 
 <app-user-dropdown *ngIf="isProfileDropdown"
-                      [title] = dropdownTitle
+                      [title] = profileDropdownTitle
                       (onTitleClickEvent) = "navigateToLandingPage()"
                       (navToProfileEvent) = "navigateToProfile()"
                       (logOutEvent)="logOut()"
 ></app-user-dropdown>
+
+<app-about-dropdown *ngIf="isAboutDropdown"
+                    (navToCompanyEvent) = "navigateToCompanyPage()"
+                    (navToTeamEvent) = "navigateToTeamPage()"
+></app-about-dropdown>

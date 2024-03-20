@@ -20,7 +20,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   spinnerNote: string = "Classes are loading...";
   appError: AppError = {status: -1, statusTxt: "", description: ""};
-  selectedCourse: Course = {name: "", teacher: "", description: "", category: Category.default}; // needed form create/update form
+  selectedCourse: Course = {name: "", teacher: {}, description: "", category: Category.default};
   selectedCourseDetails: CourseDetails = {}
   isAuthorized: boolean = false;
 
@@ -68,8 +68,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 // it opens modal with form to create new course with courseDetails as optional
   openModalCreate() {
     this.modalService.setConfiguration({title: "Add a new course"});
-    this.modalService.openModal(ModalType.CREATE_COURSE);
-    this.modalService.getModalEvent()
+    // this.modalService.openModal(ModalType.CREATE_COURSE);
+    let subscription: Subscription = this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
         next: (data: {course: Course, courseDetails: CourseDetails | null}) => {
@@ -78,6 +78,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           this.modalService.closeModal();
         }
       });
+    this.modalService.openModal(ModalType.CREATE_COURSE, subscription);
   }
   // it opens modal with form to update a course with courseDetails as optional
   openModalUpdate(course: Course) {
@@ -88,8 +89,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
             this.selectedCourseDetails = value;
             this.modalService.setConfiguration({title: "Update " + course.name + " course",
               data: {course: course, courseDetails: value}})
-            this.modalService.openModal(ModalType.UPDATE_COURSE);
-            this.modalService.getModalEvent()
+            //this.modalService.openModal(ModalType.UPDATE_COURSE);
+            let subscription: Subscription = this.modalService.getModalEvent()
               .pipe(first())
               .subscribe({
                 next: (data: {course: Course, courseDetails: CourseDetails | null}) => {
@@ -97,6 +98,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
                   this.modalService.closeModal();
                 }
               })
+            this.modalService.openModal(ModalType.UPDATE_COURSE, subscription);
           }
         }
       )
@@ -105,8 +107,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   // open delete confirmation dialog
   openModalDelete(courseId: string) {
     this.modalService.setConfiguration({title: "Delete Confirmation", data: "course"});
-    this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
-    this.modalService.getModalEvent()
+    //this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
+    let subscription = this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
         next: (result: boolean) => {
@@ -114,26 +116,28 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           this.modalService.closeModal();
         }
       });
+    this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
   }
 
   createCourse(course: Course, courseDetails: CourseDetails | null) { // when user click on 'submit' button in modal form
     // here isModalOpen is false when only course is created and true if a course with courseDetails are created(why?)
-    course.imgSource = DEFAULT_IMG_SOURCE;
     this.coursesService.addCourse(course)
       //.pipe(takeUntil(this.destroy$))
       .subscribe({
           next: (newCourse: Course) => {
-            this.courses.unshift(newCourse); // unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
             if (courseDetails !== null) {
               courseDetails.id = newCourse.id;
               this.coursesService.addCourseDetails(courseDetails)
                 //.pipe(takeUntil(this.destroy$))
                 .subscribe({
+                  next: () => this.courses.unshift(newCourse), // add course with details to the list (in case of error with details - don't add the course at all)
                   error: (err) => {
                     if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
                     this.alertService.error('An error occurred during adding the course details.')
                   }
                 })
+            } else { // add course without the details to the list
+              this.courses.unshift(newCourse); // unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
             }
           },
           error: (err) => {

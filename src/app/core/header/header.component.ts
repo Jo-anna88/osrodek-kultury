@@ -17,9 +17,12 @@ export class HeaderComponent {
   @Input()
   isUser: boolean = false;
 
-  // dropdown functionality
+  // about dropdown functionality
+  isAboutDropdown = false;
+
+  // profile dropdown functionality
   isProfileDropdown = false;
-  dropdownTitle = "";
+  profileDropdownTitle = "";
 
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
 
@@ -32,16 +35,30 @@ export class HeaderComponent {
     }
   }
 
+  toggleAboutDropdown() {
+    this.isAboutDropdown = !this.isAboutDropdown;
+  }
+
   loadData() {
     this.userService.getUserBasicData().subscribe({
         next: (res: { firstName: string, lastName: string }) => {
-          this.dropdownTitle = res.firstName + " " + res.lastName;
+          this.profileDropdownTitle = res.firstName + " " + res.lastName;
         },
         error: (err) => {
           console.log(err);
         }
       }
     )
+  }
+
+  navigateToCompanyPage() {
+    this.isAboutDropdown = false;
+    this.router.navigate(['about-company']);
+  }
+
+  navigateToTeamPage() {
+    this.isAboutDropdown = false;
+    this.router.navigate(['about-team']);
   }
 
   navigateToLandingPage() {

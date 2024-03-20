@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Observable, BehaviorSubject, Subject} from "rxjs";
+import {Observable, BehaviorSubject, Subject, Subscription} from "rxjs";
 import {ModalConfiguration, ModalType} from "../../shared/components/modal/modal";
 import {Router} from "@angular/router";
 
@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 export class ModalService {
   private modalConfiguration$ = new BehaviorSubject<ModalConfiguration>({});
   private modalEvent$ = new Subject<any>();
+  private modalDataSubscription: Subscription = new Subscription();
   public isModalOpen: boolean = false;
 
   constructor (private router: Router){}
@@ -32,14 +33,24 @@ export class ModalService {
     return this.modalConfiguration$.asObservable();
   }
 
-  openModal(modalType: ModalType) {
+  openModal(modalType: ModalType, subscription: Subscription) {
     this.isModalOpen = true;
     this.router.navigate([{outlets: {modalOutlet: ['modal', modalType]}}]);
+    this.setDataSubscription(subscription);
   }
 
   closeModal() {
     //this.setConfiguration({});
     this.isModalOpen = false;
     this.router.navigate([{ outlets: { modalOutlet: null } }]);
+    this.removeDataSubscription();
+  }
+
+  setDataSubscription(subscription: Subscription) {
+    this.modalDataSubscription = subscription;
+  }
+
+  removeDataSubscription() {
+    this.modalDataSubscription.unsubscribe();
   }
 }

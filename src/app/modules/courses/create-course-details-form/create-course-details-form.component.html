@@ -13,10 +13,6 @@
       <input formControlName="price">
     </div>
     <div class="form-field">
-      <label>Max Participants Number:</label>
-      <input formControlName="maxParticipantsNumber">
-    </div>
-    <div class="form-field">
       <label>Lesson Duration in Minutes:</label>
       <input formControlName="lessonDurationMinutes">
     </div>
@@ -25,8 +21,11 @@
       <input formControlName="date">
     </div>
     <div class="form-field">
-      <label>Room:</label>
-      <input formControlName="roomId">
+      <label>Address:</label>
+      <select formControlName="location">
+        <option value="">--Please choose an option--</option>
+        <option *ngFor="let location of locations; index as i" [value]="i">{{location.location}}</option>
+      </select>
     </div>
   </fieldset>
 
@@ -35,6 +34,3 @@
             (click)="submit()" [disabled]="createCourseDetailsForm.untouched || (createCourseDetailsForm.dirty && createCourseDetailsForm.invalid)">{{buttonAction.CREATE}}</button>
   </div>
 </form>
-
-
-

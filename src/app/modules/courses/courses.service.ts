@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError, map, Observable, of, retry} from "rxjs";
-import {Course, CourseDetails} from "./course";
+import {Course, CourseDetails, Teacher} from "./course";
 import {mockCourses} from "./courses-list/mock-courses";
 import {environment} from "../../../environments/environment";
 
@@ -38,26 +38,33 @@ export class CoursesService {
   }
 
   addCourse(newCourse: Course): Observable<Course> {
-    return this.http.post<Course>(this.apiUrl, newCourse);
+    return this.http.post<Course>(this.apiUrl, newCourse, {withCredentials: true});
   }
 
   addCourseDetails(newCourseDetails: CourseDetails): Observable<CourseDetails> {
-    return this.http.post<CourseDetails>(this.apiUrl + '/' + newCourseDetails.id + '/details', newCourseDetails);
+    return this.http.post<CourseDetails>(this.apiUrl + '/' + newCourseDetails.id + '/details', newCourseDetails, {withCredentials: true});
   }
 
   updateCourse(updatedCourse: Course): Observable<Course> {
-    return this.http.put<Course>(this.apiUrl, updatedCourse);
+    return this.http.put<Course>(this.apiUrl, updatedCourse, {withCredentials: true});
   }
 
   updateCourseDetails(updatedCourseDetails: CourseDetails): Observable<CourseDetails> {
-    return this.http.put<CourseDetails>(this.apiUrl + '/' + updatedCourseDetails.id + '/details', updatedCourseDetails)
+    return this.http.put<CourseDetails>(this.apiUrl + '/' + updatedCourseDetails.id + '/details', updatedCourseDetails, {withCredentials: true})
   }
 
   deleteCourse(id: string): Observable<Object> {
-    return this.http.delete(this.apiUrl + '/' + id);
+    return this.http.delete(this.apiUrl + '/' + id, {withCredentials: true});
   }
 
   deleteCourseDetails(id: string) {
-    return this.http.delete(this.apiUrl + '/' + id + '/details');
+    return this.http.delete(this.apiUrl + '/' + id + '/details', {withCredentials: true});
+  }
+
+  getTeachers(): Observable<Array<Teacher>> {
+    return this.http.get<Array<Teacher>>(environment.baseUrl + '/api/user/teachers', {withCredentials: true})
+      .pipe(
+        map(teachers => teachers.map(teacher => {return {...teacher}}))
+      );
   }
 }

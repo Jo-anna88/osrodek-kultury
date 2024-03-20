@@ -1,5 +1,6 @@
 <form [formGroup]="createCourseForm">
   <fieldset class="form-group">
+
     <div class="form-field">
       <label>Name:</label>
       <input formControlName="name">
@@ -7,33 +8,37 @@
       <!--      Please provide a course name.-->
       <!--    </div>-->
     </div>
+
     <div class="form-field">
       <label>Teacher:</label>
-      <input formControlName="teacher">
+      <select formControlName="teacher">
+        <option [value]="''" [disabled]="true">--Please choose an option--</option>
+        <option *ngFor="let teacher of teachers; index as i" [value]=i>{{teacher.firstName}} {{teacher.lastName}}</option>
+      </select>
     </div>
+
     <div class="form-field">
       <label>Description:</label>
       <input formControlName="description">
     </div>
+
     <div class="form-field">
       <label>Category:</label>
       <select formControlName="category">
-        <option value="">--Please choose an option--</option>
+        <option [value]="''" [disabled]="true">--Please choose an option--</option>
         <option *ngFor="let category of categories" [value]="category">{{category}}</option>
       </select>
+    </div>
+
+    <div class="form-field">
+      <label>Max Participants Number:</label>
+      <input formControlName="maxParticipantsNumber">
     </div>
 
     <div class="form-buttons">
       <button class="button button-secondary" (click)="toggleDetails()">{{showDetailsButtonText}}</button>
     </div>
 
-    <!--    it does NOT work in such case:
-    TODO: if user click UPDATE course and there is NO details for this course for now, he/she should first create details -->
-    <!--    solutions:
-    - there should be an info that there is no details for this course now (but then there should be an additional request to backend)
-    - change database association from unidirectional to bidirectional
-    - remove the functionality where user can do CRUD operations on course and courseDetails together (except 'delete' where it is obvious that it is connected)
-    -->
     <div *ngIf="showDetails">
       <div class="form-field">
         <label>Min Age:</label>
@@ -48,10 +53,6 @@
         <input formControlName="price">
       </div>
       <div class="form-field">
-        <label>Max Participants Number:</label>
-        <input formControlName="maxParticipantsNumber">
-      </div>
-      <div class="form-field">
         <label>Lesson Duration in Minutes:</label>
         <input formControlName="lessonDurationMinutes">
       </div>
@@ -60,8 +61,11 @@
         <input formControlName="date">
       </div>
       <div class="form-field">
-        <label>Room:</label>
-        <input formControlName="roomId">
+        <label>Address:</label>
+        <select formControlName="location">
+          <option [value]="''" [disabled]="true">--Please choose an option--</option>
+          <option *ngFor="let location of locations; index as i" [value]=i>{{location.location}}</option>
+        </select>
       </div>
     </div>
   </fieldset>
@@ -71,5 +75,3 @@
             (click)="submit()" [disabled]="createCourseForm.untouched || (createCourseForm.dirty && createCourseForm.invalid)">{{buttonAction.CREATE}}</button>
   </div>
 </form>
-
-

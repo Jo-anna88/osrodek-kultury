@@ -1,41 +1,85 @@
-import { Component } from '@angular/core';
-import {Category, Course, CourseDetails} from "../course";
+import {Component, OnInit} from '@angular/core';
+import {Category, Course, CourseDetails, DEFAULT_IMG_SOURCE, Teacher} from "../course";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
+import {Address, AppLocation} from "../../../shared/models/address.model";
+import {CoursesService} from "../courses.service";
+import {AddressService} from "../../../core/services/address.service";
 
 @Component({
   selector: 'app-create-course-form',
   templateUrl: './create-course-form.component.html',
   styleUrls: ['./create-course-form.component.scss']
 })
-export class CreateCourseFormComponent {
+export class CreateCourseFormComponent implements OnInit {
   protected readonly buttonAction = ButtonAction;
   createCourseForm: FormGroup;
+  teachers: Teacher[] = [];
+  selectedTeacher: Teacher = {};
   categories: string[] = Object.values(Category); // e.g., 0:"ART"
+  locations: AppLocation[] = [];
+  selectedLocation: AppLocation = {};
   showDetails: boolean = false;
   showDetailsButtonText: string = "Show Course Details";
-  constructor(private fb: FormBuilder, private modalService: ModalService) {
+  constructor(private fb: FormBuilder, private modalService: ModalService,
+              private courseService: CoursesService, private addressService: AddressService) {
     this.createCourseForm = this.fb.group({
       name: ['', Validators.required],
-      teacher: ['', Validators.required],
+      teacher: [null, Validators.required],
       description: ['', Validators.required],
       category: ['', Validators.required],
+      maxParticipantsNumber: ['', Validators.required],
       minAge: [''],
       maxAge: [''],
       price: [''],
-      maxParticipantsNumber: [''],
       lessonDurationMinutes: [''],
       date: [''],
-      roomId: ['']
+      location: [null]
     });
+  }
+
+  ngOnInit() {
+    this.loadData();
+    this.trackTeacherControlValue();
+    this.trackLocationControlValue();
+  }
+
+  loadData() {
+    // fetch teachers data
+    this.courseService.getTeachers().subscribe({
+      next: teachers => {this.teachers = teachers}
+    });
+
+    // fetch locations data
+    this.addressService.getLocations().subscribe({
+      next: locations => {this.locations = locations}
+    });
+  }
+
+  trackTeacherControlValue() {
+    this.createCourseForm.controls['teacher'].valueChanges
+      .subscribe((index: number | null) => {
+        if (index !== null) {
+          this.selectedTeacher = this.teachers[index];
+        }
+      });
+  }
+
+  trackLocationControlValue() {
+    this.createCourseForm.controls['location'].valueChanges
+      .subscribe((index: number | null) => {
+        if (index !== null) {
+          this.selectedLocation = this.locations[index];
+        }
+      });
   }
 
   toggleDetails() {
     this.showDetails = !this.showDetails;
     this.showDetailsButtonText = this.showDetails ? 'Hide Course Details' : 'Show Course Details';
     // Enable/disable validators based on showDetails
-    const detailsControls = ['minAge', 'maxAge', 'price', 'maxParticipantsNumber', 'lessonDurationMinutes', 'date', 'roomId'];
+    const detailsControls = ['minAge', 'maxAge', 'price', 'lessonDurationMinutes', 'date', 'location'];
     detailsControls.forEach(control => {
       if (this.showDetails) {
         this.createCourseForm.get(control)!.setValidators([Validators.required]);
@@ -47,20 +91,15 @@ export class CreateCourseFormComponent {
   }
 
   submit() {
-    let newCourse: Course = new Course(
-      this.createCourseForm.value.name, this.createCourseForm.value.teacher, this.createCourseForm.value.description, this.createCourseForm.value.category)
+    let formValue = this.createCourseForm.value;
+    let newCourse: Course = new Course(DEFAULT_IMG_SOURCE,
+      formValue.name, this.selectedTeacher, formValue.description, formValue.category, formValue.maxParticipantsNumber)
     if(!this.showDetails) {
       this.modalService.emitModalEvent({course: newCourse, courseDetails: null});
     } else {
-      let newCourseDetails: CourseDetails = {
-        minAge: this.createCourseForm.value.minAge,
-        maxAge: this.createCourseForm.value.maxAge,
-        price: this.createCourseForm.value.price,
-        maxParticipantsNumber: this.createCourseForm.value.maxParticipantsNumber,
-        lessonDurationMinutes: this.createCourseForm.value.lessonDurationMinutes,
-        date: this.createCourseForm.value.date,
-        roomId: this.createCourseForm.value.room
-      }
+      let newCourseDetails: CourseDetails = new CourseDetails(
+        formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, this.selectedLocation
+    )
       this.modalService.emitModalEvent({course: newCourse, courseDetails: newCourseDetails});
     }
   }

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} fr
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModalService} from "../../../core/services/modal.service";
 import {ModalConfiguration} from "./modal";
-import {Subscription, take} from "rxjs";
+import {first, Subscription, take} from "rxjs";
 
 @Component({
   selector: 'app-modal',
@@ -28,7 +28,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.setClickOutsideModalListener(); // because by default the modal is closable (there could be no config)
     this.subscription = this.modalService.getConfiguration()
-      .pipe(take(1))
+      .pipe(first())
       .subscribe({
         next: (config: ModalConfiguration) => { // if there is no configuration config = {}
           if (config.isClosable === false) {
@@ -39,7 +39,6 @@ export class ModalComponent implements OnInit, OnDestroy {
             this.title = config.title;
             this.isTitle = true;
           }
-          //this.subscription.unsubscribe();
         },
         complete: () => {
           console.log("modal component - getConfiguration complete")

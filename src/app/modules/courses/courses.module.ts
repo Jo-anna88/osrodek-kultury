@@ -6,7 +6,7 @@ import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import {SharedModule} from "../../shared/shared.module";
 import { CourseDetailComponent } from './course-detail/course-detail.component';
-import { CreateUpdateCourseFormComponent } from './create-update-course-form/create-update-course-form.component';
+//import { CreateUpdateCourseFormComponent } from './create-update-course-form/create-update-course-form.component';
 import { UpdateCourseDetailsFormComponent } from './update-course-details-form/update-course-details-form.component';
 import { CreateCourseDetailsFormComponent } from './create-course-details-form/create-course-details-form.component';
 import { CreateCourseFormComponent } from './create-course-form/create-course-form.component';
@@ -17,7 +17,7 @@ import { JoinConfirmationDialogComponent } from './join-confirmation-dialog/join
   declarations: [
     CoursesListComponent,
     CourseDetailComponent,
-    CreateUpdateCourseFormComponent,
+//    CreateUpdateCourseFormComponent,
     UpdateCourseDetailsFormComponent,
     CreateCourseDetailsFormComponent,
     CreateCourseFormComponent,

@@ -1,0 +1,20 @@
+@import 'src/styles';
+
+.dropdown-about {
+  z-index: 99999;
+  position: absolute;
+  left: 32vw;
+  padding: 1rem;
+  background-color: white;
+  border: solid 2px $primary-yellow;
+  border-radius: 3rem;
+  color: $font-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dropdown-menu-items {
+  display: flex;
+  flex-direction: column;
+}

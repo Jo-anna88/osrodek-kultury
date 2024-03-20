@@ -2,7 +2,7 @@
 
   <div class = "course-data">
     <h2>{{course.name | uppercase}} </h2>
-    <p>Teacher: <b>{{course.teacher}}</b></p>
+    <p>Teacher: <b>{{course.teacher.firstName}} {{course.teacher.lastName}}</b></p>
     <p>{{course.description}}</p>
   </div>
 
@@ -12,16 +12,19 @@
       <li>Minimum participant age: {{courseDetails.minAge}} years</li>
       <li>Maximum participant age: {{courseDetails.maxAge}} years</li>
       <li>Price per month: {{courseDetails.price | currency: 'PLN'}}</li>
-      <li>Participants number: {{courseDetails.maxParticipantsNumber}}</li>
+<!--      <li>Participants number: {{course.maxParticipantsNumber}}</li>-->
       <li>Lesson duration: {{courseDetails.lessonDurationMinutes}} minutes</li>
       <li>Class schedule: {{courseDetails.date}}</li>
-      <li>Place: Room nr {{courseDetails.roomId}}</li>
+      <li>Place: {{courseDetails.location?.location}}</li>
+      <li *ngIf="course.freeSlots !== 0; else noFreeSlots">
+        We have {{course.freeSlots}} available slots out of {{course.maxParticipantsNumber}} for this course
+      </li>
     </ul>
     <div class="buttons-container" *ngIf="isAuthorized">
       <button-edit (onEditEvent)="updateDetails()"></button-edit>
       <button-delete (onDeleteEvent)="deleteDetails(courseDetails.id!)"></button-delete>
     </div>
-    <div class="button-right" *ngIf="isClient">
+    <div class="button-right" *ngIf="isClient && course.freeSlots !== 0">
       <button class="button-primary" (click) = "openJoinDialog(course.name)">JOIN</button>
     </div>
   </div>
@@ -37,6 +40,11 @@
 <!--  </div>-->
 </div>
 
+<ng-template #noFreeSlots>
+  <li>
+    Sorry, there is no more available slots for this course.
+  </li>
+</ng-template>
 <!--<ng-template #noDetails>-->
 <!--  <p>There is no details for now.</p>-->
 <!--</ng-template>-->

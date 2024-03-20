@@ -4,8 +4,9 @@ export interface User {
   lastName?: string;
   phone?: string;
   username: string; // e.g. email, login
-  //password?: string; // rather to remove (we just need this field to send from sign up form)
   role?: Role;
+  dob?: string;
+  age?: number;
   //token?: string
 }
 

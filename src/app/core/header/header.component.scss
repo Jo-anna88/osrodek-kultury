@@ -47,3 +47,7 @@ a {
 .active {
   color: $primary-rose;
 }
+
+.rotated {
+  transform: rotate(180deg);
+}

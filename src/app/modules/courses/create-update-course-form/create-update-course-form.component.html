@@ -1,74 +1,74 @@
-<form [formGroup]="form">
-  <fieldset class="form-group">
-<!--    <legend class="h2">{{modalTitle}}</legend>-->
-    <div class="form-field">
-      <label>Name:</label>
-      <input formControlName="name">
-      <!--    <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)">-->
-      <!--      Please provide a course name.-->
-      <!--    </div>-->
-    </div>
-    <div class="form-field">
-      <label>Teacher:</label>
-      <input formControlName="teacher">
-    </div>
-    <div class="form-field">
-      <label>Description:</label>
-      <input formControlName="description">
-    </div>
-    <div class="form-field">
-      <label>Category:</label>
-      <select formControlName="category">
-        <option value="">--Please choose an option--</option>
-        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
-      </select>
-    </div>
+<!--<form [formGroup]="form">-->
+<!--  <fieldset class="form-group">-->
+<!--&lt;!&ndash;    <legend class="h2">{{modalTitle}}</legend>&ndash;&gt;-->
+<!--    <div class="form-field">-->
+<!--      <label>Name:</label>-->
+<!--      <input formControlName="name">-->
+<!--      &lt;!&ndash;    <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)">&ndash;&gt;-->
+<!--      &lt;!&ndash;      Please provide a course name.&ndash;&gt;-->
+<!--      &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    </div>-->
+<!--    <div class="form-field">-->
+<!--      <label>Teacher:</label>-->
+<!--      <input formControlName="teacher">-->
+<!--    </div>-->
+<!--    <div class="form-field">-->
+<!--      <label>Description:</label>-->
+<!--      <input formControlName="description">-->
+<!--    </div>-->
+<!--    <div class="form-field">-->
+<!--      <label>Category:</label>-->
+<!--      <select formControlName="category">-->
+<!--        <option value="">&#45;&#45;Please choose an option&#45;&#45;</option>-->
+<!--        <option *ngFor="let category of categories" [value]="category">{{category}}</option>-->
+<!--      </select>-->
+<!--    </div>-->
 
-    <div class="form-buttons">
-    <button class="button button-secondary" (click)="toggleDetails()">{{showDetailsButtonText}}</button>
-    </div>
+<!--    <div class="form-buttons">-->
+<!--    <button class="button button-secondary" (click)="toggleDetails()">{{showDetailsButtonText}}</button>-->
+<!--    </div>-->
 
-<!--    it does NOT work in such case:
-TODO: if user click UPDATE course and there is NO details for this course for now, he/she should first create details -->
-<!--    solutions:
-- there should be an info that there is no details for this course now (but then there should be an additional request to backend)
-- change database association from unidirectional to bidirectional
-- remove the functionality where user can do CRUD operations on course and courseDetails together (except 'delete' where it is obvious that it is connected)
--->
-    <div *ngIf="showDetails">
-    <div class="form-field">
-      <label>Min Age:</label>
-      <input formControlName="minAge">
-    </div>
-    <div class="form-field">
-      <label>Max Age:</label>
-      <input formControlName="maxAge">
-    </div>
-    <div class="form-field">
-      <label>Price:</label>
-      <input formControlName="price">
-    </div>
-    <div class="form-field">
-      <label>Max Participants Number:</label>
-      <input formControlName="maxParticipantsNumber">
-    </div>
-    <div class="form-field">
-      <label>Lesson Duration in Minutes:</label>
-      <input formControlName="lessonDurationMinutes">
-    </div>
-    <div class="form-field">
-      <label>Date in format Mon 13:00-13:45:</label>
-      <input formControlName="date">
-    </div>
-    <div class="form-field">
-      <label>Room:</label>
-      <input formControlName="room">
-    </div>
-    </div>
-  </fieldset>
+<!--&lt;!&ndash;    it does NOT work in such case:-->
+<!--TODO: if user click UPDATE course and there is NO details for this course for now, he/she should first create details &ndash;&gt;-->
+<!--&lt;!&ndash;    solutions:-->
+<!-- - there should be an info that there is no details for this course now (but then there should be an additional request to backend)-->
+<!-- - change database association from unidirectional to bidirectional-->
+<!-- - remove the functionality where user can do CRUD operations on course and courseDetails together (except 'delete' where it is obvious that it is connected)-->
+<!--&ndash;&gt;-->
+<!--    <div *ngIf="showDetails">-->
+<!--    <div class="form-field">-->
+<!--      <label>Min Age:</label>-->
+<!--      <input formControlName="minAge">-->
+<!--    </div>-->
+<!--    <div class="form-field">-->
+<!--      <label>Max Age:</label>-->
+<!--      <input formControlName="maxAge">-->
+<!--    </div>-->
+<!--    <div class="form-field">-->
+<!--      <label>Price:</label>-->
+<!--      <input formControlName="price">-->
+<!--    </div>-->
+<!--    <div class="form-field">-->
+<!--      <label>Max Participants Number:</label>-->
+<!--      <input formControlName="maxParticipantsNumber">-->
+<!--    </div>-->
+<!--    <div class="form-field">-->
+<!--      <label>Lesson Duration in Minutes:</label>-->
+<!--      <input formControlName="lessonDurationMinutes">-->
+<!--    </div>-->
+<!--    <div class="form-field">-->
+<!--      <label>Date in format Mon 13:00-13:45:</label>-->
+<!--      <input formControlName="date">-->
+<!--    </div>-->
+<!--    <div class="form-field">-->
+<!--      <label>Room:</label>-->
+<!--      <input formControlName="room">-->
+<!--    </div>-->
+<!--    </div>-->
+<!--  </fieldset>-->
 
-  <div class="form-buttons">
-    <button class="button button-primary"
-            (click)="submit()">{{action}}</button>
-  </div>
-</form>
+<!--  <div class="form-buttons">-->
+<!--    <button class="button button-primary"-->
+<!--            (click)="submit()">{{action}}</button>-->
+<!--  </div>-->
+<!--</form>-->

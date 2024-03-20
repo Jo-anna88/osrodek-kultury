@@ -4,10 +4,10 @@ import { SIMPLE_TEXT } from "../../../../assets/constants";
 
 @Component({
   selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  templateUrl: './about-company.component.html',
+  styleUrls: ['./about-company.component.scss']
 })
-export class AboutComponent {
+export class AboutCompanyComponent {
   ourMission : string = SIMPLE_TEXT;
   ourStory : string = SIMPLE_TEXT;
   ourHistory : string = SIMPLE_TEXT;

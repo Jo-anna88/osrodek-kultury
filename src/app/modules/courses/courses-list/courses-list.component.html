@@ -14,7 +14,7 @@
         </a>
         <p class="course-description-divider">|</p>
         <!--        link to teacher page or some pop-up window / profile card about him/her-->
-        <a class="course-teacher" [routerLink]="">{{course.teacher}}</a>
+        <a class="course-teacher" [routerLink]="">{{course.teacher.firstName}} {{course.teacher.lastName}}</a>
         <div class="buttons-container" *ngIf="isAuthorized">
           <button-edit (onEditEvent)="openModalUpdate(course)"></button-edit>
           <button-delete (onDeleteEvent)="openModalDelete(course.id!)"></button-delete>
