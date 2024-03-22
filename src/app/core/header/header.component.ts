@@ -2,7 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {mockNavbarItems} from "./mock-navbar-items";
 import {UserService} from "../services/user.service";
 import {AuthService} from "../authorization/auth.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
+import {map} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -19,12 +20,16 @@ export class HeaderComponent {
 
   // about dropdown functionality
   isAboutDropdown = false;
+  isAboutPage = false;
+  activeAboutItem = -1;
 
   // profile dropdown functionality
   isProfileDropdown = false;
   profileDropdownTitle = "";
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
+  constructor(private authService: AuthService,
+              private router: Router,
+              private userService: UserService) {}
 
   toggleProfileDropdown() {
     // show dropdown
@@ -51,14 +56,31 @@ export class HeaderComponent {
     )
   }
 
-  navigateToCompanyPage() {
+  selectNavItem() { // select navigation item other than 'about'
     this.isAboutDropdown = false;
+    this.isAboutPage = false;
+    this.activeAboutItem = -1;
+  }
+
+  navigateToCompanyPage(i: number) {
+    this.isAboutDropdown = false;
+    this.isAboutPage = true;
+    this.activeAboutItem = i;
     this.router.navigate(['about-company']);
   }
 
-  navigateToTeamPage() {
+  navigateToTeamPage(i: number) {
     this.isAboutDropdown = false;
+    this.isAboutPage = true;
+    this.activeAboutItem = i;
     this.router.navigate(['about-team']);
+  }
+
+  navigateToLocationsPage(i: number) {
+    this.isAboutDropdown = false;
+    this.isAboutPage = true;
+    this.activeAboutItem = i;
+    this.router.navigate(['about-locations']);
   }
 
   navigateToLandingPage() {

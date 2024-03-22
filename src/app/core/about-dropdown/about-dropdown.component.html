@@ -1,6 +1,9 @@
 <div class = "dropdown-about">
   <ul class="dropdown-menu-items">
-    <li (click) = "navigateToCompanyPage()">Company</li>
-    <li (click) = "navigateToTeamPage()">Team</li>
+    <li *ngFor = "let item of items; index as i"
+        (click)="navigateByIndex(i)" [class.active]="i === selected">{{item}}</li>
+<!--    <li (click) = "navigateToCompanyPage()">Company</li>-->
+<!--    <li (click) = "navigateToTeamPage()">Team</li>-->
+<!--    <li (click) = "navigateToLocationsPage()">Locations</li>-->
   </ul>
 </div>

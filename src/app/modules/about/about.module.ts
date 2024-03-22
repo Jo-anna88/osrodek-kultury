@@ -5,11 +5,13 @@ import { AboutRoutingModule } from './about-routing.module';
 import { AboutCompanyComponent } from './about-company/about-company.component';
 import {SharedModule} from "../../shared/shared.module";
 import { AboutTeamComponent } from './about-team/about-team.component';
+import { AboutLocationsComponent } from './about-locations/about-locations.component';
 
 @NgModule({
   declarations: [
     AboutCompanyComponent,
-    AboutTeamComponent
+    AboutTeamComponent,
+    AboutLocationsComponent
   ],
     imports: [
         CommonModule,

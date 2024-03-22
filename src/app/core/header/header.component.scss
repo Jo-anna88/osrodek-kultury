@@ -23,7 +23,7 @@ ul {
   justify-content: space-around;
   align-items: center;
 }
-a {
+li {
   font-family: $font-primary;
   font-size: 1.25em; //or: font-size: larger (20px)
   color: $primary-blue;
@@ -44,10 +44,19 @@ a {
   }
 }
 
+dropdown-arrow {
+  display: inline-block;
+}
+
 .active {
   color: $primary-rose;
 }
 
 .rotated {
+  display: inline-block;
   transform: rotate(180deg);
+}
+
+a {
+  color: $primary-blue;
 }
