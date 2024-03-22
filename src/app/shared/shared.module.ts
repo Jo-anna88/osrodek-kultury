@@ -16,6 +16,8 @@ import { ButtonDeleteComponent } from './components/button-delete/button-delete.
 import { ButtonAddComponent } from './components/button-add/button-add.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { DeleteConfirmationDialogComponent } from './components/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { CardProfileComponent } from './components/card-profile/card-profile.component';
+import { CardLocation } from './components/card-location/card-location';
 
 @NgModule({
     declarations: [
@@ -26,21 +28,24 @@ import { DeleteConfirmationDialogComponent } from './components/delete-confirmat
         ButtonDeleteComponent,
         ButtonAddComponent,
         ModalComponent,
-        DeleteConfirmationDialogComponent
+        DeleteConfirmationDialogComponent,
+        CardProfileComponent,
+        CardLocation
     ],
-  exports: [
-    //FontAwesomeModule,
-    MatIconModule,
-    MatButtonModule,
-    DropdownComponent,
-    SpinnerComponent,
-    ErrorComponent,
-    ButtonEditComponent,
-    ButtonDeleteComponent,
-    ButtonAddComponent,
-    ModalComponent,
-    DeleteConfirmationDialogComponent
-  ],
+    exports: [
+        //FontAwesomeModule,
+        MatIconModule,
+        MatButtonModule,
+        DropdownComponent,
+        SpinnerComponent,
+        ErrorComponent,
+        ButtonEditComponent,
+        ButtonDeleteComponent,
+        ButtonAddComponent,
+        ModalComponent,
+        DeleteConfirmationDialogComponent,
+        CardProfileComponent
+    ],
     imports: [
         CommonModule,
         RouterLink,

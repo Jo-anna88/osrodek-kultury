@@ -1,1 +1,27 @@
-<p>about-team works!</p>
+<ng-container *ngIf="!isLoading else spinner">
+  <ng-container *ngIf="employees.length; else noDataTemplate">
+    <div class="team-container">
+      <div class="button-add-wrapper" *ngIf="isAuthorized">
+        <button-add (onAddEvent)="openModalCreate()"></button-add>
+      </div>
+      <div class = "profile-cards-container">
+        <div class = "profile-card-wrapper" *ngFor="let employee of employees">
+          <app-card-profile [profile]="employee"></app-card-profile>
+          <div class="buttons-container" *ngIf="isAuthorized">
+            <button-edit (onEditEvent)="openModalUpdate(employee)"></button-edit>
+            <button-delete (onDeleteEvent)="openModalDelete(employee.id!)"></button-delete>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #spinner>
+  <app-spinner [note]="spinnerNote"></app-spinner>
+</ng-template>
+
+<ng-template #noDataTemplate>
+<!--  <app-error [error]=appError></app-error>-->
+    <p>Oops! No data available at that moment. Please, try again later.</p>
+</ng-template>

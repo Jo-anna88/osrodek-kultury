@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else spinner">
   <ng-container *ngIf="courses.length; else noDataTemplate">
     <ul class="courses-list">
-      <li *ngIf="isAuthorized">
+      <li class="button-add-wrapper" *ngIf="isAuthorized">
         <button-add (onAddEvent)="openModalCreate()"></button-add>
       </li>
       <li class="course-card" *ngFor="let course of courses">

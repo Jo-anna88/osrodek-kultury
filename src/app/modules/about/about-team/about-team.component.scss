@@ -1,0 +1,23 @@
+.team-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 20%;
+  align-items: center;
+}
+
+.profile-cards-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 3rem;
+  justify-content: space-between;
+}
+
+.profile-card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-add-wrapper {
+  margin-bottom: 1rem;
+}

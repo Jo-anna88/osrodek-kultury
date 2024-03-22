@@ -16,11 +16,8 @@ export interface Credentials {
 }
 
 export enum Role {
-  User = 'User', // read-only (or: 'unknown', 'viewer') todo: is this role needed?
   Client = 'CLIENT', // logged-in user
   Employee = 'EMPLOYEE', // np. księgowa, nauczyciel, sprzątaczka, etc. (can add and update)
-  Teacher = 'Teacher', // logged-in user todo: is this role needed?
-  Director = 'Director', // logged-in user (or: 'publisher') todo: is this role needed?
   Admin = 'ADMIN' // logged-in user, 'superuser' (can add, update and delete; can add new employees)
 }
 
