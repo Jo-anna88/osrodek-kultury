@@ -8,7 +8,6 @@ import { MatIconModule} from "@angular/material/icon";
 import { MatButtonModule} from "@angular/material/button";
 import { MatDialogModule } from "@angular/material/dialog";
 
-import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ButtonEditComponent } from './components/button-edit/button-edit.component';
@@ -18,10 +17,12 @@ import { ModalComponent } from './components/modal/modal.component';
 import { DeleteConfirmationDialogComponent } from './components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { CardProfileComponent } from './components/card-profile/card-profile.component';
 import { CardLocation } from './components/card-location/card-location';
+import { CardClientProfileComponent } from './components/card-client-profile/card-client-profile.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { MenuItemComponent } from './components/menu-item/menu-item.component';
 
 @NgModule({
     declarations: [
-        DropdownComponent,
         SpinnerComponent,
         ErrorComponent,
         ButtonEditComponent,
@@ -30,22 +31,26 @@ import { CardLocation } from './components/card-location/card-location';
         ModalComponent,
         DeleteConfirmationDialogComponent,
         CardProfileComponent,
-        CardLocation
+        CardLocation,
+        CardClientProfileComponent,
+        MenuComponent,
+        MenuItemComponent
     ],
-    exports: [
-        //FontAwesomeModule,
-        MatIconModule,
-        MatButtonModule,
-        DropdownComponent,
-        SpinnerComponent,
-        ErrorComponent,
-        ButtonEditComponent,
-        ButtonDeleteComponent,
-        ButtonAddComponent,
-        ModalComponent,
-        DeleteConfirmationDialogComponent,
-        CardProfileComponent
-    ],
+  exports: [
+    //FontAwesomeModule,
+    MatIconModule,
+    MatButtonModule,
+    SpinnerComponent,
+    ErrorComponent,
+    ButtonEditComponent,
+    ButtonDeleteComponent,
+    ButtonAddComponent,
+    ModalComponent,
+    DeleteConfirmationDialogComponent,
+    CardProfileComponent,
+    CardClientProfileComponent,
+    MenuComponent
+  ],
     imports: [
         CommonModule,
         RouterLink,

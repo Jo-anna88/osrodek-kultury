@@ -1,7 +1,7 @@
-import {ICulturalEvent} from "./cultural-event";
+import {CulturalEvent} from "./cultural-event";
 import {SIMPLE_TEXT} from "../../../../assets/constants";
 
-export const mockCulturalEvents: Array<ICulturalEvent> = [
+export const mockCulturalEvents: Array<CulturalEvent> = [
   {
     imgSource: "assets/images/cultural-event1.jpg",
     name: "Event1",

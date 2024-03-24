@@ -1,13 +1,15 @@
 export interface User {
-  id?: number;
+  id?: string; // UUID
   firstName?: string;
   lastName?: string;
   phone?: string;
-  username: string; // e.g. email, login
-  role?: Role;
+  username?: string; // e.g. email, login
   dob?: string;
   age?: number;
-  //token?: string
+  headshot?: string;
+  role?: Role;
+  position?: string;
+  description?: string;
 }
 
 export interface Credentials {

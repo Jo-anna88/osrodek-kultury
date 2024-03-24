@@ -1,0 +1,9 @@
+<section class = "menu-container" [style.border-color] = menuColor>
+  <div class = "menu-title" [style.background-color] = menuColor>{{ title | uppercase }}</div>
+  <div class="menu-list">
+    <app-menu-item *ngFor="let item of items; index as i"
+               (click)="selectItem(i)"
+               [data]="item"
+    ></app-menu-item>
+  </div>
+</section>

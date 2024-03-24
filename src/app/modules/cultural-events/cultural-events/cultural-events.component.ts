@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ICulturalEvent} from "./cultural-event";
+import {CulturalEvent} from "./cultural-event";
 import {CulturalEventService} from "../cultural-event.service";
 import {catchError, delay, map, of, Subject, takeUntil} from "rxjs";
 
@@ -12,7 +12,7 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
 
   destroy$: Subject<void> = new Subject<void>();
 
-  culturalEvents : ICulturalEvent[] = [];
+  culturalEvents : CulturalEvent[] = [];
   isLoading: boolean = false;
   spinnerNote: string = "Cultural Events are loading...";
 
@@ -30,7 +30,7 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
       //.pipe(delay(5000))
       .pipe(takeUntil(this.destroy$))
       .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
-        next: (value: ICulturalEvent[]) => {this.culturalEvents=value;},
+        next: (value: CulturalEvent[]) => {this.culturalEvents=value;},
         error: (err: any) => {
           console.error('error during loading cultural events: '+ err);
           this.isLoading=false;},

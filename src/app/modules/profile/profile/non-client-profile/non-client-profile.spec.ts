@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DropdownComponent } from './dropdown.component';
+import { NonClientProfile } from './non-client-profile';
 
-describe('DropdownComponent', () => {
-  let component: DropdownComponent;
-  let fixture: ComponentFixture<DropdownComponent>;
+describe('EmployeeAdminProfileComponent', () => {
+  let component: NonClientProfile;
+  let fixture: ComponentFixture<NonClientProfile>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DropdownComponent ]
+      declarations: [ NonClientProfile ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DropdownComponent);
+    fixture = TestBed.createComponent(NonClientProfile);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
