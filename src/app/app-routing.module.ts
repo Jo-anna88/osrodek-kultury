@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { LoginComponent } from "./core/authorization/login/login.component";
 import { ModalComponent } from "./shared/components/modal/modal.component";
@@ -37,10 +37,15 @@ const ROUTES: Routes = [
   {path: '**', component: PageNotFoundComponent}
 ];
 
+const routerExtraOptions: ExtraOptions = {
+  // scrollPositionRestoration: "enabled",
+  // anchorScrolling: "enabled",
+  // scrollOffset: [0, 64],
+  //enableTracing: true
+};
+
 @NgModule({
-  imports: [RouterModule.forRoot(ROUTES,
-  //  {enableTracing: true}
-     )],
+  imports: [RouterModule.forRoot(ROUTES, routerExtraOptions)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -13,10 +13,10 @@ export class MenuComponent {
   @Input()
   menuColor: string = "";
   @Output()
-  selectedItemIdxEvent: EventEmitter<number> = new EventEmitter<number>();
+  onSelectEvent: EventEmitter<number> = new EventEmitter<number>();
 
   selectItem(i: number) {
     console.log("selected item: ", this.items[i])
-    this.selectedItemIdxEvent.emit(i);
+    this.onSelectEvent.emit(i);
   }
 }

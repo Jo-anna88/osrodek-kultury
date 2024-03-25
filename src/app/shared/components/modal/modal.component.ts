@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {ModalService} from "../../../core/services/modal.service";
 import {ModalConfiguration} from "./modal";
-import {first, Subscription, take} from "rxjs";
+import {first, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-modal',
