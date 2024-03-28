@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {User} from "../../shared/models/user.model";
+import {BehaviorSubject, Observable, of} from "rxjs";
+import {User, UserSimpleData} from "../../shared/models/user.model";
 import {StorageService} from "./storage.service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {AuthService} from "../authorization/auth.service";
+import {Course} from "../../modules/courses/course";
+import {CulturalEvent} from "../../modules/cultural-events/cultural-events/cultural-event";
+import {mockCulturalEvents} from "../../modules/cultural-events/cultural-events/mock-cultural-events";
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +38,40 @@ export class UserService {
   getUserProfile(): Observable<User> {
     return this.http.get<User>(this.apiUrl +'/profile', {withCredentials: true});
   }
+
+  getChildren(): Observable<Array<User>> {
+    return this.http.get<Array<User>>(this.apiUrl + '/children', {withCredentials: true});
+  }
+
+  getUserSimpleData(): Observable<UserSimpleData> {
+    return this.http.get<UserSimpleData>(this.apiUrl + '/user-simple', {withCredentials: true});
+  }
+  getChildrenSimpleData(): Observable<Array<UserSimpleData>> {
+    return this.http.get<Array<UserSimpleData>>(this.apiUrl + '/children-simple', {withCredentials: true});
+  }
+
+  getUserCourses(): Observable<Array<Course>> {
+    return this.http.get<Array<Course>>(this.apiUrl + '/courses', {withCredentials: true});
+  }
+
+  getCoursesByUserId(id: string): Observable<Array<Course>> {
+    return this.http.get<Array<Course>>(this.apiUrl + '/courses/' + id, {withCredentials: true});
+  }
+
+  getUserEvents(): Observable<Array<CulturalEvent>> {
+    return of(mockCulturalEvents);
+  }
+
+  joinCourse(courseId: string, userId: string) {
+    if (userId === '') {
+      return this.http.get(this.apiUrl + '/join-course/' + courseId, {withCredentials: true});
+    } else {
+      return this.joinCourseByUserId(courseId, userId);
+    }
+  }
+
+  joinCourseByUserId(courseId: string, userId: string) { // user or child id
+    return this.http.get(this.apiUrl + '/join-course/' + courseId + '/' + userId, {withCredentials: true});
+  }
+
 }

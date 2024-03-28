@@ -6,12 +6,12 @@
               [title]="'My Classes'"
               [items]="coursesMenuItems"
               [menuColor]="'#BA264A'"
-              (onSelectEvent)="setSelectedClass($event)"></app-menu>
+              (onSelectEvent)="navigateToClass($event)"></app-menu>
     <app-menu *ngIf="culturalEvents.length"
               [title]="'My Events'"
               [items]="culturalEventsMenuItems"
               [menuColor]="'#334075'"
-              (onSelectEvent)="setSelectedCulturalEvent($event)"></app-menu>
+              (onSelectEvent)="navigateToCulturalEvent($event)"></app-menu>
     <app-menu *ngIf="children.length"
               [title]="'My Children'"
               [items]="childrenMenuItems"

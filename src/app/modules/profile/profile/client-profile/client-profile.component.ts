@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../../shared/models/user.model";
 import {Course} from "../../../courses/course";
 import {CulturalEvent} from "../../../cultural-events/cultural-events/cultural-event";
@@ -7,6 +7,7 @@ import {mockCourses} from "../../../courses/courses-list/mock-courses";
 import {mockChildren} from "../../../mocks/mock-user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ViewportScroller} from "@angular/common";
+import {UserService} from "../../../../core/services/user.service";
 
 // enum TypeOfItem {
 //   COURSE = 'Course',
@@ -38,7 +39,10 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
   //typeOfSelectedItem: TypeOfItem | undefined = undefined;
   selectedChild: User = {};
 
-  constructor(private router: Router, private route: ActivatedRoute, private viewportScroller: ViewportScroller) {}
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private viewportScroller: ViewportScroller,
+              private userService: UserService) {}
 
   ngOnInit() {
     this.loadData();
@@ -63,43 +67,49 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
   loadData() {
     this.isLoading = true;
 
-    setTimeout(() => {
-      this.courses = mockCourses;
-      if(this.courses.length) {
+    this.userService.getUserCourses().subscribe({
+      next: (courses) => {
+        this.courses = courses;
         this.courses.map((course) => {
           this.coursesMenuItems.push(course.name);
         })
-      }
-
-      this.culturalEvents = mockCulturalEvents;
-      if(this.culturalEvents.length) {
+      },
+      error: (err) => {console.log(err)},
+      complete: () => {this.isLoading = false;}
+    })
+    this.userService.getUserEvents().subscribe({
+      next: (culturalEvents) => {
+        this.culturalEvents = culturalEvents;
         this.culturalEvents.map((culturalEvent) => {
           this.culturalEventsMenuItems.push(culturalEvent.name);
-        })
-      }
-
-      this.children = mockChildren;
-      if(this.children.length) {
+        });
+      },
+      error: (err) => {console.log(err)}
+    })
+    this.userService.getChildren().subscribe({
+      next: (children) => {
+        this.children = children;
         this.children.map((child) => {
           this.childrenMenuItems.push(child.firstName + " " + child.lastName);
-        })
-      }
-
-      this.isLoading = false;
-    }, 2000);
+        });
+      },
+      error: (err) => {console.log(err)}
+    })
   }
 
-  setSelectedClass(index: number) {
+  navigateToClass(index: number) {
     let selectedCourseId = this.courses[index].id;
     this.router.navigate(['classes', selectedCourseId]);
+    //todo: it could show details of selected class, like Schedule, Attendance and Payments (with redirection to e.g. ePay)
   }
 
-  setSelectedCulturalEvent(index: number) {
+  navigateToCulturalEvent(index: number) {
     //this.isSelected = true;
     //this.typeOfSelectedItem = TypeOfItem.EVENT;
     //this.selectedItem = this.culturalEvents[index];
     let selectedEventId = this.culturalEvents[index].id;
     this.router.navigate(['events', selectedEventId]);
+    //todo: it could show reservation details, like Date, Place/Venue, Number of Reserved Tickets
   }
 
   setSelectedChild(index: number) {

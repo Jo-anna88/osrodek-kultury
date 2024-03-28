@@ -1,0 +1,11 @@
+@import 'src/styles';
+
+.child-data-section {
+  margin: 2rem 20%;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: transparentize($primary-yellow, 0.15);
+  border-radius: 3rem;
+}

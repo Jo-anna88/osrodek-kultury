@@ -30,3 +30,9 @@ export enum Privilege {
   DELETE = 'DELETE',
   // OTHER = 'OTHER'
 }
+
+export interface UserSimpleData { // in backend: UserBasicInfo
+    id?: string, // UUID
+    firstName?: string,
+    lastName?: string
+}

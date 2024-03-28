@@ -12,6 +12,9 @@ import { CreateCourseDetailsFormComponent } from './create-course-details-form/c
 import { CreateCourseFormComponent } from './create-course-form/create-course-form.component';
 import { UpdateCourseFormComponent } from './update-course-form/update-course-form.component';
 import { JoinConfirmationDialogComponent } from './join-confirmation-dialog/join-confirmation-dialog.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -24,12 +27,12 @@ import { JoinConfirmationDialogComponent } from './join-confirmation-dialog/join
     UpdateCourseFormComponent,
     JoinConfirmationDialogComponent
   ],
-    imports: [
-        CommonModule,
-        CoursesRoutingModule,
-        SharedModule,
-        FormsModule,
-        ReactiveFormsModule
-    ]
+  imports: [
+    CommonModule,
+    CoursesRoutingModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
+  ]
 })
 export class CoursesModule { }

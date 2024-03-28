@@ -1,9 +1,12 @@
-<section>
-  <img [src]=child.headshot [alt]="''">
-  <p>Firstname: {{child.firstName}}</p>
-  <p>Lastname: {{child.lastName}}</p>
-  <p>Phone: {{child.phone}}</p>
-  <p>Date of birth: {{child.dob}}</p>
-  <p>Age: {{child.age}}</p>
-  <p>Courses:</p>
+<section class = "child-data-section">
+  <app-card-client-profile [user]="child"></app-card-client-profile>
+  <div class="buttons-container">
+    <button-edit></button-edit>
+    <button-delete></button-delete>
+  </div>
+  <app-menu *ngIf="courses.length"
+            [title]="'Child\'s Classes'"
+            [items]="coursesMenuItems"
+            [menuColor]="'#BA264A'"
+            (onSelectEvent)="navigateToCourse($event)"></app-menu>
 </section>

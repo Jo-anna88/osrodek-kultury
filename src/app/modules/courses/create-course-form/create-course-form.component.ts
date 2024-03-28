@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Category, Course, CourseDetails, DEFAULT_IMG_SOURCE, Teacher} from "../course";
+import {Category, Course, CourseDetails, DEFAULT_IMG_SOURCE} from "../course";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
 import {Address, AppLocation} from "../../../shared/models/address.model";
 import {CoursesService} from "../courses.service";
 import {AddressService} from "../../../core/services/address.service";
+import {UserSimpleData} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'app-create-course-form',
@@ -15,8 +16,8 @@ import {AddressService} from "../../../core/services/address.service";
 export class CreateCourseFormComponent implements OnInit {
   protected readonly buttonAction = ButtonAction;
   createCourseForm: FormGroup;
-  teachers: Teacher[] = [];
-  selectedTeacher: Teacher = {};
+  teachers: UserSimpleData[] = [];
+  selectedTeacher: UserSimpleData = {};
   categories: string[] = Object.values(Category); // e.g., 0:"ART"
   locations: AppLocation[] = [];
   selectedLocation: AppLocation = {};

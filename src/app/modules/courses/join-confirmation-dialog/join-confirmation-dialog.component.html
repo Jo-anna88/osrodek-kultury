@@ -1,13 +1,39 @@
 <div class="modal-content-wrapper">
-  <div>
-    You are registering for {{courseName}} class. Please, confirm your choice.
+<!--  when user hasn't got any children -->
+  <ng-template *ngIf="persons.length===1; else choosePersonTemplate">
+    <div class="dialog-question">
+      You are registering for {{courseName}} class. Please, confirm your choice.
+    </div>
+
+    <div class="form-buttons">
+      <button class="button button-secondary"
+              (click)="cancel()">{{buttonAction.CANCEL}}
+      </button>
+      <button class="button button-primary"
+              (click)="confirm()">{{buttonAction.REGISTER}}
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<!--  when user has got children -->
+<ng-template #choosePersonTemplate>
+  <div class="dialog-question">
+    Who do you like to enroll for {{courseName}} class?
   </div>
+  <form #participantForm="ngForm">
+    <select required name="person" ngModel>
+      <option [ngValue]="person" *ngFor="let person of persons">{{person.firstName}} {{person.lastName}}</option>
+    </select>
+  </form>
+
   <div class="form-buttons">
     <button class="button button-secondary"
             (click)="cancel()">{{buttonAction.CANCEL}}
     </button>
     <button class="button button-primary"
-            (click)="confirm()">{{buttonAction.REGISTER}}
+            [disabled]="participantForm.invalid"
+            (click)="onSubmit(participantForm)">{{buttonAction.REGISTER}}
     </button>
   </div>
-</div>
+</ng-template>

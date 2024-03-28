@@ -7,6 +7,7 @@ import {ModalService} from "../../../core/services/modal.service";
 import {ModalType} from "../../../shared/components/modal/modal";
 import {Role} from "../../../shared/models/user.model";
 import {AuthService} from "../../../core/authorization/auth.service";
+import {UserService} from "../../../core/services/user.service";
 
 @Component({
   selector: 'app-course-detail',
@@ -18,7 +19,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
   course$! : Observable<Course>; // the exclamation mark acts as a non-null assertion operator
   courseDetails : CourseDetails | null | undefined = undefined;
-  id: string = "-1";
+  courseDetailsId: string = "-1";
   protected readonly Object = Object;
   isAuthorized: boolean = false;
   isClient: boolean = false;
@@ -27,11 +28,12 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private coursesService: CoursesService,
     private modalService: ModalService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {}
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id')!;
-    this.course$ = this.coursesService.getCourseById(this.id);
+    this.courseDetailsId = this.route.snapshot.paramMap.get('id')!;
+    this.course$ = this.coursesService.getCourseById(this.courseDetailsId);
     this.loadData();
     this.setIsAuthorized();
     if(this.modalService.isModalOpen) this.modalService.closeModal(); // because of redirection from update course form
@@ -51,7 +53,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
 
   loadData() {
     //this.isLoading = true;
-    this.coursesService.getCourseDetailsById(this.id)
+    this.coursesService.getCourseDetailsById(this.courseDetailsId)
       .subscribe({
         next: (value: CourseDetails) => {
           this.courseDetails = value.id !== null ? value : null;
@@ -66,7 +68,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe({
         next: (courseDetails: CourseDetails) => {
-          courseDetails.id = this.id; //courseId;
+          courseDetails.id = this.courseDetailsId; //courseId;
           console.log("Course Details to add: ", courseDetails);
           this.coursesService.addCourseDetails(courseDetails)
             //.pipe(takeUntil(this.destroy$))
@@ -132,9 +134,16 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     let subscription = this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
-        next: (isConfirmed: boolean) => {
-          if (isConfirmed) {
-           console.log("Confirmed");
+        next: (value: {isConfirmed: boolean, id: string}) => {
+          if (value.isConfirmed) {
+           this.userService.joinCourse(this.courseDetailsId, value.id).subscribe({
+             next: (value) => {
+               console.log(value); // null
+               this.course$ = this.coursesService.getCourseById(this.courseDetailsId); // for freeSlots refresh
+             },
+             error: (err) => {console.log(err)},
+             complete: () => {console.log("join course - completed")}
+           });
           }
         },
         complete: () => {this.modalService.closeModal();}

@@ -17,15 +17,15 @@ export class ProfileComponent implements OnInit{
   constructor(private userService: UserService){}
 
   ngOnInit() {
-    this.user = CLIENT_MOCK;
+    //this.user = CLIENT_MOCK;
     //this.user = EMPLOYEE_MOCK;
 
-    // this.userService.getUserProfile().subscribe({
-    //   next: (user: User) => {
-    //     this.user = user;
-    //     console.log(user);
-    //   },
-    //   error: (err) => {console.log(err);}
-    // })
+    this.userService.getUserProfile().subscribe({
+      next: (user: User) => {
+        this.user = user;
+        console.log(user);
+      },
+      error: (err) => {console.log(err);}
+    })
   }
 }

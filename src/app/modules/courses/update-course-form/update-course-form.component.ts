@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Category, Course, CourseDetails, Teacher} from "../course";
+import {Category, Course, CourseDetails} from "../course";
 import {ButtonAction, ModalConfiguration} from "../../../shared/components/modal/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {first, forkJoin, Subscription} from "rxjs";
@@ -7,6 +7,7 @@ import {ModalService} from "../../../core/services/modal.service";
 import {AppLocation} from "../../../shared/models/address.model";
 import {CoursesService} from "../courses.service";
 import {AddressService} from "../../../core/services/address.service";
+import {UserSimpleData} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'app-update-course-form',
@@ -21,8 +22,8 @@ export class UpdateCourseFormComponent implements OnInit, OnDestroy {
   protected readonly buttonAction = ButtonAction;
   isLoading: boolean = false;
   updateCourseForm!: FormGroup;
-  teachers: Teacher[] = [];
-  selectedTeacher: Teacher = {};
+  teachers: UserSimpleData[] = [];
+  selectedTeacher: UserSimpleData = {};
   categories: string[] = Object.values(Category); // e.g., 0:"ART"
   locations: AppLocation[] = [];
   selectedLocation: AppLocation = {};

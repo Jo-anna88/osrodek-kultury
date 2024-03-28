@@ -1,16 +1,17 @@
 import {AppLocation} from "../../shared/models/address.model";
+import {UserSimpleData} from "../../shared/models/user.model";
 
 export class Course {
-  id?: string; // UUID
+  id?: string; // Long
   imgSource?: string;
   name: string;
-  teacher: Teacher;
+  teacher: UserSimpleData;
   description: string;
   category: Category;
   //courseDetails? : CourseDetails;
   maxParticipantsNumber?: number;
   freeSlots?: number; // get from backend
-  constructor(imgSource: string, name: string, teacher: Teacher, description: string, category: Category, maxParticipantsNumber: number) {
+  constructor(imgSource: string, name: string, teacher: UserSimpleData, description: string, category: Category, maxParticipantsNumber: number) {
     this.imgSource = imgSource;
     this.name=name;
     this.teacher=teacher;
@@ -21,7 +22,7 @@ export class Course {
 }
 
 export class CourseDetails {
-  id?: string;
+  id?: string; // Long
   minAge?: number;
   maxAge?: number;
   price?: string; // cena za kurs / semestr
@@ -47,12 +48,6 @@ export enum Category {
   music = 'MUSIC',
   sport = 'SPORT',
   default = 'OTHER'
-}
-
-export interface Teacher { // or: PersonFullName
-  id?: string, // UUID
-  firstName?: string,
-  lastName?: string
 }
 
 export const DEFAULT_IMG_SOURCE = "assets/icons/default.png"
