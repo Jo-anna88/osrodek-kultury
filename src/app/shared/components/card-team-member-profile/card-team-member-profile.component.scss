@@ -3,5 +3,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin: 1rem;
+}
+
+.full-name {
+  padding: 1rem 0;
+  text-align: center;
 }

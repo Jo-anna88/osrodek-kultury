@@ -1,4 +1,4 @@
-import {EmployeeProfile} from "../../shared/components/card-profile/profile-model";
+import {EmployeeProfile} from "../../shared/components/card-team-member-profile/profile-model";
 import {SIMPLE_TEXT_SHORT} from "../../../assets/constants";
 
 export const mockEmployee : EmployeeProfile [] = [

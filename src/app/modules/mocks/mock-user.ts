@@ -25,8 +25,21 @@ export const EMPLOYEE_MOCK: User = {
   description: SIMPLE_TEXT_SHORT
 }
 
-let child1: User = {
+export const ADMIN_MOCK: User = {
   id: "3",
+  firstName: "Paweł",
+  lastName: "Zorro",
+  phone: "456-789-123",
+  username: "pawel.zorro@ccw.pl",
+  age: 42,
+  headshot: "assets/images/avatar1.svg",
+  role: Role.Admin,
+  position: "Director",
+  description: SIMPLE_TEXT_SHORT
+}
+
+let child1: User = {
+  id: "4",
   firstName: "Kunegunda",
   lastName: "Nowak",
   phone: "123-456-789", // parent's phone
@@ -36,7 +49,7 @@ let child1: User = {
   role: Role.Client
 }
 let child2: User = {
-  id: "4",
+  id: "5",
   firstName: "Stefania",
   lastName: "Nowak",
   phone: "123-456-789", // parent's phone
@@ -46,7 +59,7 @@ let child2: User = {
   role: Role.Client
 }
 let child3: User = {
-  id: "5",
+  id: "6",
   firstName: "Krzysztof",
   lastName: "Nowak",
   phone: "123-456-789", // parent's phone

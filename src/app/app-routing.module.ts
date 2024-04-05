@@ -19,6 +19,8 @@ import {
 import {
   JoinConfirmationDialogComponent
 } from "./modules/courses/join-confirmation-dialog/join-confirmation-dialog.component";
+import {AddEmployeeFormComponent} from "./modules/about/add-employee-form/add-employee-form.component";
+import {UpdateEmployeeFormComponent} from "./modules/about/update-employee-form/update-employee-form.component";
 
 const ROUTES: Routes = [
   {path: 'login', component: LoginComponent}, // for PRIMARY_OUTLET (default router with name 'primary')
@@ -30,7 +32,9 @@ const ROUTES: Routes = [
       {path: ModalType.UPDATE_COURSE, component: UpdateCourseFormComponent},
       {path: ModalType.CREATE_COURSE_DETAILS, component: CreateCourseDetailsFormComponent},
       {path: ModalType.UPDATE_COURSE_DETAILS, component: UpdateCourseDetailsFormComponent},
-      {path: ModalType.JOIN_CONFIRMATION, component: JoinConfirmationDialogComponent}
+      {path: ModalType.JOIN_CONFIRMATION, component: JoinConfirmationDialogComponent},
+      {path: ModalType.ADD_EMPLOYEE, component: AddEmployeeFormComponent},
+      {path: ModalType.UPDATE_EMPLOYEE, component: UpdateEmployeeFormComponent}
     ]
   }, // for named router outlet
   {path: '', redirectTo: '/home', pathMatch: 'full'},

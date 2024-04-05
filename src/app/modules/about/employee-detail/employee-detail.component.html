@@ -1,0 +1,8 @@
+<div class = "employee-detail-container">
+  <app-card-team-member-profile [profile] = employeeProfile></app-card-team-member-profile>
+  <app-menu *ngIf="coursesMenuItems.length"
+            [title]="'Classes led by me'"
+            [items]="coursesMenuItems"
+            [menuColor]="'#334075'"
+            (onSelectEvent)="navigateToClass($event)"></app-menu>
+</div>

@@ -17,7 +17,7 @@
       <li>Class schedule: {{courseDetails.date}}</li>
       <li>Place: {{courseDetails.location?.location}}</li>
       <li *ngIf="course.freeSlots !== 0; else noFreeSlots">
-        We have {{course.freeSlots}} available slots out of {{course.maxParticipantsNumber}} for this course
+        <i> We have {{course.freeSlots}} available slots out of {{course.maxParticipantsNumber}} for this course </i>
       </li>
     </ul>
     <div class="buttons-container" *ngIf="isAuthorized">

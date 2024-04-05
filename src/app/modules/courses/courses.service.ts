@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError, map, Observable, of, retry} from "rxjs";
-import {Course, CourseDetails} from "./course";
+import {Course, CourseBasicInfo, CourseDetails} from "./course";
 import {mockCourses} from "./courses-list/mock-courses";
 import {environment} from "../../../environments/environment";
 import {UserSimpleData} from "../../shared/models/user.model";
@@ -67,5 +67,9 @@ export class CoursesService {
       .pipe(
         map(teachers => teachers.map(teacher => {return {...teacher}}))
       );
+  }
+
+  getCoursesLedByTeacher(teacherId: string): Observable<Array<CourseBasicInfo>> {
+    return this.http.get<Array<CourseBasicInfo>>(this.apiUrl + /led-by/ + teacherId);
   }
 }

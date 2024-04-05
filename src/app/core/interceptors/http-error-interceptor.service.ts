@@ -15,12 +15,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("Http Error Interceptor", request);
-    /*
+    console.log("Http Error Interceptor - request: ", request);
+
     request = request.clone({
       withCredentials: true,
     });
-    */
+
+    console.log("Http Error Interceptor - request after setting 'withCredentials' to 'true': ", request);
+
     /*
     if(request.url.includes("auth")) {
       return next.handle(request);

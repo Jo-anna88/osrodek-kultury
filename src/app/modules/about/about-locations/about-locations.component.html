@@ -1,1 +1,14 @@
-<p>about-locations works!</p>
+<div class="locations-container">
+  <section class="section-location" *ngFor = "let address of addresses; index as i">
+    <img class="location-photo" [src]="'/assets/images/location'+(i+1)+'.jpg'" alt=""/>
+    <section class="address-section">
+      <p>{{address.location}}</p>
+      <p>{{address.street}} {{address.houseNumber}}</p>
+      <p>{{address.zipCode}} {{address.city}}</p>
+    </section>
+  </section>
+  <div class="source">
+    Images by <a href="https://www.freepik.com/free-vector/minimal-architecture-covers_9446808.htm#fromView=search&page=1&position=30&uuid=9cc5f73e-68d4-4af9-97db-463dc8364a4c">Freepik</a>
+  </div>
+</div>
+

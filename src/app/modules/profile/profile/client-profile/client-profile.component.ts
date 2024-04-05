@@ -74,7 +74,7 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
           this.coursesMenuItems.push(course.name);
         })
       },
-      error: (err) => {console.log(err)},
+      error: (err) => {console.log(err); this.isLoading = false;},
       complete: () => {this.isLoading = false;}
     })
     this.userService.getUserEvents().subscribe({
@@ -84,7 +84,8 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
           this.culturalEventsMenuItems.push(culturalEvent.name);
         });
       },
-      error: (err) => {console.log(err)}
+      error: (err) => {console.log(err); this.isLoading  = false;},
+      complete: () => {this.isLoading = false;}
     })
     this.userService.getChildren().subscribe({
       next: (children) => {
@@ -93,7 +94,8 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
           this.childrenMenuItems.push(child.firstName + " " + child.lastName);
         });
       },
-      error: (err) => {console.log(err)}
+      error: (err) => {console.log(err); this.isLoading = false},
+      complete: () => {this.isLoading = false;}
     })
   }
 

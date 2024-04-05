@@ -1,0 +1,49 @@
+<form [formGroup]="addEmployeeForm" class="form-container">
+  <fieldset class="form-group">
+
+    <div class="form-field">
+      <label>First Name:</label>
+      <input formControlName="firstName" class="form-control">
+      <!--    <div *ngIf="form.get('firstName').invalid && (form.get('firstName').dirty || form.get('firstName').touched)">-->
+      <!--      Please provide your first name.-->
+      <!--    </div>-->
+    </div>
+    <div class="form-field">
+      <label>Last Name:</label>
+      <input formControlName="lastName" class="form-control">
+    </div>
+    <div class="form-field">
+      <label>Phone:</label>
+      <input formControlName="phone" placeholder="+48 100 200 300" class="form-control">
+    </div>
+    <div class="form-field">
+      <label>Date of birth:</label>
+      <input formControlName="dob" placeholder="YYYY-MM-DD" class="form-control">
+    </div>
+    <div class="form-field">
+      <label>Role:</label>
+      <div class="radio-wrapper">
+        <span class="radio-item">
+          <input type="radio" formControlName="role" [value]=Role.Employee class="radio-button"/> Employee
+        </span>
+        <span class="radio-item">
+          <input type="radio" formControlName="role" [value]=Role.Admin class="radio-button"/> Administrator
+        </span>
+      </div>
+    </div>
+    <div class="form-field">
+      <label>Position:</label>
+      <input formControlName="position" class="form-control">
+    </div>
+    <div class="form-field">
+      <label>Description:</label>
+      <input formControlName="description" class="form-control">
+    </div>
+
+  </fieldset>
+
+  <div class="form-buttons">
+    <button class="button button-primary"
+            (click)="submit()" [disabled]="addEmployeeForm.untouched || (addEmployeeForm.dirty && addEmployeeForm.invalid)">{{buttonAction.SAVE}}</button>
+  </div>
+</form>

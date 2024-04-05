@@ -8,6 +8,8 @@ import {AuthService} from "../authorization/auth.service";
 import {Course} from "../../modules/courses/course";
 import {CulturalEvent} from "../../modules/cultural-events/cultural-events/cultural-event";
 import {mockCulturalEvents} from "../../modules/cultural-events/cultural-events/mock-cultural-events";
+import {mockCourses} from "../../modules/courses/courses-list/mock-courses";
+import {mockChildren} from "../../modules/mocks/mock-user";
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +42,8 @@ export class UserService {
   }
 
   getChildren(): Observable<Array<User>> {
-    return this.http.get<Array<User>>(this.apiUrl + '/children', {withCredentials: true});
+    return of(mockChildren);
+    //return this.http.get<Array<User>>(this.apiUrl + '/children', {withCredentials: true});
   }
 
   getUserSimpleData(): Observable<UserSimpleData> {
@@ -51,7 +54,8 @@ export class UserService {
   }
 
   getUserCourses(): Observable<Array<Course>> {
-    return this.http.get<Array<Course>>(this.apiUrl + '/courses', {withCredentials: true});
+    return of(mockCourses);
+    //return this.http.get<Array<Course>>(this.apiUrl + '/courses', {withCredentials: true});
   }
 
   getCoursesByUserId(id: string): Observable<Array<Course>> {

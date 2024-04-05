@@ -3,6 +3,7 @@ import {User} from "../../../../shared/models/user.model";
 import {Course} from "../../../courses/course";
 import {mockCourses} from "../../../courses/courses-list/mock-courses";
 import {UserService} from "../../../../core/services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-child-section',
@@ -16,7 +17,8 @@ export class ChildSectionComponent implements OnInit {
   courses: Course[] = [];
   coursesMenuItems: string[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+              private router: Router) {}
 
   ngOnInit() {
     this.userService.getCoursesByUserId(this.child.id!).subscribe({
@@ -29,7 +31,8 @@ export class ChildSectionComponent implements OnInit {
     })
   }
 
-  navigateToCourse(i: number) {
-
+  navigateToClass(index: number) {
+    let selectedCourseId = this.courses[index].id;
+    this.router.navigate(['classes', selectedCourseId]);
   }
 }

@@ -1,1 +1,29 @@
-<p>employee-admin-profile works!</p>
+<app-card-employee-profile [user]="user"></app-card-employee-profile>
+
+<!--<ng-container *ngIf="!isLoading; else spinner">-->
+<!--  <section class="menus-section">-->
+<!--    <app-menu *ngIf="courses.length"-->
+<!--              [title]="'My Classes'"-->
+<!--              [items]="coursesMenuItems"-->
+<!--              [menuColor]="'#BA264A'"-->
+<!--              (onSelectEvent)="navigateToClass($event)"></app-menu>-->
+<!--    <app-menu *ngIf="culturalEvents.length"-->
+<!--              [title]="'My Events'"-->
+<!--              [items]="culturalEventsMenuItems"-->
+<!--              [menuColor]="'#334075'"-->
+<!--              (onSelectEvent)="navigateToCulturalEvent($event)"></app-menu>-->
+<!--    <app-menu *ngIf="children.length"-->
+<!--              [title]="'My Children'"-->
+<!--              [items]="childrenMenuItems"-->
+<!--              [menuColor]="'#CE8D3D'"-->
+<!--              (onSelectEvent)="setSelectedChild($event)"></app-menu>-->
+<!--  </section>-->
+<!--</ng-container>-->
+
+<!--<section *ngIf="selectedChild.id" [attr.id]="'selected-child-section'">-->
+<!--  <app-child-section [child]="selectedChild"></app-child-section>-->
+<!--</section>-->
+
+<!--<ng-template #spinner>-->
+<!--  <app-spinner [note]="spinnerNote"></app-spinner>-->
+<!--</ng-template>-->

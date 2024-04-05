@@ -10,7 +10,7 @@
         <a routerLink="home"
            routerLinkActive="active"> Home </a>
       </li>
-      <li (click)="toggleAboutDropdown()" [class.active]="isAboutPage">
+      <li class="about-item" (click)="toggleAboutDropdown()" [class.active]="isAboutPage">
         About <i class="bi bi-caret-down-fill dropdown-arrow" [class.rotated]="isAboutDropdown"></i>
       </li>
       <li (click)="selectNavItem()">

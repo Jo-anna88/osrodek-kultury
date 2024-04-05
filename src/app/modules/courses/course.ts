@@ -21,6 +21,11 @@ export class Course {
   }
 }
 
+export interface CourseBasicInfo {
+  id?: number,
+  name?: string
+}
+
 export class CourseDetails {
   id?: string; // Long
   minAge?: number;

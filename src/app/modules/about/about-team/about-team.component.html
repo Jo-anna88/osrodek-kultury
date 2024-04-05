@@ -6,7 +6,14 @@
       </div>
       <div class = "profile-cards-container">
         <div class = "profile-card-wrapper" *ngFor="let employee of employees">
-          <app-card-profile [profile]="employee"></app-card-profile>
+          <app-card-team-member-profile [profile]="employee"
+                            [routerLink]="['/about-team/employee', employee.id]"
+          ></app-card-team-member-profile>
+<!--          <app-card-profile *ngIf="employee.position === 'Teacher'" [profile]="employee"-->
+<!--                            [routerLink]="['/about-team/employee', employee.id]"-->
+<!--          ></app-card-profile>-->
+<!--          <app-card-profile *ngIf="employee.position !== 'Teacher'" [profile]="employee"-->
+<!--          ></app-card-profile>-->
           <div class="buttons-container" *ngIf="isAuthorized">
             <button-edit (onEditEvent)="openModalUpdate(employee)"></button-edit>
             <button-delete (onDeleteEvent)="openModalDelete(employee.id!)"></button-delete>

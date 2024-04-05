@@ -21,3 +21,10 @@
 .button-add-wrapper {
   margin-bottom: 1rem;
 }
+
+app-card-team-member-profile {
+  cursor: pointer;
+  &:hover {
+    scale: 1.2;
+  }
+}

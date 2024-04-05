@@ -28,6 +28,8 @@ export class SignUpModalFormComponent {
       lastName: value.lastName,
       phone: value.phone,
       username: value.email,
+      dob: value.dob,
+      // headshot
       role: Role.Client
     }
     let pswd = value.password; // todo: first we need to validate if password is equal to confirmPassword

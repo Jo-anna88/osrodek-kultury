@@ -168,3 +168,13 @@ button:disabled {
     margin: 2px;
   }
 }
+
+.radio-wrapper {
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .radio-button {
+
+  }
+}

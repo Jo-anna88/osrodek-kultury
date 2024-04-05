@@ -9,4 +9,6 @@ import {User} from "../../../../shared/models/user.model";
 export class NonClientProfile {
     @Input()
     user: User = {}
+
+  // todo: For Teacher: it could show Schedule and give a possibility of sending Absence Info to course participants
 }
