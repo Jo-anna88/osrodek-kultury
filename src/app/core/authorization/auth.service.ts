@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {User, Role, Credentials} from "../../shared/models/user.model";
+import {User, Role, Credentials, UserSimpleData} from "../../shared/models/user.model";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {environment} from "../../../environments/environment";
 //import * as moment from "moment";
@@ -14,8 +14,8 @@ export class AuthService { // authentication && authorization
   role$ = new BehaviorSubject<Role | null>(null);
   constructor(private http: HttpClient) {}
 
-  logIn(credentials: Credentials): Observable<User> { // username (email) and password; to authenticate
-    return this.http.post<User>(this.apiUrl +'/login', credentials, {withCredentials: true})
+  logIn(credentials: Credentials): Observable<UserSimpleData> { // username (email) and password; to authenticate
+    return this.http.post<UserSimpleData>(this.apiUrl +'/login', credentials, {withCredentials: true})
   } // here a token should be sent in a cookie
 
   signUp(newUser: User, pswd: string): Observable<HttpResponse<any>> {
@@ -23,7 +23,7 @@ export class AuthService { // authentication && authorization
     return this.http.post<any>(this.apiUrl +'/signup', fullUser, {withCredentials: true});
   }
 
-  logout():Observable<any> {
+  logout():Observable<HttpResponse<any>> {
     return this.http.post<any>(this.apiUrl + '/logout', {}, {withCredentials: true});
   }
 

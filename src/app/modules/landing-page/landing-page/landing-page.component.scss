@@ -1,0 +1,11 @@
+@import 'src/styles';
+
+.dashboard-container {
+  height: 100%;
+  background-image: url("/assets/images/background-0.svg");
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}

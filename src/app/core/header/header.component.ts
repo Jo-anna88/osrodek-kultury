@@ -4,6 +4,7 @@ import {UserService} from "../services/user.service";
 import {AuthService} from "../authorization/auth.service";
 import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
 import {map} from "rxjs";
+import {StorageService} from "../services/storage.service";
 
 @Component({
   selector: 'app-header',
@@ -29,14 +30,16 @@ export class HeaderComponent {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private userService: UserService) {}
+              private storageService: StorageService) {}
 
   toggleProfileDropdown() {
     // show dropdown
     this.isProfileDropdown = !this.isProfileDropdown;
     // get user's name and surname to set the dropdown title
     if(this.isProfileDropdown) {
-      this.loadData();
+      let fullName = this.storageService.get("fullname");
+      if (fullName) {this.profileDropdownTitle = fullName}
+      //this.loadData();
     }
   }
 
@@ -44,17 +47,17 @@ export class HeaderComponent {
     this.isAboutDropdown = !this.isAboutDropdown;
   }
 
-  loadData() {
-    this.userService.getUserBasicData().subscribe({
-        next: (res: { firstName: string, lastName: string }) => {
-          this.profileDropdownTitle = res.firstName + " " + res.lastName;
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      }
-    )
-  }
+  // loadData() {
+  //   this.userService.getUserBasicData().subscribe({
+  //       next: (res: { firstName: string, lastName: string }) => {
+  //         this.profileDropdownTitle = res.firstName + " " + res.lastName;
+  //       },
+  //       error: (err) => {
+  //         console.log(err);
+  //       }
+  //     }
+  //   )
+  // }
 
   selectNavItem() { // select navigation item other than 'about'
     this.isAboutDropdown = false;
@@ -99,6 +102,7 @@ export class HeaderComponent {
       next: () => {
         this.authService.setNotAuthenticated();
         this.authService.setRoleToNull();
+        this.storageService.clear();
       }
     });
     this.router.navigate(['/login']);

@@ -1,11 +1,15 @@
-<!--<div><h1> {{text}} </h1></div>-->
-<div class = "actions-wrapper">
-  <div>
-    <p>Search a class</p>
-    <button>go to classes</button>
+
+<div class="actions-wrapper">
+    <div class="action-box" [routerLink]="'/classes'" >
+      <img class="action-icon" [src]="'assets/icons/paint-brush.png'" alt=""/>
+      <p class="action-description">{{ DashboardAction.findClass }}</p>
+    </div>
+    <div class="action-box" [routerLink]="'/events'">
+      <img class="action-icon" [src]="'assets/icons/theatre.png'" alt=""/>
+      <p class="action-description">{{ DashboardAction.findEvent }}</p>
+    </div>
+    <div class="action-box" (click)="createChildAccount()">
+      <img class="action-icon" [src]="'assets/icons/create-child-account.png'" alt=""/>
+      <p class="action-description">{{ DashboardAction.createChildAccount }}</p>
+    </div>
   </div>
-  <div>
-    <p>Search an event</p>
-    <button>go to events</button>
-  </div>
-</div>

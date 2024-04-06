@@ -1,11 +1,15 @@
-<div [ngSwitch]="currentUserRole">
-  <div *ngSwitchCase=Role.Client>
-    <app-dashboard-client></app-dashboard-client>
-  </div>
-  <div *ngSwitchCase=Role.Admin>
-    <app-dashboard-admin></app-dashboard-admin>
-  </div>
-  <div *ngSwitchCase=Role.Employee>
-    <app-dashboard-employee></app-dashboard-employee>
-  </div>
+<div [ngSwitch]="currentUserRole" class="dashboard-container">
+
+    <div class="dashboard-title h1">
+      Welcome {{ fullName }}!
+    </div>
+
+    <div class="dashboard-question h2">
+      What would you like to do today?
+    </div>
+
+    <app-dashboard-client *ngSwitchCase=Role.Client></app-dashboard-client>
+    <app-dashboard-admin *ngSwitchCase=Role.Admin></app-dashboard-admin>
+    <app-dashboard-employee *ngSwitchCase=Role.Employee></app-dashboard-employee>
+
 </div>

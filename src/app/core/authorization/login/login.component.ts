@@ -1,20 +1,20 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../services/user.service";
-import {Credentials, User} from "../../../shared/models/user.model";
+import {Router} from "@angular/router";
+import {Credentials, User, UserSimpleData} from "../../../shared/models/user.model";
 import {first, Subject, Subscription, takeUntil} from "rxjs";
 import {ModalService} from "../../services/modal.service";
 import {AlertService} from "../../../modules/alert/alert.service";
 import {ModalType} from "../../../shared/components/modal/modal";
+import {StorageService} from "../../services/storage.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnDestroy {
   destroy$ = new Subject<void>();
   form: FormGroup;
   subscription = new Subscription();
@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private alertService: AlertService,
               private modalService: ModalService,
+              private storageService: StorageService,
               private router: Router) {
 
     this.form = this.fb.group({
@@ -38,9 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
-  }
-
   logIn() {
     const val = this.form.value;
     if (val.email && val.password) {
@@ -48,15 +46,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.authService.logIn(credentials)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-            next: (user) => {
-              console.log("Response after login: ", user)
-              if (user) {
-                this.authService.setAuthenticated();
-                this.authService.setRole();
-              } else {
-                this.authService.setNotAuthenticated();
-                this.authService.setRoleToNull();
-              }
+            next: (result: UserSimpleData) => {
+              this.storageService.save("fullname", result.firstName + " " + result.lastName);
+              this.authService.setAuthenticated();
+              this.authService.setRole();
               //const url = this.route.snapshot.queryParams['requested'];
               //url ? this.router.navigateByUrl(url) :
               this.router.navigate(['landing-page']);
@@ -82,9 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.authService.signUp(data.user, data.password)
             //.pipe(takeUntil(this.destroy$))
             .subscribe({
-              next: (nUser) => {
-                console.log("Response after signup: ", nUser);
-              }
+              next: (value) => {} // void
             })
           //this.subscription.unsubscribe(); // it is needed because without it, it sends request many times from modal (???)
           this.modalService.closeModal();

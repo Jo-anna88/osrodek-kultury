@@ -15,6 +15,7 @@ export class SignUpModalFormComponent {
     lastName: ['', Validators.required],
     phone: [''],
     email: ['', [Validators.required, Validators.email]],
+    dob: ['', Validators.required],
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]]
   });
