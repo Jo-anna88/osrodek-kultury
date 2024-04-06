@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Role} from "../../../shared/models/user.model";
 import {AuthService} from "../../../core/authorization/auth.service";
 import {Subscription} from "rxjs";
-import {DashboardAction} from "../../dashboard/dashboard-actions-model";
 import {StorageService} from "../../../core/services/storage.service";
 
 @Component({

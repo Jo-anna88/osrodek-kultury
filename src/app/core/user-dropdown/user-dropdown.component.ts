@@ -21,7 +21,6 @@ export class UserDropdownComponent {
   navigateToProfile() {
     this.navToProfileEvent.emit();
   }
-
   logOut() {
     this.logOutEvent.emit();
   }

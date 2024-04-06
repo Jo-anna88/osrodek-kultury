@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit{
 
   ngOnInit() {
     //this.user = CLIENT_MOCK;
-    this.user = EMPLOYEE_MOCK;
+    //this.user = EMPLOYEE_MOCK;
     //this.user = ADMIN_MOCK;
     this.loadData();
   }

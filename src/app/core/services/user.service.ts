@@ -38,8 +38,8 @@ export class UserService {
   }
 
   getChildren(): Observable<Array<User>> {
-    return of(mockChildren);
-    //return this.http.get<Array<User>>(this.apiUrl + '/children', {withCredentials: true});
+    //return of(mockChildren);
+    return this.http.get<Array<User>>(this.apiUrl + '/children', {withCredentials: true});
   }
 
   getUserSimpleData(): Observable<UserSimpleData> {
@@ -50,8 +50,8 @@ export class UserService {
   }
 
   getUserCourses(): Observable<Array<Course>> {
-    return of(mockCourses);
-    //return this.http.get<Array<Course>>(this.apiUrl + '/courses', {withCredentials: true});
+    //return of(mockCourses);
+    return this.http.get<Array<Course>>(this.apiUrl + '/courses', {withCredentials: true});
   }
 
   getCoursesByUserId(id: string): Observable<Array<Course>> {

@@ -1,11 +1,10 @@
-<!--<div><h1> {{text}} </h1></div>-->
-<div class = "actions-wrapper">
-  <div>
-    <p>Edit classes</p>
-    <button>go to classes</button>
+<div class="actions-wrapper">
+  <div class="action-box" [routerLink]="'/classes'" >
+    <img class="action-icon" [src]="'assets/icons/paint-brush.png'" alt=""/>
+    <p class="action-description">{{ DashboardAction.editClasses }}</p>
   </div>
-  <div>
-    <p>Edit events</p>
-    <button>go to events</button>
+  <div class="action-box" [routerLink]="'/events'">
+    <img class="action-icon" [src]="'assets/icons/theatre.png'" alt=""/>
+    <p class="action-description">{{ DashboardAction.editEvents }}</p>
   </div>
 </div>
