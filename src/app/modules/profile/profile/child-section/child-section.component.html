@@ -1,8 +1,8 @@
 <section class = "child-data-section">
   <app-card-client-profile [user]="child"></app-card-client-profile>
   <div class="buttons-container">
-    <button-edit></button-edit>
-    <button-delete></button-delete>
+    <button-edit (onEditEvent)="onChildUpdate()"></button-edit>
+    <button-delete (onDeleteEvent)="onChildDelete()"></button-delete>
   </div>
   <app-menu *ngIf="courses.length"
             [title]="'Child\'s Classes'"

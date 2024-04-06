@@ -7,7 +7,6 @@ import {AuthService} from "../../../core/authorization/auth.service";
 import {first, Subject, Subscription, takeUntil} from "rxjs";
 import {Role, User} from "../../../shared/models/user.model";
 import {EmployeeService} from "../employee.service";
-import {Course, CourseDetails} from "../../courses/course";
 import {ModalType} from "../../../shared/components/modal/modal";
 
 @Component({

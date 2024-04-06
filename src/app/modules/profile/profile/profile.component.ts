@@ -19,10 +19,10 @@ export class ProfileComponent implements OnInit{
   constructor(private userService: UserService){}
 
   ngOnInit() {
-    //this.user = CLIENT_MOCK;
+    this.user = CLIENT_MOCK;
     //this.user = EMPLOYEE_MOCK;
     //this.user = ADMIN_MOCK;
-    this.loadData();
+    //this.loadData();
   }
 
   loadData() {
@@ -31,12 +31,10 @@ export class ProfileComponent implements OnInit{
     this.userService.getUserProfile().subscribe({
       next: (user: User) => {
         this.user = user;
-        console.log(user);
       },
       error: (err) => {
         this.isLoading = false;
         this.toggleSpinner();
-        console.log(err);
       },
       complete: () => {
         this.isLoading = false;

@@ -12,6 +12,8 @@ import {SignUpModalFormComponent} from "./authorization/sign-up-modal-form/sign-
 import {SharedModule} from "../shared/shared.module";
 import { UserDropdownComponent } from './user-dropdown/user-dropdown.component';
 import { AboutDropdownComponent } from './about-dropdown/about-dropdown.component';
+import {AddChildFormComponent} from "./forms/add-child-form/add-child-form.component";
+import {UpdateChildFormComponent} from "./forms/update-child-form/update-child-form.component";
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import { AboutDropdownComponent } from './about-dropdown/about-dropdown.componen
         LoginComponent,
         SignUpModalFormComponent,
         UserDropdownComponent,
-        AboutDropdownComponent
+        AboutDropdownComponent,
+      AddChildFormComponent,
+      UpdateChildFormComponent
     ],
   imports: [
     MatButtonModule,

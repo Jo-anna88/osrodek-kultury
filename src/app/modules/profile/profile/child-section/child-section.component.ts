@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from "../../../../shared/models/user.model";
 import {Course} from "../../../courses/course";
 import {mockCourses} from "../../../courses/courses-list/mock-courses";
@@ -13,6 +13,10 @@ import {Router} from "@angular/router";
 export class ChildSectionComponent implements OnInit {
   @Input()
   child: User = {}
+  @Output()
+  onChildUpdateEvent = new EventEmitter();
+  @Output()
+  onChildDeleteEvent = new EventEmitter();
 
   courses: Course[] = [];
   coursesMenuItems: string[] = [];
@@ -34,5 +38,15 @@ export class ChildSectionComponent implements OnInit {
   navigateToClass(index: number) {
     let selectedCourseId = this.courses[index].id;
     this.router.navigate(['classes', selectedCourseId]);
+  }
+
+  onChildUpdate() {
+    // todo: open modal for update child -> update list of children (e.g. by sending updated child and using its id)
+    this.onChildUpdateEvent.emit();
+  }
+
+  onChildDelete() {
+    // todo: open modal for delete child -> update list of children (e.g. by sending id of child and using it)
+    this.onChildDeleteEvent.emit();
   }
 }

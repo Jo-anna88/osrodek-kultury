@@ -1,0 +1,26 @@
+<form [formGroup]="createChildAccountForm" class="form-container">
+  <fieldset class="form-group">
+    <div class="form-field">
+      <label>First Name:</label>
+      <input formControlName="firstName" class="form-control">
+    </div>
+    <div class="form-field">
+      <label>Last Name:</label>
+      <input formControlName="lastName" class="form-control">
+    </div>
+    <div class="form-field">
+      <label>Date of birth:</label>
+      <input formControlName="dob" placeholder="YYYY-MM-DD" class="form-control">
+    </div>
+  </fieldset>
+
+  <div class="form-buttons">
+    <button class="button button-secondary"
+            (click)="close()">{{buttonAction.CANCEL}}
+    </button>
+    <button class="button button-primary"
+            (click)="submit()">{{buttonAction.CREATE}}
+    </button>
+  </div>
+</form>
+

@@ -49,6 +49,18 @@ export class UserService {
     return this.http.get<Array<UserSimpleData>>(this.apiUrl + '/children-simple', {withCredentials: true});
   }
 
+  addChild(child: User): Observable<User> {
+    return this.http.post<User>(this.apiUrl + '/child', child);
+  }
+
+  updateChild(child: User): Observable<User> {
+    return this.http.put<User>(this.apiUrl + '/child', child);
+  }
+
+  deleteChild(childId: string): Observable<any> {
+    return this.http.delete<any>(this.apiUrl + '/child/' + childId);
+  }
+
   getUserCourses(): Observable<Array<Course>> {
     //return of(mockCourses);
     return this.http.get<Array<Course>>(this.apiUrl + '/courses', {withCredentials: true});
