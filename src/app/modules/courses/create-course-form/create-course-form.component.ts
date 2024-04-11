@@ -27,7 +27,7 @@ export class CreateCourseFormComponent implements OnInit {
               private courseService: CoursesService, private addressService: AddressService) {
     this.createCourseForm = this.fb.group({
       name: ['', Validators.required],
-      teacher: [null, Validators.required],
+      teacher: [null],
       description: ['', Validators.required],
       category: ['', Validators.required],
       maxParticipantsNumber: ['', Validators.required],

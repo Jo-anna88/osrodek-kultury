@@ -2,7 +2,7 @@
 
   <div class = "course-data">
     <h2>{{course.name | uppercase}} </h2>
-    <p>Teacher: <b>{{course.teacher.firstName}} {{course.teacher.lastName}}</b></p>
+    <p *ngIf="course.teacher">Teacher: <b>{{course.teacher.firstName}} {{course.teacher.lastName}}</b></p>
     <p>{{course.description}}</p>
   </div>
 
@@ -16,8 +16,8 @@
       <li>Lesson duration: {{courseDetails.lessonDurationMinutes}} minutes</li>
       <li>Class schedule: {{courseDetails.date}}</li>
       <li>Place: {{courseDetails.location?.location}}</li>
-      <li *ngIf="course.freeSlots !== 0; else noFreeSlots">
-        <i> We have {{course.freeSlots}} available slots out of {{course.maxParticipantsNumber}} for this course </i>
+      <li class = "slots-message" *ngIf="course.freeSlots !== 0; else noFreeSlots">
+        We have {{course.freeSlots}} available slots out of {{course.maxParticipantsNumber}} for this course.
       </li>
     </ul>
     <div class="buttons-container" *ngIf="isAuthorized">
@@ -30,7 +30,7 @@
   </div>
 
   <div class="no-details-message" *ngIf="courseDetails === null">
-    <p><i>There is no details for now.</i></p>
+    <p>There is no details for now.</p>
     <button-add *ngIf = "isAuthorized" class="button-small" (onAddEvent)="addDetails()"></button-add>
   </div>
 
@@ -41,7 +41,7 @@
 </div>
 
 <ng-template #noFreeSlots>
-  <li>
+  <li class = "slots-message">
     Sorry, there is no more available slots for this course.
   </li>
 </ng-template>

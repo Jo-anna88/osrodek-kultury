@@ -17,8 +17,12 @@ export class EmployeeService {
     return this.http.get<Array<EmployeeProfile>>(this.apiUrl + 's');
   }
 
-  getEmployeeById(id: string): Observable<EmployeeProfile> {
-    return this.http.get<EmployeeProfile>(this.apiUrl + '/' + id);
+  getEmployeeById(id: string): Observable<User> {
+    return this.http.get<User>(this.apiUrl + '/' + id);
+  }
+
+  getEmployeeProfileById(id: string): Observable<EmployeeProfile> {
+    return this.http.get<EmployeeProfile>(this.apiUrl + '/' + id + '/profile');
     //return of(EMPLOYEE_MOCK);
   }
 

@@ -11,7 +11,7 @@ import {StorageService} from "../services/storage.service";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   // navigation items
   items: string[] = mockNavbarItems;
 
@@ -31,6 +31,14 @@ export class HeaderComponent {
   constructor(private authService: AuthService,
               private router: Router,
               private storageService: StorageService) {}
+
+  ngOnInit() {
+    this.checkIsUser();
+  }
+
+  checkIsUser() {
+    this.isUser = this.storageService.exists("fullname");
+  }
 
   toggleProfileDropdown() {
     // show dropdown
@@ -103,8 +111,9 @@ export class HeaderComponent {
         this.authService.setNotAuthenticated();
         this.authService.setRoleToNull();
         this.storageService.clear();
+        this.ngOnInit();
+        this.router.navigate(['/login']);
       }
     });
-    this.router.navigate(['/login']);
   }
 }

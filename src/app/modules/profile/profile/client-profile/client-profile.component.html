@@ -21,7 +21,10 @@
 </ng-container>
 
 <section *ngIf="selectedChild.id" [attr.id]="'selected-child-section'">
-  <app-child-section [child]="selectedChild"></app-child-section>
+  <app-child-section [child]="selectedChild"
+                     (onChildUpdateEvent)="updateChild($event)"
+                     (onChildDeleteEvent)="deleteChild()"
+  ></app-child-section>
 </section>
 
 <ng-template #spinner>

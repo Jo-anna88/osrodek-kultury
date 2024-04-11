@@ -12,9 +12,9 @@
           </i>
           <p class="course-name">{{course.name}}</p>
         </a>
-        <p class="course-description-divider">|</p>
+        <p *ngIf = "course.teacher" class="course-description-divider">|</p>
         <!--        link to teacher page or some pop-up window / profile card about him/her-->
-        <a class="course-teacher" [routerLink]="['/about-team/employee', course.teacher.id]">
+        <a *ngIf = "course.teacher" class="course-teacher" [routerLink]="['/about-team/employee', course.teacher.id]">
           {{course.teacher.firstName}} {{course.teacher.lastName}}
         </a>
         <div class="buttons-container" *ngIf="isAuthorized">

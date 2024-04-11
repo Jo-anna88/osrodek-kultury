@@ -28,7 +28,7 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   loadData() {
-    this.employeeService.getEmployeeById(this.employeeId)
+    this.employeeService.getEmployeeProfileById(this.employeeId)
       .subscribe({
         next: (profile: EmployeeProfile) => {
           this.employeeProfile = profile

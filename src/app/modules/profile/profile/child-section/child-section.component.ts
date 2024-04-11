@@ -1,9 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from "../../../../shared/models/user.model";
 import {Course} from "../../../courses/course";
-import {mockCourses} from "../../../courses/courses-list/mock-courses";
 import {UserService} from "../../../../core/services/user.service";
 import {Router} from "@angular/router";
+import {ModalService} from "../../../../core/services/modal.service";
+import {first, Subscription} from "rxjs";
+import {ModalType} from "../../../../shared/components/modal/modal";
 
 @Component({
   selector: 'app-child-section',
@@ -14,14 +16,15 @@ export class ChildSectionComponent implements OnInit {
   @Input()
   child: User = {}
   @Output()
-  onChildUpdateEvent = new EventEmitter();
+  onChildUpdateEvent: EventEmitter<User> = new EventEmitter<User>();
   @Output()
-  onChildDeleteEvent = new EventEmitter();
+  onChildDeleteEvent: EventEmitter<void> = new EventEmitter<void>();
 
   courses: Course[] = [];
   coursesMenuItems: string[] = [];
 
   constructor(private userService: UserService,
+              private modalService: ModalService,
               private router: Router) {}
 
   ngOnInit() {
@@ -41,12 +44,59 @@ export class ChildSectionComponent implements OnInit {
   }
 
   onChildUpdate() {
-    // todo: open modal for update child -> update list of children (e.g. by sending updated child and using its id)
-    this.onChildUpdateEvent.emit();
+    this.openModalUpdate(this.child);
   }
 
   onChildDelete() {
-    // todo: open modal for delete child -> update list of children (e.g. by sending id of child and using it)
-    this.onChildDeleteEvent.emit();
+    this.openModalDelete(this.child.id!);
   }
+
+  openModalUpdate(child: User) {
+            this.modalService.setConfiguration({title: "Update child: " + child.firstName + " " + child.lastName,
+              data: {child: child}})
+            //this.modalService.openModal(ModalType.UPDATE_COURSE);
+            let subscription: Subscription = this.modalService.getModalEvent()
+              .pipe(first())
+              .subscribe({
+                next: (data: {child: User}) => {
+                  this.updateChild(data.child);
+                  this.modalService.closeModal();
+                }
+              })
+            this.modalService.openModal(ModalType.UPDATE_CHILD, subscription);
+          }
+
+updateChild(child: User) {
+    this.userService.updateChild(child)
+      .subscribe({
+        next: (updatedChild) => {
+          this.child = updatedChild; // to update data in child-section.html
+          this.onChildUpdateEvent.emit(updatedChild);
+        }
+      })
+}
+
+  openModalDelete(childId: string) {
+    this.modalService.setConfiguration({title: "Delete Confirmation", data: "child"});
+    //this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
+    let subscription = this.modalService.getModalEvent()
+      .pipe(first())
+      .subscribe({
+        next: (result: boolean) => {
+          if(result) {this.deleteChild(childId);}
+          this.modalService.closeModal();
+        }
+      });
+    this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
+  }
+
+  deleteChild(childId: string) {
+    this.userService.deleteChild(childId)
+      .subscribe({
+        next: (value) => {
+          this.onChildDeleteEvent.emit();
+        }
+      })
+  }
+
 }

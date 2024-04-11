@@ -1,3 +1,5 @@
+@import 'src/styles';
+
 .team-container {
   display: flex;
   flex-direction: column;
@@ -10,21 +12,20 @@
   flex-direction: row;
   flex-wrap: wrap;
   row-gap: 3rem;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .profile-card-wrapper {
   display: flex;
   flex-direction: column;
-}
-
-.button-add-wrapper {
-  margin-bottom: 1rem;
-}
-
-app-card-team-member-profile {
+  border-radius: 1.5rem;
+  background-color: transparentize($primary-yellow, 0.15);
   cursor: pointer;
   &:hover {
     scale: 1.2;
   }
+}
+
+.button-add-wrapper {
+  margin-bottom: 1rem;
 }

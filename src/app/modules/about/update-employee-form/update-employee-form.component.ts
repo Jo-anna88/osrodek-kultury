@@ -46,7 +46,6 @@ export class UpdateEmployeeFormComponent implements OnInit {
 
   submit() {
     let formValue = this.updateEmployeeForm.value;
-    console.log(formValue);
     this.modalService.emitModalEvent({employee: formValue});
   }
 }

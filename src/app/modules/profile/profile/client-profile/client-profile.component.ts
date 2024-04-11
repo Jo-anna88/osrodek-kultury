@@ -8,6 +8,7 @@ import {mockChildren} from "../../../mocks/mock-user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ViewportScroller} from "@angular/common";
 import {UserService} from "../../../../core/services/user.service";
+import {forkJoin} from "rxjs";
 
 // enum TypeOfItem {
 //   COURSE = 'Course',
@@ -67,34 +68,28 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
   loadData() {
     this.isLoading = true;
 
-    this.userService.getUserCourses().subscribe({
-      next: (courses) => {
+    forkJoin([
+      this.userService.getUserCourses(),
+      this.userService.getUserEvents(),
+      this.userService.getChildren()
+    ]).subscribe({
+      next: ([courses, culturalEvents, children]) => {
         this.courses = courses;
         this.courses.map((course) => {
           this.coursesMenuItems.push(course.name);
         })
-      },
-      error: (err) => {console.log(err); this.isLoading = false;},
-      complete: () => {this.isLoading = false;}
-    })
-    this.userService.getUserEvents().subscribe({
-      next: (culturalEvents) => {
+
         this.culturalEvents = culturalEvents;
         this.culturalEvents.map((culturalEvent) => {
           this.culturalEventsMenuItems.push(culturalEvent.name);
         });
-      },
-      error: (err) => {console.log(err); this.isLoading  = false;},
-      complete: () => {this.isLoading = false;}
-    })
-    this.userService.getChildren().subscribe({
-      next: (children) => {
+
         this.children = children;
         this.children.map((child) => {
           this.childrenMenuItems.push(child.firstName + " " + child.lastName);
         });
       },
-      error: (err) => {console.log(err); this.isLoading = false},
+      error: (err) => {console.log(err); this.isLoading = false;},
       complete: () => {this.isLoading = false;}
     })
   }
@@ -117,5 +112,17 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
   setSelectedChild(index: number) {
     this.selectedChild = this.children[index];
     this.router.navigate([], {relativeTo: this.route, fragment: 'selected-child-section' });
+  }
+
+  updateChild(updatedChild: User) {
+    let index = this.children.findIndex(child => child.id === updatedChild.id); // find index in an array
+    this.childrenMenuItems[index] = updatedChild.firstName + " " + updatedChild.lastName;
+  }
+
+  deleteChild() {
+    this.selectedChild = {}
+    this.router.navigate([], {relativeTo: this.route });
+    let index = this.children.findIndex(child => child.id === this.selectedChild.id); // find index in an array
+    this.childrenMenuItems.splice(index, 1); // remove element from array
   }
 }
