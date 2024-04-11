@@ -164,6 +164,16 @@ button:disabled {
   opacity: 0.3;
 }
 
+.form-date {
+  color: rgba(51,64,117,0.3);
+  &:focus {
+    color: $font-color
+  }
+  &.ng-valid.ng-dirty {
+    color: $font-color
+  }
+}
+
 .form-buttons {
   button {
     margin: 2px;
