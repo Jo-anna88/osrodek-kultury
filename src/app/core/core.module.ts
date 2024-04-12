@@ -13,7 +13,7 @@ import {SharedModule} from "../shared/shared.module";
 import { UserDropdownComponent } from './user-dropdown/user-dropdown.component';
 import { AboutDropdownComponent } from './about-dropdown/about-dropdown.component';
 import {AddChildFormComponent} from "./forms/add-child-form/add-child-form.component";
-import {UpdateChildFormComponent} from "./forms/update-child-form/update-child-form.component";
+import {UpdateClientFormComponent} from "./forms/update-client-form/update-client-form.component";
 
 @NgModule({
     declarations: [
@@ -24,7 +24,7 @@ import {UpdateChildFormComponent} from "./forms/update-child-form/update-child-f
         UserDropdownComponent,
         AboutDropdownComponent,
       AddChildFormComponent,
-      UpdateChildFormComponent
+      UpdateClientFormComponent
     ],
   imports: [
     MatButtonModule,

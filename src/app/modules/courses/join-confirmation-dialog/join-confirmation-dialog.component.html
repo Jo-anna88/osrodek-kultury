@@ -1,6 +1,6 @@
-<div class="modal-content-wrapper">
+<div class="modal-content-wrapper" *ngIf="!isLoading">
 <!--  when user hasn't got any children -->
-  <ng-template *ngIf="persons.length===1; else choosePersonTemplate">
+  <div *ngIf="persons.length===1; else choosePersonTemplate">
     <div class="dialog-question">
       You are registering for {{courseName}} class. Please, confirm your choice.
     </div>
@@ -13,7 +13,7 @@
               (click)="confirm()">{{buttonAction.REGISTER}}
       </button>
     </div>
-  </ng-template>
+  </div>
 </div>
 
 <!--  when user has got children -->

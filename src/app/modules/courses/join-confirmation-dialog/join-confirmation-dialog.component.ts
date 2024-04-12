@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ButtonAction, ModalConfiguration} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
-import {first, Subscription} from "rxjs";
+import {first, forkJoin, Subscription} from "rxjs";
 import {UserSimpleData} from "../../../shared/models/user.model";
 import {UserService} from "../../../core/services/user.service";
 import {NgForm} from "@angular/forms";
@@ -20,24 +20,17 @@ export class JoinConfirmationDialogComponent implements OnInit, OnDestroy {
   constructor(private modalService: ModalService, private userService: UserService) {
   }
   ngOnInit() {
-    this.subscription = this.modalService.getConfiguration()
-      .pipe(first())
-      .subscribe(
-        {
-          next: (config: ModalConfiguration) => {
-            this.courseName = config.data;
-            this.subscription.unsubscribe();
-          }
-        }
-      );
+    this.isLoading = true;
 
     // load persons
-    this.isLoading = true;
-    this.userService.getUserSimpleData().subscribe({
-      next: (user) => this.persons.push(user)
-    }); // todo: get from local storage ?
-    this.userService.getChildrenSimpleData().subscribe({
-      next: (children) => {
+    forkJoin([
+      this.modalService.getConfiguration().pipe(first()),
+      this.userService.getUserSimpleData(),
+      this.userService.getChildrenSimpleData()
+    ]).subscribe({
+      next: ([config, user, children]) => {
+        this.courseName = config.data;
+        this.persons.push(user);
         children.forEach(child => this.persons.push(child));
       },
       error: () => {this.isLoading = false;},
@@ -49,7 +42,7 @@ export class JoinConfirmationDialogComponent implements OnInit, OnDestroy {
     this.modalService.emitModalEvent({isConfirmed: false, id: ''});
   }
   confirm() {
-    this.modalService.emitModalEvent({isConfirmed: true, id: ''});
+    this.modalService.emitModalEvent({isConfirmed: true, id: this.persons[0].id});
   }
 
   onSubmit(participantForm: NgForm) {

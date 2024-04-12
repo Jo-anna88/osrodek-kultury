@@ -5,13 +5,17 @@
     <app-menu *ngIf="courses.length"
               [title]="'My Classes'"
               [items]="coursesMenuItems"
+              [isItemDeletable] = true
               [menuColor]="'#BA264A'"
-              (onSelectEvent)="navigateToClass($event)"></app-menu>
+              (onSelectEvent)="navigateToClass($event)"
+              (onDeleteEvent)="openModalDeleteCourse($event)"></app-menu>
     <app-menu *ngIf="culturalEvents.length"
               [title]="'My Events'"
               [items]="culturalEventsMenuItems"
+              [isItemDeletable] = true
               [menuColor]="'#334075'"
-              (onSelectEvent)="navigateToCulturalEvent($event)"></app-menu>
+              (onSelectEvent)="navigateToCulturalEvent($event)"
+              (onDeleteEvent)="openModalDeleteEvent($event)"></app-menu>
     <app-menu *ngIf="children.length"
               [title]="'My Children'"
               [items]="childrenMenuItems"
@@ -19,6 +23,22 @@
               (onSelectEvent)="setSelectedChild($event)"></app-menu>
   </section>
 </ng-container>
+
+<div class="manage-account-container">
+  <p class="manage-account-toggle" (click)="toggleAccountManagerView()">Manage your account</p>
+  <div *ngIf = "isAccountManager" [attr.id] = "'account-manager-section'" class = "account-manager">
+<!--    password change can be added here -->
+    <a (click)="onUpdateAccount()">
+      Update your profile data.
+      <i class ="bi bi-pencil update-icon"></i>
+    </a>
+
+    <a (click)="onDeleteAccount()">
+      Delete your CCW Account.
+      <i class="bi bi-trash delete-icon"></i>
+    </a>
+  </div>
+</div>
 
 <section *ngIf="selectedChild.id" [attr.id]="'selected-child-section'">
   <app-child-section [child]="selectedChild"

@@ -9,7 +9,7 @@ export enum ModalType {
   ADD_EMPLOYEE = "addEmployee",
   UPDATE_EMPLOYEE = "updateEmployee",
   ADD_CHILD = "addChild",
-  UPDATE_CHILD = "updateChild",
+  UPDATE_CLIENT_ACCOUNT = "updateClientAccount",
 }
 export enum ButtonAction {
   SAVE = "Save",
@@ -18,6 +18,8 @@ export enum ButtonAction {
   DELETE = "Delete",
   CANCEL = "Cancel",
   REGISTER = "Register",
+  WITHDRAW = "Withdraw from class",
+  CANCEL_BOOKING = "Cancel the booking",
   NONE = ""
 }
 
@@ -25,5 +27,7 @@ export interface ModalConfiguration {
   isClosable?: boolean,
   // isTitle?: boolean, // maybe it is not needed, because we can use: if(this.modalTitle) this.isTitle = true;
   title? : string,
-  data?: any // np. dane inicjalizujące do formularza przy Update, lub słowo-klucz w Delete, które określa item, który użytkownik oznaczył do usunięcia
+  data?: any, // np. dane inicjalizujące do formularza przy Update, lub słowo-klucz w Delete, które określa item, który użytkownik oznaczył do usunięcia
+  question? : string, // a field for custom question in delete/remove confirmation window
+  action?: ButtonAction
 }

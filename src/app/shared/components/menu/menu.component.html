@@ -2,8 +2,10 @@
   <div class = "menu-title" [style.background-color] = menuColor>{{ title | uppercase }}</div>
   <div class="menu-list">
     <app-menu-item *ngFor="let item of items; index as i"
-               (click)="selectItem(i)"
-               [data]="item"
-    ></app-menu-item>
+               (onSelect)="onSelectEvent.emit(i)"
+               [data]="item">
+      <i *ngIf="isItemDeletable" (click)="onDeleteEvent.emit(i)" class="bi bi-trash delete-icon"></i>
+      <i *ngIf="isItemUpdatable" (click)="onUpdateEvent.emit(i)" class="bi bi-pencil update-icon"></i>
+    </app-menu-item>
   </div>
 </section>

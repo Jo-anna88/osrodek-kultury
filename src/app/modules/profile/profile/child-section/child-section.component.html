@@ -7,6 +7,8 @@
   <app-menu *ngIf="courses.length"
             [title]="'Child\'s Classes'"
             [items]="coursesMenuItems"
+            [isItemDeletable] = true
             [menuColor]="'#BA264A'"
-            (onSelectEvent)="navigateToClass($event)"></app-menu>
+            (onSelectEvent)="navigateToClass($event)"
+            (onDeleteEvent)="openModalDeleteCourse($event)"></app-menu>
 </section>

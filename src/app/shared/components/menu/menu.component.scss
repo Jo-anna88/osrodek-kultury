@@ -21,3 +21,13 @@
   flex-direction: column;
   align-items: center;
 }
+
+.delete-icon {
+  cursor: pointer;
+  color: $primary-rose;
+}
+
+.update-icon {
+  cursor: pointer;
+  color: $primary-blue;
+}

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {User, UserSimpleData} from "../../shared/models/user.model";
 import {StorageService} from "./storage.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {AuthService} from "../authorization/auth.service";
 import {Course} from "../../modules/courses/course";
@@ -37,6 +37,10 @@ export class UserService {
     return this.http.get<User>(this.apiUrl +'/profile', {withCredentials: true});
   }
 
+  updateUserProfile(client: User): Observable<User> {
+    return this.http.put<User>(this.apiUrl, client);
+  }
+
   getChildren(): Observable<Array<User>> {
     //return of(mockChildren);
     return this.http.get<Array<User>>(this.apiUrl + '/children', {withCredentials: true});
@@ -45,6 +49,7 @@ export class UserService {
   getUserSimpleData(): Observable<UserSimpleData> {
     return this.http.get<UserSimpleData>(this.apiUrl + '/user-simple', {withCredentials: true});
   }
+
   getChildrenSimpleData(): Observable<Array<UserSimpleData>> {
     return this.http.get<Array<UserSimpleData>>(this.apiUrl + '/children-simple', {withCredentials: true});
   }
@@ -74,16 +79,16 @@ export class UserService {
     return of(mockCulturalEvents);
   }
 
-  joinCourse(courseId: string, userId: string) {
-    if (userId === '') {
-      return this.http.get(this.apiUrl + '/join-course/' + courseId, {withCredentials: true});
-    } else {
-      return this.joinCourseByUserId(courseId, userId);
-    }
+  joinCourse(courseId: string, userId: string) { // user or child id
+    return this.http.get(this.apiUrl + '/join-course/' + courseId + '/' + userId, {withCredentials: true});
   }
 
-  joinCourseByUserId(courseId: string, userId: string) { // user or child id
-    return this.http.get(this.apiUrl + '/join-course/' + courseId + '/' + userId, {withCredentials: true});
+  removeCourse(courseId: string, userId: string) {
+    return this.http.delete(this.apiUrl + '/withdraw-from-course/' + courseId + '/' + userId);
+  }
+
+  removeAccount(): Observable<HttpResponse<void>> {
+    return this.http.delete<HttpResponse<void>>(this.apiUrl);
   }
 
 }

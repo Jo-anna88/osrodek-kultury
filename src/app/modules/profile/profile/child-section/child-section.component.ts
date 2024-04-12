@@ -5,7 +5,7 @@ import {UserService} from "../../../../core/services/user.service";
 import {Router} from "@angular/router";
 import {ModalService} from "../../../../core/services/modal.service";
 import {first, Subscription} from "rxjs";
-import {ModalType} from "../../../../shared/components/modal/modal";
+import {ButtonAction, ModalType} from "../../../../shared/components/modal/modal";
 
 @Component({
   selector: 'app-child-section',
@@ -53,23 +53,23 @@ export class ChildSectionComponent implements OnInit {
 
   openModalUpdate(child: User) {
             this.modalService.setConfiguration({title: "Update child: " + child.firstName + " " + child.lastName,
-              data: {child: child}})
+              data: {client: child}})
             //this.modalService.openModal(ModalType.UPDATE_COURSE);
             let subscription: Subscription = this.modalService.getModalEvent()
               .pipe(first())
               .subscribe({
-                next: (data: {child: User}) => {
-                  this.updateChild(data.child);
+                next: (data: {client: User}) => {
+                  this.updateChild(data.client);
                   this.modalService.closeModal();
                 }
               })
-            this.modalService.openModal(ModalType.UPDATE_CHILD, subscription);
+            this.modalService.openModal(ModalType.UPDATE_CLIENT_ACCOUNT, subscription);
           }
 
 updateChild(child: User) {
     this.userService.updateChild(child)
       .subscribe({
-        next: (updatedChild) => {
+        next: (updatedChild: User) => {
           this.child = updatedChild; // to update data in child-section.html
           this.onChildUpdateEvent.emit(updatedChild);
         }
@@ -97,6 +97,36 @@ updateChild(child: User) {
           this.onChildDeleteEvent.emit();
         }
       })
+  }
+
+  openModalDeleteCourse(index: number) {
+    this.modalService.setConfiguration({
+      title: "Withdraw from Class",
+      question: "Do yo really want do withdraw " + this.child.firstName + " " + this.child.lastName
+                + " from " + this.courses[index].name + " class?",
+      action: ButtonAction.WITHDRAW
+    });
+    //this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
+    let subscription = this.modalService.getModalEvent()
+      .pipe(first())
+      .subscribe({
+        next: (result: boolean) => {
+          if(result) {this.withdrawFromClass(index);}
+          this.modalService.closeModal();
+        }
+      });
+    this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
+  }
+
+  withdrawFromClass(index: number) {
+    let courseId = this.courses[index].id!;
+    this.userService.removeCourse(courseId, this.child.id!).subscribe({
+      error: (err) => {console.log(err)},
+      complete: () => {
+        this.coursesMenuItems.splice(index, 1); // remove element from array
+        console.log("Course was removed successfully.")
+      }
+    })
   }
 
 }

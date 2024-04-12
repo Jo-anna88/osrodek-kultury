@@ -9,8 +9,9 @@ import {ModalService} from "../../../core/services/modal.service";
   styleUrls: ['./delete-confirmation-dialog.component.scss']
 })
 export class DeleteConfirmationDialogComponent implements OnInit, OnDestroy {
-  title: string = "Delete Confirmation"; // default title
   data: string = ""; // a kind of item/data to be deleted
+  question: string = ""; // a custom question
+  confirmButton = ButtonAction.DELETE;
   protected readonly buttonAction = ButtonAction;
   subscription: Subscription = new Subscription();
   constructor(private modalService: ModalService) {
@@ -21,8 +22,9 @@ export class DeleteConfirmationDialogComponent implements OnInit, OnDestroy {
       .subscribe(
         {
           next: (config: ModalConfiguration) => {
-            this.data = config.data;
-            if(config.title) this.title = config.title;
+            if (config.data) { this.data = config.data; }
+            if (config.question) { this.question = config.question; }
+            if (config.action) { this.confirmButton = config.action; }
             this.subscription.unsubscribe();
           }
         }

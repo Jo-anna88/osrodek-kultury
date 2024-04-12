@@ -19,10 +19,10 @@ export class ProfileComponent implements OnInit{
   constructor(private userService: UserService){}
 
   ngOnInit() {
-    this.user = CLIENT_MOCK;
+    //this.user = CLIENT_MOCK;
     //this.user = EMPLOYEE_MOCK;
     //this.user = ADMIN_MOCK;
-    //this.loadData();
+    this.loadData();
   }
 
   loadData() {

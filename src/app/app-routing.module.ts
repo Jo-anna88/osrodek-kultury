@@ -22,7 +22,7 @@ import {
 import {AddEmployeeFormComponent} from "./modules/about/add-employee-form/add-employee-form.component";
 import {UpdateEmployeeFormComponent} from "./modules/about/update-employee-form/update-employee-form.component";
 import {AddChildFormComponent} from "./core/forms/add-child-form/add-child-form.component";
-import {UpdateChildFormComponent} from "./core/forms/update-child-form/update-child-form.component";
+import {UpdateClientFormComponent} from "./core/forms/update-client-form/update-client-form.component";
 
 const ROUTES: Routes = [
   {path: 'login', component: LoginComponent}, // for PRIMARY_OUTLET (default router with name 'primary')
@@ -38,7 +38,7 @@ const ROUTES: Routes = [
       {path: ModalType.ADD_EMPLOYEE, component: AddEmployeeFormComponent},
       {path: ModalType.UPDATE_EMPLOYEE, component: UpdateEmployeeFormComponent},
       {path: ModalType.ADD_CHILD, component: AddChildFormComponent},
-      {path: ModalType.UPDATE_CHILD, component: UpdateChildFormComponent}
+      {path: ModalType.UPDATE_CLIENT_ACCOUNT, component: UpdateClientFormComponent}
     ]
   }, // for named router outlet
   {path: '', redirectTo: '/home', pathMatch: 'full'},

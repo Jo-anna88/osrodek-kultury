@@ -11,12 +11,16 @@ export class MenuComponent {
   @Input()
   items: string[] = []
   @Input()
+  isItemDeletable: boolean = false;
+  @Input()
+  isItemUpdatable: boolean = false;
+  @Input()
   menuColor: string = "";
   @Output()
   onSelectEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output()
+  onDeleteEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output()
+  onUpdateEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  selectItem(i: number) {
-    console.log("selected item: ", this.items[i])
-    this.onSelectEvent.emit(i);
-  }
 }
