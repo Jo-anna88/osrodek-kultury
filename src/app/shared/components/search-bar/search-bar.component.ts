@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Subject, switchMap} from "rxjs";
 import {SearchService} from "../../../core/services/search.service";
 import {SearchType} from "../../models/search-type.model";
@@ -11,10 +11,14 @@ import {SearchType} from "../../models/search-type.model";
 export class SearchBarComponent implements OnInit {
   @Input()
   searchType: SearchType = SearchType.NONE;
+  @Output()
+  results: EventEmitter<Array<any>> = new EventEmitter<Array<any>>()
+  @Output()
+  queryRemoved: EventEmitter<void> = new EventEmitter<void>();
 
+  searchTimeout: any; //NodeJS.Timeout;
   valid$: Subject<boolean> = new Subject<boolean>();
   showInvalidMessage: boolean = false;
-  results : any[] = []
 
   ngOnInit() {
     this.valid$.subscribe({
@@ -36,19 +40,14 @@ export class SearchBarComponent implements OnInit {
   }
 
   search(value: string) {
+    if (value === '') {this.queryRemoved.emit();}
     if (value.length >= 3) {
       this.valid$.next(true);
-      this.searchService.search(value, this.searchType)
-        .pipe(
-          debounceTime(500),
-          distinctUntilChanged()
-        )
-        .subscribe({
-          next: (results) => {
-            this.results = results;
-            console.log(this.results);
-          }
-        })
+
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout( () => {
+        this.setResults(this.capitalizeFirstLetter(value))
+      }, 1000);
     } else {
       this.valid$.next(false);
     }
@@ -56,5 +55,20 @@ export class SearchBarComponent implements OnInit {
 
   clearValue(inputField: HTMLInputElement): void {
     inputField.value = ''; // Clear the value of the input field
+    this.queryRemoved.emit();
+  }
+
+  setResults(value: string) {
+    this.searchService.search(value, this.searchType)
+      .subscribe({
+        next: (results) => {
+          this.results.emit(results);
+        }
+      })
+  }
+
+  capitalizeFirstLetter(value: string): string {
+    if (!value) return value;
+    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 }

@@ -24,6 +24,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   selectedCourse: Course = {name: "", teacher: {}, description: "", category: Category.default};
   selectedCourseDetails: CourseDetails = {}
   isAuthorized: boolean = false;
+  protected readonly SearchType = SearchType;
 
   constructor(private coursesService: CoursesService,
               private alertService: AlertService,
@@ -64,6 +65,15 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
       })
+  }
+
+  setResults(courses : Array<Course>) {
+    if (courses.length > 0 ) {this.courses = courses;}
+    else {console.log("***** THERE IS NO RESULTS *****")}
+  }
+
+  clearResults() {
+    this.loadData();
   }
 
 // it opens modal with form to create new course with courseDetails as optional
@@ -202,5 +212,5 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  protected readonly SearchType = SearchType;
+
 }
