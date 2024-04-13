@@ -25,6 +25,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   selectedCourseDetails: CourseDetails = {}
   isAuthorized: boolean = false;
   protected readonly SearchType = SearchType;
+  isSearch: boolean = false;
 
   constructor(private coursesService: CoursesService,
               private alertService: AlertService,
@@ -68,11 +69,13 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   setResults(courses : Array<Course>) {
-    if (courses.length > 0 ) {this.courses = courses;}
-    else {console.log("***** THERE IS NO RESULTS *****")}
+    this.isSearch = true;
+    this.courses = courses;
+    if (courses.length === 0 ) {console.log("***** THERE IS NO RESULTS *****")}
   }
 
   clearResults() {
+    this.isSearch = false;
     this.loadData();
   }
 
