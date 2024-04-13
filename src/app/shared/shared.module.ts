@@ -21,6 +21,7 @@ import { CardClientProfileComponent } from './components/card-client-profile/car
 import { MenuComponent } from './components/menu/menu.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { CardEmployeeProfileComponent } from './components/card-employee-profile/card-employee-profile.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { CardEmployeeProfileComponent } from './components/card-employee-profile
         CardClientProfileComponent,
         CardEmployeeProfileComponent,
         MenuComponent,
-        MenuItemComponent
+        MenuItemComponent,
+        SearchBarComponent
     ],
   exports: [
     //FontAwesomeModule,
@@ -54,7 +56,8 @@ import { CardEmployeeProfileComponent } from './components/card-employee-profile
     CardClientProfileComponent,
     CardEmployeeProfileComponent,
     MenuComponent,
-    MenuItemComponent
+    MenuItemComponent,
+    SearchBarComponent
   ],
     imports: [
         CommonModule,

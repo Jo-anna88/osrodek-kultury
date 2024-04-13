@@ -8,6 +8,7 @@ import {ModalType} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
 import {AuthService} from "../../../core/authorization/auth.service";
 import {Role} from "../../../shared/models/user.model";
+import {SearchType} from "../../../shared/models/search-type.model";
 
 @Component({
   selector: 'app-courses',
@@ -200,4 +201,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  protected readonly SearchType = SearchType;
 }

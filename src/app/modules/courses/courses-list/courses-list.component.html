@@ -1,5 +1,6 @@
 <ng-container *ngIf="!isLoading; else spinner">
   <ng-container *ngIf="courses.length; else noDataTemplate">
+    <app-search-bar [searchType]="SearchType.COURSE"></app-search-bar>
     <ul class="courses-list">
       <li class="button-add-wrapper" *ngIf="isAuthorized">
         <button-add (onAddEvent)="openModalCreate()"></button-add>

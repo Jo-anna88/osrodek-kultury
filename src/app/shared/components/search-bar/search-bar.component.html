@@ -1,0 +1,8 @@
+<div class="search-bar-wrapper">
+  <input type="search" #searchInput (keyup)="search(getValue($event))" id="name" placeholder="Search..."
+         class="search-bar"/>
+  <span class="clear-button-wrapper">
+    <p class="clear-button" (click)="clearValue(searchInput)">&times;</p>
+  </span>
+</div>
+<div *ngIf="showInvalidMessage" class="invalid-message">Text is too short. 3 characters are needed.</div>
