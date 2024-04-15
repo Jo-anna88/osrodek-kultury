@@ -1,5 +1,6 @@
 <ng-container *ngIf="!isLoading; else spinner">
-    <app-search-bar [searchType]="SearchType.COURSE"
+    <app-search-bar *ngIf="!isError"
+                    [searchType]="SearchType.COURSE"
                     (results)="setResults($event)"
                     (queryRemoved)="clearResults()"
     ></app-search-bar>
@@ -38,7 +39,7 @@
 </ng-template>
 
 <ng-template #noDataTemplate>
-  <ng-container *ngIf="!isSearch; else noResultsTemplate">
+  <ng-container *ngIf="isError; else noResultsTemplate">
 <!--    <app-error [error]=appError></app-error>-->
     <p class="no-data-message">Oops! No data available at that moment. Please, try again later.</p>
   </ng-container>

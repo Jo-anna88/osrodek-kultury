@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {mockCulturalEvents} from "../../modules/cultural-events/cultural-events/mock-cultural-events";
 import {Course} from "../../modules/courses/course";
-import {Router} from "@angular/router";
+import {Params, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,12 @@ export class SearchService {
     return of(results)
   }
 
-  searchCourses(name: string): Observable<Course[]> {
+  searchCourses(name: string): Observable<Array<Course>> {
     this.router.navigate(['/classes/search'], { queryParams: { name: name } });
     return this.http.get<Array<Course>>(this.apiUrl + '/classes/search', { params: { name: name } });
+  }
+
+  searchCoursesByParams(params: Params): Observable<Array<Course>> {
+    return this.http.get<Array<Course>>(this.apiUrl + '/classes/search', {params: params});
   }
 }

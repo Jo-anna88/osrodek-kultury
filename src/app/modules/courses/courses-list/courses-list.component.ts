@@ -9,6 +9,8 @@ import {ModalService} from "../../../core/services/modal.service";
 import {AuthService} from "../../../core/authorization/auth.service";
 import {Role} from "../../../shared/models/user.model";
 import {SearchType} from "../../../shared/models/search-type.model";
+import {ActivatedRoute} from "@angular/router";
+import {SearchService} from "../../../core/services/search.service";
 
 @Component({
   selector: 'app-courses',
@@ -25,14 +27,30 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   selectedCourseDetails: CourseDetails = {}
   isAuthorized: boolean = false;
   protected readonly SearchType = SearchType;
-  isSearch: boolean = false;
+  isError: boolean = false;
 
   constructor(private coursesService: CoursesService,
               private alertService: AlertService,
               private modalService: ModalService,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              private searchService: SearchService,
+              private route: ActivatedRoute) {}
   ngOnInit(): void {
-    this.loadData();
+    this.route.queryParams.pipe(first()).subscribe(parameters => { // in case of e.g. browser refresh or history
+      if (Object.keys(parameters).length) {
+        console.log('Parameters:', parameters);
+        this.isLoading = true;
+        this.searchService.searchCoursesByParams(parameters).subscribe({
+          next: (result) => {this.courses = result},
+          error: (err) => {this.isLoading = false; this.isError = true;},
+          complete: () => {this.isLoading = false;}
+        })
+      }
+      else {
+        console.log("no params");
+        this.loadData();
+      }
+    });
     this.setIsAuthorized();
   }
 
@@ -58,8 +76,9 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           this.courses = value;
         },
         error: (err) => {
-          if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
-          this.alertService.error('An error occurred during loading the courses.');
+          this.isError = true;
+          //if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
+          //this.alertService.error('An error occurred during loading the courses.');
           this.isLoading = false;
         },
         complete: () => {
@@ -69,13 +88,10 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   setResults(courses : Array<Course>) {
-    this.isSearch = true;
     this.courses = courses;
-    if (courses.length === 0 ) {console.log("***** THERE IS NO RESULTS *****")}
   }
 
   clearResults() {
-    this.isSearch = false;
     this.loadData();
   }
 
