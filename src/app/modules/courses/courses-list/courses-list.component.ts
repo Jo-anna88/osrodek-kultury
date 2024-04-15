@@ -36,9 +36,9 @@ export class CoursesListComponent implements OnInit, OnDestroy {
               private searchService: SearchService,
               private route: ActivatedRoute) {}
   ngOnInit(): void {
-    this.route.queryParams.pipe(first()).subscribe(parameters => { // in case of e.g. browser refresh or history
+    this.route.queryParams
+      .subscribe(parameters => { // in case of e.g. browser refresh or history
       if (Object.keys(parameters).length) {
-        console.log('Parameters:', parameters);
         this.isLoading = true;
         this.searchService.searchCoursesByParams(parameters).subscribe({
           next: (result) => {this.courses = result},
@@ -46,10 +46,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           complete: () => {this.isLoading = false;}
         })
       }
-      else {
-        console.log("no params");
-        this.loadData();
-      }
+      else { this.loadData(); }
     });
     this.setIsAuthorized();
   }
@@ -85,10 +82,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
       })
-  }
-
-  setResults(courses : Array<Course>) {
-    this.courses = courses;
   }
 
   clearResults() {

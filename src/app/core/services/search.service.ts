@@ -13,22 +13,26 @@ import {Params, Router} from "@angular/router";
 export class SearchService {
   private apiUrl: string = environment.baseUrl + '/api';
   constructor (private http: HttpClient, private router: Router) {}
-  search(value: string, searchType: SearchType): Observable<Array<any>> {
+  search(value: string, searchType: SearchType) {
     if(searchType === SearchType.COURSE) {
-      return this.searchCourses(value);
+      this.searchCourses(this.capitalizeFirstLetter(value));
     }
     let results = [];
     results.push(mockCulturalEvents[0])
-    return of(results)
+    //return of(results)
   }
 
-  searchCourses(name: string): Observable<Array<Course>> {
+  searchCourses(name: string) {
     this.router.navigate(['/classes/search'], { queryParams: { name: name } });
-    return this.http.get<Array<Course>>(this.apiUrl + '/classes/search', { params: { name: name } });
   }
 
   searchCoursesByParams(params: Params): Observable<Array<Course>> {
     this.router.navigate(['/classes/search'], { queryParams: params})
     return this.http.get<Array<Course>>(this.apiUrl + '/classes/search', {params: params});
+  }
+
+  capitalizeFirstLetter(value: string): string {
+    if (!value) return value;
+    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 }

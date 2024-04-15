@@ -12,8 +12,6 @@ export class SearchBarComponent implements OnInit {
   @Input()
   searchType: SearchType = SearchType.NONE;
   @Output()
-  results: EventEmitter<Array<any>> = new EventEmitter<Array<any>>()
-  @Output()
   queryRemoved: EventEmitter<void> = new EventEmitter<void>();
 
   searchTimeout: any; //NodeJS.Timeout;
@@ -46,7 +44,7 @@ export class SearchBarComponent implements OnInit {
 
       clearTimeout(this.searchTimeout);
       this.searchTimeout = setTimeout( () => {
-        this.setResults(this.capitalizeFirstLetter(value))
+        this.setSearchParam(value)
       }, 1000);
     } else {
       this.valid$.next(false);
@@ -58,17 +56,8 @@ export class SearchBarComponent implements OnInit {
     this.queryRemoved.emit();
   }
 
-  setResults(value: string) {
-    this.searchService.search(value, this.searchType)
-      .subscribe({
-        next: (results) => {
-          this.results.emit(results);
-        }
-      })
+  setSearchParam(value: string) {
+    this.searchService.search(value, this.searchType);
   }
 
-  capitalizeFirstLetter(value: string): string {
-    if (!value) return value;
-    return value.charAt(0).toUpperCase() + value.slice(1);
-  }
 }

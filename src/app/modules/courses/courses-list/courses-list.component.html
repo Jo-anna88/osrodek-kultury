@@ -1,7 +1,6 @@
 <ng-container *ngIf="!isLoading; else spinner">
     <app-search-bar *ngIf="!isError"
                     [searchType]="SearchType.COURSE"
-                    (results)="setResults($event)"
                     (queryRemoved)="clearResults()"
     ></app-search-bar>
   <app-courses-filters></app-courses-filters>
