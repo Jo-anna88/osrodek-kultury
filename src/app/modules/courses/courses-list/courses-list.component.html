@@ -4,6 +4,7 @@
                     (results)="setResults($event)"
                     (queryRemoved)="clearResults()"
     ></app-search-bar>
+  <app-courses-filters></app-courses-filters>
   <ng-container *ngIf="courses.length; else noDataTemplate">
     <ul class="courses-list">
       <li class="button-add-wrapper" *ngIf="isAuthorized">

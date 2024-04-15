@@ -15,6 +15,7 @@ import { JoinConfirmationDialogComponent } from './join-confirmation-dialog/join
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
+import { CoursesFiltersComponent } from './courses-filters/courses-filters.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {MatInputModule} from "@angular/material/input";
     CreateCourseDetailsFormComponent,
     CreateCourseFormComponent,
     UpdateCourseFormComponent,
-    JoinConfirmationDialogComponent
+    JoinConfirmationDialogComponent,
+    CoursesFiltersComponent
   ],
   imports: [
     CommonModule,

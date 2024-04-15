@@ -1,0 +1,62 @@
+<label class="h3 filter-label" (click)="toggleFilters()">
+  FILTERS <i class="bi bi-caret-down-fill dropdown-arrow" [class.rotated]="isFilters$.getValue()"></i></label>
+
+<form *ngIf="isFilters$.getValue()" [formGroup]="filters" class="form-container courses-filters-form-container">
+  <fieldset class="filters-set">
+    <div class = "filter">
+      <label>Minimum Age:</label>
+      <input formControlName="minAge" class="form-control" type="text" pattern="[0-9]*">
+      <!--    <div class = "form-control-error" [hidden]="minAge.valid">-->
+      <!--      <small class="text-danger">Please, provide a number.</small>-->
+      <!--    </div>-->
+    </div>
+
+    <!--    ADD CUSTOM VALIDATION: MAX AGE > MIN AGE-->
+    <div class = "filter">
+      <label>Maximum Age:</label>
+      <input formControlName="maxAge" class="form-control" type="text" name="maxAge" pattern="[0-9]*">
+<!--      <div class="form-control-error" [hidden]="maxAge.valid">-->
+<!--        <small class="text-danger">Please, provide a number.</small>-->
+<!--      </div>-->
+    </div>
+
+    <div class = "filter">
+      <label>Price:</label>
+      <input formControlName="price" class="form-control" type="text" name="price" pattern="[0-9]*">
+<!--      <div class="form-control-error" [hidden]="price.valid">-->
+<!--        <small class="text-danger">Please, provide a price in right format, e.g. 100</small>-->
+<!--      </div>-->
+    </div>
+
+    <div class = "filter form-select-wrapper">
+      <label>Teacher:</label>
+      <select formControlName="teacher">
+        <option [value]="''" [disabled]="true">--Please choose an option--</option>
+        <option *ngFor="let teacher of teachers; index as i" [value]=i>{{teacher.firstName}} {{teacher.lastName}}</option>
+      </select>
+    </div>
+
+    <div class = "filter form-select-wrapper">
+      <label>Category:</label>
+      <select formControlName="category">
+        <option [value]="''" [disabled]="true">--Please choose an option--</option>
+        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+      </select>
+    </div>
+
+    <div class = "filter form-select-wrapper">
+      <label>Location:</label>
+      <select formControlName="location">
+        <option [value]="''" [disabled]="true">--Please choose an option--</option>
+        <option *ngFor="let location of locations; index as i" [value]=i>{{location.location}}</option>
+      </select>
+    </div>
+
+  </fieldset>
+
+  <div class="form-buttons">
+    <button type="button" class="button-primary" (click)="submitFilters()"
+            [disabled]="filters.pristine || (filters.dirty && filters.invalid)">{{ ButtonAction.FILTER }}
+    </button>
+  </div>
+</form>

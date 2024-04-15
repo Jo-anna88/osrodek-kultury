@@ -55,5 +55,14 @@ export enum Category {
   default = 'OTHER'
 }
 
+export interface CourseCriteria {
+  minAge?: number,
+  maxAge?: number,
+  price?: string,
+  teacher? : string, // User.id
+  category?: Category,
+  location?: number, // AppLocation.id
+}
+
 export const DEFAULT_IMG_SOURCE = "assets/icons/default.png"
 export const DEFAULT_CATEGORY = Category.default;

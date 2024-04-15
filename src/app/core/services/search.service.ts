@@ -28,6 +28,7 @@ export class SearchService {
   }
 
   searchCoursesByParams(params: Params): Observable<Array<Course>> {
+    this.router.navigate(['/classes/search'], { queryParams: params})
     return this.http.get<Array<Course>>(this.apiUrl + '/classes/search', {params: params});
   }
 }

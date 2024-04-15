@@ -1,0 +1,36 @@
+@import 'src/styles';
+
+:host {
+  height: fit-content;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.filter-label {
+  color: $font-color;
+}
+.courses-filters-form-container {
+  width: 60vw;
+}
+.filters-set {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.filter {
+  flex: 0 0 calc(30% - 1rem); /* 1rem is the total margin between items */
+  margin: 0.5rem;
+}
+.form-select-wrapper {
+  display: flex;
+  flex-direction: column;
+  & select {
+    width:100%
+  }
+}
+
+.rotated {
+  display: inline-block;
+  transform: rotate(180deg);
+}

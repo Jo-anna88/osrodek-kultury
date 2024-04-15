@@ -20,6 +20,9 @@ export enum ButtonAction {
   REGISTER = "Register",
   WITHDRAW = "Withdraw from class",
   CANCEL_BOOKING = "Cancel the booking",
+  FILTER = "Filter",
+  SORT = "Sort",
+  SUBMIT = "Submit",
   NONE = ""
 }
 
