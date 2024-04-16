@@ -20,7 +20,7 @@ export class CulturalEventDetailComponent implements OnInit {
                private route: ActivatedRoute) {}
   ngOnInit() {
     this.culturalEventId = +this.route.snapshot.paramMap.get('id')!;
-    this.loadData();
+    //this.loadData();
   }
 
   loadData() {
