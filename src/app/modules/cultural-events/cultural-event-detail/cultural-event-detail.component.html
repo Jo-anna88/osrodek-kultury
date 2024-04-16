@@ -1,13 +1,16 @@
 <ng-container *ngIf="!isLoading else spinner">
-<div class = "cultural-event-detail-container" *ngIf="culturalEvent.name.length; else noDataTemplate">
-
-  <img class="event-image" [src]= culturalEvent.imgSource alt="cultural event">
-  <p>{{culturalEvent.name}}</p>
-  <p class="date">{{culturalEvent.date | date:'longDate'}} </p>
-  <p class="description">{{culturalEvent.description}}</p>
-  <p class="location">Location: {{culturalEvent.location?.location}}</p>
-  <p class="price">Price for ticket: {{culturalEvent.price | currency: 'PLN'}}</p>
-</div>
+  <div class="cultural-event-detail-container" *ngIf="culturalEvent.name.length; else noDataTemplate">
+    <aside class="event-image-wrapper">
+      <img class="event-image" [src]=culturalEvent.imgSource alt="cultural event">
+    </aside>
+    <aside class="event-details">
+      <p>{{ culturalEvent.name }}</p>
+      <p>{{ culturalEvent.date | date:'longDate' }} </p>
+      <p>{{ culturalEvent.description }}</p>
+      <p>Location: {{ culturalEvent.location?.location }}</p>
+      <p>Price for ticket: {{ culturalEvent.price | currency: 'PLN' }}</p>
+    </aside>
+  </div>
 </ng-container>
 <ng-template #spinner>
   <app-spinner [note]="spinnerNote"></app-spinner>
