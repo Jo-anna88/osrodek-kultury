@@ -23,7 +23,7 @@ export class CulturalEventsListComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   spinnerNote: string = "Cultural Events are loading...";
   selectedCulturalEvent: CulturalEvent = {name: ''}
-  isAuthorized: boolean = true; //todo: change it to false
+  isAuthorized: boolean = false;
 
   constructor(private culturalEventService: CulturalEventService,
               private modalService: ModalService,
@@ -33,7 +33,7 @@ export class CulturalEventsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadData();
-    //this.setIsAuthorized(); //todo: uncomment this line
+    this.setIsAuthorized();
   }
 
   loadData() {
