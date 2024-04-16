@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading else spinner">
-  <div class="cultural-events-container">
+  <div class="cultural-events-container" *ngIf="culturalEvents.length; else noDataTemplate">
     <article class="cultural-event" *ngFor="let culturalEvent of culturalEvents">
       <img class="event-image" [src]= culturalEvent.imgSource alt="cultural event">
       <div class="event-text">
@@ -13,4 +13,9 @@
 
 <ng-template #spinner>
   <app-spinner [note]="spinnerNote"></app-spinner>
+</ng-template>
+
+<ng-template #noDataTemplate>
+    <!--    <app-error [error]=appError></app-error>-->
+    <p class="no-data-message">Oops! No data available at that moment. Please, try again later.</p>
 </ng-template>

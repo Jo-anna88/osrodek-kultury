@@ -1,26 +1,29 @@
 <ng-container *ngIf="!isLoading; else spinner">
-    <app-search-bar *ngIf="!isError"
-                    [searchType]="SearchType.COURSE"
-                    (queryRemoved)="clearResults()"
-    ></app-search-bar>
+  <app-search-bar *ngIf="!isError"
+                  [searchType]="SearchType.COURSE"
+                  (queryRemoved)="clearResults()"
+  ></app-search-bar>
+
   <app-courses-filters></app-courses-filters>
+
+  <div class="buttons-container button-add-wrapper" *ngIf="isAuthorized">
+    <button-add (onAddEvent)="openModalCreate()"></button-add>
+  </div>
+
   <ng-container *ngIf="courses.length; else noDataTemplate">
     <ul class="courses-list">
-      <li class="button-add-wrapper" *ngIf="isAuthorized">
-        <button-add (onAddEvent)="openModalCreate()"></button-add>
-      </li>
       <li class="course-card" *ngFor="let course of courses">
         <a class="course-icon-container" [routerLink]="['/classes', course.id]">
           <!--        <a class="course-icon-container" target="_blank" [routerLink]="['/classes', course.id]" >-->
           <i class="bi bi-circle">
             <img class="course-icon" [src]=course.imgSource alt="cultural event">
           </i>
-          <p class="course-name">{{course.name}}</p>
+          <p class="course-name">{{ course.name }}</p>
         </a>
-        <p *ngIf = "course.teacher" class="course-description-divider">|</p>
+        <p *ngIf="course.teacher" class="course-description-divider">|</p>
         <!--        link to teacher page or some pop-up window / profile card about him/her-->
-        <a *ngIf = "course.teacher" class="course-teacher" [routerLink]="['/about-team/employee', course.teacher.id]">
-          {{course.teacher.firstName}} {{course.teacher.lastName}}
+        <a *ngIf="course.teacher" class="course-teacher" [routerLink]="['/about-team/employee', course.teacher.id]">
+          {{ course.teacher.firstName }} {{ course.teacher.lastName }}
         </a>
         <div class="buttons-container" *ngIf="isAuthorized">
           <button-edit (onEditEvent)="openModalUpdate(course)"></button-edit>
@@ -28,9 +31,9 @@
         </div>
       </li>
     </ul>
-  <div class="source-link">
-    <a href="https://www.flaticon.com/icons" class="source">Icons created by Freepik - Flaticon</a>
-  </div>
+    <div class="source-link">
+      <a href="https://www.flaticon.com/icons" class="source">Icons created by Freepik - Flaticon</a>
+    </div>
   </ng-container>
 </ng-container>
 
@@ -40,11 +43,11 @@
 
 <ng-template #noDataTemplate>
   <ng-container *ngIf="isError; else noResultsTemplate">
-<!--    <app-error [error]=appError></app-error>-->
+    <!--    <app-error [error]=appError></app-error>-->
     <p class="no-data-message">Oops! No data available at that moment. Please, try again later.</p>
   </ng-container>
 </ng-template>
 
 <ng-template #noResultsTemplate>
-  <p class = "no-data-message">Oops! No results match your search criteria. Please, try again.</p>
+  <p class="no-data-message">Oops! No results match your search criteria. Please, try again.</p>
 </ng-template>
