@@ -8,6 +8,7 @@ import { SharedModule } from "../../shared/shared.module";
 import { CulturalEventDetailComponent } from './cultural-event-detail/cultural-event-detail.component';
 import { CreateCulturalEventFormComponent } from './create-cultural-event-form/create-cultural-event-form.component';
 import { UpdateCulturalEventFormComponent } from './update-cultural-event-form/update-cultural-event-form.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { UpdateCulturalEventFormComponent } from './update-cultural-event-form/u
     CommonModule,
     CulturalEventsRoutingModule,
     MatProgressSpinnerModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class CulturalEventsModule { }

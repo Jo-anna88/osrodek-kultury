@@ -22,7 +22,7 @@ export class CulturalEventService {
 
   getEventById(id: number) : Observable<CulturalEvent> {
     //return of(mockCulturalEvents[0]);
-    return this.http.get<CulturalEvent>(this.apiUrl+ '/' + id + '/details')
+    return this.http.get<CulturalEvent>(this.apiUrl+ '/' + id)
   }
 
   createCulturalEvent(newCulturalEvent: CulturalEvent): Observable<CulturalEvent> { //Observable<Object>

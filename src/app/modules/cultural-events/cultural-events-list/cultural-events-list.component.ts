@@ -72,8 +72,8 @@ export class CulturalEventsListComponent implements OnInit, OnDestroy {
     let subscription: Subscription = this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
-        next: (data: { culturalEvent: CulturalEvent }) => {
-          this.createCulturalEvent(data.culturalEvent);
+        next: (culturalEvent: CulturalEvent) => {
+          this.createCulturalEvent(culturalEvent);
           //this.subscription.unsubscribe();
           this.modalService.closeModal();
         }
@@ -91,8 +91,8 @@ export class CulturalEventsListComponent implements OnInit, OnDestroy {
     let subscription: Subscription = this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
-        next: (data: { culturalEvent: CulturalEvent }) => {
-          this.updateCulturalEvent(data.culturalEvent);
+        next: ( culturalEvent: CulturalEvent ) => {
+          this.updateCulturalEvent(culturalEvent);
           this.modalService.closeModal();
         }
       })
