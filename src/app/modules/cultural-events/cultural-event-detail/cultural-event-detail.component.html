@@ -1,1 +1,19 @@
-<p>cultural-event-detail works!</p>
+<ng-container *ngIf="!isLoading else spinner">
+<div class = "cultural-event-detail-container" *ngIf="culturalEvent.name.length; else noDataTemplate">
+
+  <img class="event-image" [src]= culturalEvent.imgSource alt="cultural event">
+  <p>{{culturalEvent.name}}</p>
+  <p class="date">{{culturalEvent.date | date:'longDate'}} </p>
+  <p class="description">{{culturalEvent.description}}</p>
+  <p class="location">Location: {{culturalEvent.location?.location}}</p>
+  <p class="price">Price for ticket: {{culturalEvent.price | currency: 'PLN'}}</p>
+</div>
+</ng-container>
+<ng-template #spinner>
+  <app-spinner [note]="spinnerNote"></app-spinner>
+</ng-template>
+
+<ng-template #noDataTemplate>
+    <!--    <app-error [error]=appError></app-error>-->
+    <p class="no-data-message">Oops! No data available at that moment. Please, try again later.</p>
+</ng-template>
