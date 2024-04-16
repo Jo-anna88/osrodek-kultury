@@ -1,7 +1,7 @@
 import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../../shared/models/user.model";
 import {Course} from "../../../courses/course";
-import {CulturalEvent} from "../../../cultural-events/cultural-events/cultural-event";
+import {CulturalEvent} from "../../../cultural-events/cultural-event";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ViewportScroller} from "@angular/common";
 import {UserService} from "../../../../core/services/user.service";

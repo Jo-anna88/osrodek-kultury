@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Category, Course, CourseDetails, DEFAULT_IMG_SOURCE} from "../course";
+import {Category, Course, CourseDetails, DEFAULT_ICON_SOURCE} from "../course";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
@@ -93,7 +93,7 @@ export class CreateCourseFormComponent implements OnInit {
 
   submit() {
     let formValue = this.createCourseForm.value;
-    let newCourse: Course = new Course(DEFAULT_IMG_SOURCE,
+    let newCourse: Course = new Course(DEFAULT_ICON_SOURCE,
       formValue.name, this.selectedTeacher, formValue.description, formValue.category, formValue.maxParticipantsNumber)
     if(!this.showDetails) {
       this.modalService.emitModalEvent({course: newCourse, courseDetails: null});

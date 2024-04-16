@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CulturalEventsRoutingModule } from './cultural-events-routing.module';
-import { CulturalEventsComponent } from './cultural-events/cultural-events.component';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {SharedModule} from "../../shared/shared.module";
+import { CulturalEventsListComponent } from './cultural-events-list/cultural-events-list.component';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { SharedModule } from "../../shared/shared.module";
+import { CulturalEventDetailComponent } from './cultural-event-detail/cultural-event-detail.component';
 
 @NgModule({
   declarations: [
-    CulturalEventsComponent
+    CulturalEventsListComponent,
+    CulturalEventDetailComponent
   ],
   imports: [
     CommonModule,

@@ -13,30 +13,16 @@ export interface AppLocation {
   location?: string
 }
 
-/*
-
-export enum Locations {
-  "Wieliszew" = "CCW headquarters - Wieliszew", // id=1
-  "Olszewnica" = "CCW branch - Olszewnica", //id=2
-  "Skrzeszew" = "CCW branch - Skrzeszew", //id=3
-  "Komornica" = "CCW branch - Komornica" //id=4
-}
-
-const mock_addresses: Array<Address> = [
-    {id:1, location: Locations.Wieliszew, city: "Wieliszew", zipCode: "05-135", street: "Kulturalna", houseNumber: "1"},
-    {id:2, location: Locations.Olszewnica, city: "Olszewnica", zipCode: "05-135", street: "Artystyczna", houseNumber: "2"},
-    {id:3, location: Locations.Skrzeszew, city: "Skrzeszew", zipCode: "05-135", street: "Teatralna", houseNumber: "3"},
-    {id:4, location: Locations.Komornica, city: "Komornica", zipCode: "05-135", street: "Sportowa", houseNumber: "4"}
+export const mock_locations: Array<AppLocation> = [
+  {id: 1, location: "CCW headquarters - Wieliszew"},
+  {id: 2, location: "CCW branch - Olszewnica"},
+  {id: 3, location: "CCW branch - Skrzeszew"},
+  {id: 4, location: "CCW branch - Komornica"}
 ]
 
-const entries: Array<[Locations, Address]> = [
-  [Locations.Wieliszew, {city: "Wieliszew", zipCode: "05-135", street: "Kulturalna", houseNumber: "1"}],
-  [Locations.Olszewnica, {city: "Olszewnica", zipCode: "05-135", street: "Artystyczna", houseNumber: "2"}],
-  [Locations.Skrzeszew, {city: "Skrzeszew", zipCode: "05-135", street: "Teatralna", houseNumber: "3"}],
-  [Locations.Komornica, {city: "Komornica", zipCode: "05-135", street: "Sportowa", houseNumber: "4"}]
-];
-
-export const addresses: Map<Locations, Address> = new Map(entries);
-
-*/
-
+export const mock_addresses: Array<Address> = [
+    {id:1, location: mock_locations[0].location, city: "Wieliszew", zipCode: "05-135", street: "Kulturalna", houseNumber: "1"},
+    {id:2, location: mock_locations[1].location, city: "Olszewnica", zipCode: "05-135", street: "Artystyczna", houseNumber: "2"},
+    {id:3, location: mock_locations[2].location, city: "Skrzeszew", zipCode: "05-135", street: "Teatralna", houseNumber: "3"},
+    {id:4, location: mock_locations[3].location, city: "Komornica", zipCode: "05-135", street: "Sportowa", houseNumber: "4"}
+]

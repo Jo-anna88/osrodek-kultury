@@ -3,7 +3,7 @@
     <article class="cultural-event" *ngFor="let culturalEvent of culturalEvents">
       <img class="event-image" [src]= culturalEvent.imgSource alt="cultural event">
       <div class="event-text">
-        <a class="event-name" [routerLink]="">{{culturalEvent.name}}</a>
+        <a class="event-name" [routerLink]="['/events', culturalEvent.id]">{{culturalEvent.name}}</a>
         <p class="date">{{culturalEvent.date | date:'longDate'}} </p>
         <p class="description">{{culturalEvent.description}}</p>
       </div>

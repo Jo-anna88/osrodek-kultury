@@ -1,5 +1,5 @@
-import {Category, Course} from "../course";
-import {SIMPLE_TEXT} from "../../../../assets/constants";
+import {Category, Course} from "./course";
+import {SIMPLE_TEXT} from "../../../assets/constants";
 
 export const mockCourses: Course[] = [
   {

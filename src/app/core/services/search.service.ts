@@ -3,7 +3,7 @@ import {SearchType} from "../../shared/models/search-type.model";
 import {Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {mockCulturalEvents} from "../../modules/cultural-events/cultural-events/mock-cultural-events";
+import {mockCulturalEvents} from "../../modules/cultural-events/mock-cultural-events";
 import {Course} from "../../modules/courses/course";
 import {Params, Router} from "@angular/router";
 

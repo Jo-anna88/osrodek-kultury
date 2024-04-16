@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CulturalEventsComponent } from './cultural-events.component';
+import { CulturalEventsListComponent } from './cultural-events-list.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 
-describe('CulturalEventsComponent', () => {
-  let component: CulturalEventsComponent;
-  let fixture: ComponentFixture<CulturalEventsComponent>;
+describe('CulturalEventsListComponent', () => {
+  let component: CulturalEventsListComponent;
+  let fixture: ComponentFixture<CulturalEventsListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [ CulturalEventsComponent ]
+      declarations: [ CulturalEventsListComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CulturalEventsComponent);
+    fixture = TestBed.createComponent(CulturalEventsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,9 +6,9 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {AuthService} from "../authorization/auth.service";
 import {Course} from "../../modules/courses/course";
-import {CulturalEvent} from "../../modules/cultural-events/cultural-events/cultural-event";
-import {mockCulturalEvents} from "../../modules/cultural-events/cultural-events/mock-cultural-events";
-import {mockCourses} from "../../modules/courses/courses-list/mock-courses";
+import {CulturalEvent} from "../../modules/cultural-events/cultural-event";
+import {mockCulturalEvents} from "../../modules/cultural-events/mock-cultural-events";
+import {mockCourses} from "../../modules/courses/mock-courses";
 import {mockChildren} from "../../modules/mocks/mock-user";
 
 @Injectable({

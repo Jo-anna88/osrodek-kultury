@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CulturalEvent} from "./cultural-event";
+import {CulturalEvent} from "../cultural-event";
 import {CulturalEventService} from "../cultural-event.service";
 import {catchError, delay, map, of, Subject, takeUntil} from "rxjs";
 
 @Component({
-  selector: 'app-cultural-events',
-  templateUrl: './cultural-events.component.html',
-  styleUrls: ['./cultural-events.component.scss']
+  selector: 'app-cultural-events-list',
+  templateUrl: './cultural-events-list.component.html',
+  styleUrls: ['./cultural-events-list.component.scss']
 })
-export class CulturalEventsComponent implements OnInit, OnDestroy {
+export class CulturalEventsListComponent implements OnInit, OnDestroy {
 
   destroy$: Subject<void> = new Subject<void>();
 
@@ -28,7 +28,6 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
     // first solution:
     this.culturalEventService.getEvents()
       //.pipe(delay(5000))
-      .pipe(takeUntil(this.destroy$))
       .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
         next: (value: CulturalEvent[]) => {this.culturalEvents=value;},
         error: (err: any) => {
@@ -37,21 +36,6 @@ export class CulturalEventsComponent implements OnInit, OnDestroy {
         complete: () => {this.isLoading=false;}
 
       })
-    // // second solution:
-    // this.culturalEventService.getEvents()
-    //   .pipe( //Observable<ICulturalEvent[]>
-    //     delay(5000),
-    //     catchError((error) => {
-    //       alert("error during loading cultural events " + error);
-    //       this.isLoading = false;
-    //       return of(error);
-    //     }),
-    //     map(
-    //       (data: ICulturalEvent[]) => {this.culturalEvents = data})
-    //   )
-    //   .subscribe({
-    //     next: () => this.isLoading = false
-    //   });
   }
 
   ngOnDestroy(): void {

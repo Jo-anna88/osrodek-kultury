@@ -64,5 +64,5 @@ export interface CourseCriteria {
   location?: number, // AppLocation.id
 }
 
-export const DEFAULT_IMG_SOURCE = "assets/icons/default.png"
+export const DEFAULT_ICON_SOURCE = "assets/icons/default.png"
 export const DEFAULT_CATEGORY = Category.default;
