@@ -33,7 +33,7 @@ export class CulturalEventService {
     return this.http.put<CulturalEvent>(this.apiUrl, updatedCulturalEvent);
   }
 
-  deleteCulturalEvent(id: string) {
+  deleteCulturalEvent(id: number) {
     return this.http.delete(this.apiUrl + '/' + id);
   }
 }

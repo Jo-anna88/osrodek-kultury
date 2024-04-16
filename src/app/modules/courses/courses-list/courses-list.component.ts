@@ -209,7 +209,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           next: (id) => {
             let index = this.courses.findIndex(c => c.id === id); // find index in an array
             this.courses.splice(index, 1); // remove element from array
-            this.alertService.success("The course was deleted.");
+            this.alertService.success("The course was deleted successfully.");
           },
           error: (err) => {
             if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;

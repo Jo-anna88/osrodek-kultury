@@ -1,11 +1,18 @@
 <ng-container *ngIf="!isLoading else spinner">
+  <div class="buttons-container button-add-wrapper" *ngIf="isAuthorized">
+    <button-add (onAddEvent)="openModalCreate()"></button-add>
+  </div>
   <div class="cultural-events-container" *ngIf="culturalEvents.length; else noDataTemplate">
     <article class="cultural-event" *ngFor="let culturalEvent of culturalEvents">
-      <img class="event-image" [src]= culturalEvent.imgSource alt="cultural event">
-      <div class="event-text">
-        <a class="event-name" [routerLink]="['/events', culturalEvent.id]">{{culturalEvent.name}}</a>
-        <p class="date">{{culturalEvent.date | date:'longDate'}} </p>
-        <p class="description">{{culturalEvent.description}}</p>
+      <img class="cultural-event-image" [src]= culturalEvent.imgSource alt="cultural event">
+      <div class="cultural-event-info">
+        <a class="cultural-event-name" [routerLink]="['/events', culturalEvent.id]">{{culturalEvent.name}}</a>
+        <p class="cultural-event-date">{{culturalEvent.date | date:'longDate'}} </p>
+        <p class="cultural-event-description">{{culturalEvent.description}}</p>
+      </div>
+      <div class="buttons-container" *ngIf="isAuthorized">
+        <button-edit (onEditEvent)="openModalUpdate(culturalEvent)"></button-edit>
+        <button-delete (onDeleteEvent)="openModalDelete(culturalEvent.id!)"></button-delete>
       </div>
     </article>
   </div>

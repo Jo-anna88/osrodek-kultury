@@ -16,27 +16,27 @@
     margin-bottom: 0;
   }
 
-  .event-image {
+  .cultural-event-image {
     height: 100%;
     margin-right: 2%;
     border-radius: 1.5rem;
     box-shadow: $shadow;
   }
-  .event-text {
+  .cultural-event-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
   }
-  .description {
+  .cultural-event-description {
     @include multiline-ellipsis(6);
   }
-  .event-name {
+  .cultural-event-name {
     font-size: 1.25rem;
     font-family: $font-primary;
     &:hover {color: $primary-rose}
   }
-  .date {
+  .cultural-event-date {
     font-weight: bold;
   }
 }
