@@ -23,7 +23,7 @@
       <label>Phone:</label>
       <input type="tel" formControlName="phone" placeholder="100200300" class="form-control" required>
       <div [hidden]="phone.valid || phone.pristine">
-        <small class="text-danger" *ngIf="phone.errors?.['required']">Please provide your last contact phone.</small>
+        <small class="text-danger" *ngIf="phone.errors?.['required']">Please provide a contact phone.</small>
         <small class="text-danger" *ngIf="phone.errors?.['maxLength']">Phone number should not exceed 9 digits.</small>
         <small class="text-danger" *ngIf="phone.errors?.['pattern']">Please match the requested format: 100200300.</small>
       </div>
@@ -37,15 +37,27 @@
     </div>
     <div class="form-field">
       <label>Username:</label>
-      <input type="email" formControlName="email" placeholder="example@mail.com" class="form-control" required>
+      <input type="email" formControlName="email" placeholder="example@example.com" class="form-control" required>
+      <div [hidden]="email.valid || email.pristine">
+        <small class="text-danger" *ngIf="email.errors?.['required']">Please provide your email as a username.</small>
+        <small class="text-danger" *ngIf="email.errors?.['email']">Please match the requested format: example@example.com</small>
+      </div>
     </div>
     <div class="form-field">
       <label>Password:</label>
       <input type="password" formControlName="password" class="form-control" required>
+      <div [hidden]="password.valid || password.pristine">
+        <small class="text-danger" *ngIf="password.errors?.['required']">Please provide a password.</small>
+        <small class="text-danger" *ngIf="password.errors?.['pattern']">Please match the requested length and format: {{PASSWORD_REQUIREMENTS}}</small>
+      </div>
     </div>
     <div class="form-field">
       <label>Confirm password:</label>
       <input type="password" formControlName="confirmPassword" class="form-control" required>
+      <div [hidden]="confirmPassword.valid || confirmPassword.pristine">
+        <small class="text-danger" *ngIf="confirmPassword.errors?.['required']">Please provide a password confirmation.</small>
+        <small class="text-danger" *ngIf="confirmPassword.errors?.['confirmPassword']">Please make sure your passwords match.</small>
+      </div>
     </div>
   </fieldset>
 
@@ -53,7 +65,7 @@
     <button class="button button-secondary"
             (click)="close()">{{buttonAction.CANCEL}}
     </button>
-    <button class="button button-primary"
+    <button class="button button-primary" [disabled]="signUpForm.invalid"
             (click)="submit()">{{buttonAction.CREATE}}
     </button>
   </div>

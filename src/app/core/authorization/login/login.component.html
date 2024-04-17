@@ -7,11 +7,15 @@
              type="email" class="form-control" placeholder="Email" title="example@example.com" required>
     </div>
     <div [hidden]="email.valid || email.pristine">
+      <small class="text-danger" *ngIf="email.errors?.['required']">Please provide a password.</small>
       <small class="text-danger" *ngIf="email.errors?.['email']">Please match the requested format: example@example.com </small>
     </div>
     <div class="form-control">
       <input name="password" formControlName="password"
              type="password" class="form-control" placeholder="Password" required>
+    </div>
+    <div [hidden]="password.valid || password.pristine">
+      <small class="text-danger" *ngIf="password.errors?.['required']">Please provide a password.</small>
     </div>
   </fieldset>
 
@@ -19,7 +23,7 @@
     <button class="button button-secondary"
             (click)="signUp()">Sign Up</button>
 
-    <button class="button button-primary"
+    <button class="button button-primary" [disabled]="form.invalid"
             (click)="logIn()">Log In</button>
   </div>
 </form>

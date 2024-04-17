@@ -3,7 +3,13 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ModalService} from "../../services/modal.service";
 import {User, Role} from "../../../shared/models/user.model";
 import {ButtonAction} from "../../../shared/components/modal/modal";
-import {confirmPasswordValidator, LETTERS_ONLY, PASSWORD_REGEX, PHONE_REGEX} from "../../forms/form-validators";
+import {
+  confirmPasswordValidator,
+  LETTERS_ONLY,
+  PASSWORD_REGEX,
+  PASSWORD_REQUIREMENTS,
+  PHONE_REGEX
+} from "../../forms/form-validators";
 
 @Component({
   selector: 'app-sign-up-modal-form',
@@ -19,7 +25,7 @@ export class SignUpModalFormComponent {
       firstName: ['', [Validators.required, Validators.maxLength(24), Validators.pattern(LETTERS_ONLY)]],
       lastName: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(LETTERS_ONLY)]],
       phone: ['', [Validators.required, Validators.maxLength(9), Validators.pattern(PHONE_REGEX)]],
-      dob: ['', Validators.required],
+      dob: [null, Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: this.passwordControl,
       confirmPassword: ['', [Validators.required, confirmPasswordValidator(this.passwordControl)]]
@@ -66,4 +72,6 @@ export class SignUpModalFormComponent {
   close() {
     this.modalService.closeModal();
   }
+
+  protected readonly PASSWORD_REQUIREMENTS = PASSWORD_REQUIREMENTS;
 }

@@ -8,6 +8,7 @@ import {ModalService} from "../../services/modal.service";
 import {AlertService} from "../../../modules/alert/alert.service";
 import {ModalType} from "../../../shared/components/modal/modal";
 import {StorageService} from "../../services/storage.service";
+import {PASSWORD_REQUIREMENTS} from "../../forms/form-validators";
 
 @Component({
   selector: 'app-login',
@@ -36,6 +37,10 @@ export class LoginComponent implements OnDestroy {
   // (e.g., in statements like div [hidden]="email.valid" or in *ngIf="email.errors?.['required']")
   get email() {
     return this.form.get('email')!;
+  }
+
+  get password() {
+    return this.form.get('password')!;
   }
 
   @HostListener('document: keydown.enter', ['$event']) onEnterHandler(event: KeyboardEvent) {
@@ -94,4 +99,6 @@ export class LoginComponent implements OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  protected readonly PASSWORD_REQUIREMENTS = PASSWORD_REQUIREMENTS;
 }
