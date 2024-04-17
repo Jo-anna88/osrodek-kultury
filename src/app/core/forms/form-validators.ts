@@ -10,7 +10,7 @@ PASSWORD REQUIREMENTS:
 - Allows characters from the following character set: uppercase letters (A-Z), lowercase letters (a-z), digits (0-9),
 and the special characters @$!%*?&
 */
-const PASSWORD_REGEX: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+export const PASSWORD_REGEX: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 export function passwordValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     let validPassword: boolean = PASSWORD_REGEX.test(control.value);

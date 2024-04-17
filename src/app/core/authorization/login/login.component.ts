@@ -8,7 +8,6 @@ import {ModalService} from "../../services/modal.service";
 import {AlertService} from "../../../modules/alert/alert.service";
 import {ModalType} from "../../../shared/components/modal/modal";
 import {StorageService} from "../../services/storage.service";
-import {passwordValidator} from "../../forms/form-validators";
 
 @Component({
   selector: 'app-login',
@@ -29,7 +28,7 @@ export class LoginComponent implements OnDestroy {
 
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, passwordValidator()]]
+      password: ['', [Validators.required]]
     });
   }
 
