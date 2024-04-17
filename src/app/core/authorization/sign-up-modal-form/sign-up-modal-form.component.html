@@ -3,31 +3,49 @@
 <!--    <legend class="h2">Create account</legend>-->
     <div class="form-field">
       <label>First Name:</label>
-      <input formControlName="firstName" class="form-control">
+      <input formControlName="firstName" class="form-control" required>
+      <div [hidden]="firstName.valid || firstName.pristine">
+        <small class="text-danger" *ngIf="firstName.errors?.['required']">Please provide your first name.</small>
+        <small class="text-danger" *ngIf="firstName.errors?.['maxLength']">First name should not exceed 24 characters.</small>
+        <small class="text-danger" *ngIf="firstName.errors?.['pattern']">First name should contain letters only.</small>
+      </div>
     </div>
     <div class="form-field">
       <label>Last Name:</label>
-      <input formControlName="lastName" class="form-control">
+      <input formControlName="lastName" class="form-control" required>
+      <div [hidden]="lastName.valid || lastName.pristine">
+        <small class="text-danger" *ngIf="lastName.errors?.['required']">Please provide your last name.</small>
+        <small class="text-danger" *ngIf="lastName.errors?.['maxLength']">Last name should not exceed 100 characters.</small>
+        <small class="text-danger" *ngIf="lastName.errors?.['pattern']">Last name should contain letters only.</small>
+      </div>
     </div>
     <div class="form-field">
       <label>Phone:</label>
-      <input type="tel" formControlName="phone" placeholder="+48 100 200 300" class="form-control">
+      <input type="tel" formControlName="phone" placeholder="100200300" class="form-control" required>
+      <div [hidden]="phone.valid || phone.pristine">
+        <small class="text-danger" *ngIf="phone.errors?.['required']">Please provide your last contact phone.</small>
+        <small class="text-danger" *ngIf="phone.errors?.['maxLength']">Phone number should not exceed 9 digits.</small>
+        <small class="text-danger" *ngIf="phone.errors?.['pattern']">Please match the requested format: 100200300.</small>
+      </div>
     </div>
     <div class="form-field">
       <label>Date of birth:</label>
-      <input type="date" formControlName="dob" placeholder="YYYY-MM-DD" class="form-control form-date">
+      <input type="date" formControlName="dob" placeholder="YYYY-MM-DD" class="form-control form-date" required>
+      <div [hidden]="dob.valid || dob.pristine">
+        <small class="text-danger" *ngIf="dob.errors?.['required']">Please provide your date of birth.</small>
+      </div>
     </div>
     <div class="form-field">
       <label>Username:</label>
-      <input type="email" formControlName="email" placeholder="example@mail.com" class="form-control">
+      <input type="email" formControlName="email" placeholder="example@mail.com" class="form-control" required>
     </div>
     <div class="form-field">
       <label>Password:</label>
-      <input type="password" formControlName="password" class="form-control">
+      <input type="password" formControlName="password" class="form-control" required>
     </div>
     <div class="form-field">
       <label>Confirm password:</label>
-      <input type="password" formControlName="confirmPassword" class="form-control">
+      <input type="password" formControlName="confirmPassword" class="form-control" required>
     </div>
   </fieldset>
 
