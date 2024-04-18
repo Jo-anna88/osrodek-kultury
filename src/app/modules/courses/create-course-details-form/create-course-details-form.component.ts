@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
@@ -6,14 +6,15 @@ import {AppLocation} from "../../../shared/models/address.model";
 import {AddressService} from "../../../core/services/address.service";
 import {CourseDetails} from "../course";
 import {maxAgeValidator} from "../../../core/forms/form-validators";
-import {min} from "rxjs";
+import {min, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-create-course-details-form',
   templateUrl: './create-course-details-form.component.html',
   styleUrls: ['./create-course-details-form.component.scss']
 })
-export class CreateCourseDetailsFormComponent implements OnInit{
+export class CreateCourseDetailsFormComponent implements OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
   protected readonly buttonAction = ButtonAction;
   createCourseDetailsForm: FormGroup;
   locations: AppLocation[] = [];
@@ -57,6 +58,7 @@ export class CreateCourseDetailsFormComponent implements OnInit{
 
   trackMinAgeControl() {
     this.createCourseDetailsForm.controls['minAge'].valueChanges
+      .pipe(takeUntil(this.destroy$))
       .subscribe((age: string) => {
         if (!!age && !!this.maxAge.value) {
           this.isMinAgeValid = this.validateAgeControls(age, this.maxAge.value);
@@ -68,11 +70,20 @@ export class CreateCourseDetailsFormComponent implements OnInit{
     return +minAge < +maxAge; // cast strings to numbers and validate
   }
 
+  close() {
+    this.modalService.closeModal();
+  }
+
   submit() {
     let formValue = this.createCourseDetailsForm.value;
     this.selectedLocation = this.locations[this.location.value];
     this.modalService.emitModalEvent(new CourseDetails(
       formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, this.selectedLocation
     ));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -3,27 +3,27 @@
   <fieldset class="form-group">
       <div class="form-field">
         <label>Min Age:</label>
-        <input formControlName="minAge">
+        <input formControlName="minAge" class="form-control" required>
       </div>
       <div class="form-field">
         <label>Max Age:</label>
-        <input formControlName="maxAge">
+        <input formControlName="maxAge" class="form-control" required>
       </div>
       <div class="form-field">
         <label>Price:</label>
-        <input formControlName="price">
+        <input formControlName="price" class="form-control" required>
       </div>
       <div class="form-field">
         <label>Lesson Duration in Minutes:</label>
-        <input formControlName="lessonDurationMinutes">
+        <input formControlName="lessonDurationMinutes" class="form-control" required>
       </div>
       <div class="form-field">
         <label>Date in format Mon 13:00-13:45:</label>
-        <input formControlName="date">
+        <input formControlName="date" class="form-control" required>
       </div>
       <div class="form-field">
         <label>Address:</label>
-        <select formControlName="location">
+        <select formControlName="location" class="form-control-select" required>
           <option value="">--Please choose an option--</option>
           <option *ngFor="let location of locations; index as i" [value]="i">{{location.location}}</option>
         </select>
@@ -31,6 +31,9 @@
   </fieldset>
 
   <div class="form-buttons">
+    <button class="button button-secondary"
+            (click)="close()">{{ buttonAction.CANCEL }}
+    </button>
     <button class="button button-primary"
             (click)="submit()" [disabled]="updateCourseDetailsForm.untouched || (updateCourseDetailsForm.dirty && updateCourseDetailsForm.invalid)">{{buttonAction.UPDATE}}</button>
   </div>

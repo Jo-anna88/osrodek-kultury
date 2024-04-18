@@ -91,12 +91,11 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe({
         next: (courseDetails: CourseDetails) => {
-          console.log("Course Details to update: ", courseDetails);
+          courseDetails.id = this.courseDetailsId;
           this.coursesService.updateCourseDetails(courseDetails)
             //.pipe(takeUntil(this.destroy$))
             .subscribe({
               next: (updatedCourseDetails) => {
-                console.log("Response after signup: ", updatedCourseDetails);
                 this.courseDetails = updatedCourseDetails;
               }
             });
@@ -117,7 +116,6 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
               //.pipe(takeUntil(this.destroy$))
               .subscribe({
                 next: () => {
-                  console.log("Deleted successfully");
                   this.courseDetails = null;
                 }
               });

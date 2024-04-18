@@ -25,7 +25,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   appError: AppError = {status: -1, statusTxt: "", description: ""};
   selectedCourse: Course = {name: "", teacher: {}, description: "", category: Category.default};
   selectedCourseDetails: CourseDetails = {}
-  isAuthorized: boolean = false;
+  isAuthorized: boolean = true; // todo: set to false
   protected readonly SearchType = SearchType;
   isError: boolean = false;
 
@@ -48,7 +48,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
       }
       else { this.loadData(); }
     });
-    this.setIsAuthorized();
+    //this.setIsAuthorized(); //todo: uncomment
   }
 
   setIsAuthorized() {

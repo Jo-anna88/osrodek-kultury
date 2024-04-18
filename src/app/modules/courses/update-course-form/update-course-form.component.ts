@@ -33,6 +33,13 @@ export class UpdateCourseFormComponent implements OnInit, OnDestroy {
               private courseService: CoursesService, private addressService: AddressService) {
   }
 
+  get teacher() {
+    return this.updateCourseForm.get('teacher')!;
+  }
+  get location() {
+    return this.updateCourseForm.get('location')!;
+  }
+
   ngOnInit() {
     this.loadData();
   }
@@ -55,32 +62,10 @@ export class UpdateCourseFormComponent implements OnInit, OnDestroy {
 
         // populate form
         this.populateForm(); // Call populateForm after all data is fetched
-
-        // track teacher control and optionally location control
-        this.trackTeacherControlValue();
-        if(this.showDetails) this.trackLocationControlValue();
       },
       error: (err) => {console.log(err); this.isLoading = false;},
       complete: () => {this.isLoading = false;}
     });
-  }
-
-  trackTeacherControlValue() {
-    this.updateCourseForm.controls['teacher'].valueChanges
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedTeacher = this.teachers[index];
-        }
-      });
-  }
-
-  trackLocationControlValue() {
-    this.updateCourseForm.controls['location'].valueChanges
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedLocation = this.locations[index];
-        }
-      });
   }
 
   private populateForm() {
@@ -113,13 +98,19 @@ export class UpdateCourseFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  close() {
+    this.modalService.closeModal();
+  }
+
   submit() {
     let formValue = this.updateCourseForm.value;
+    this.selectedTeacher = this.teachers[this.teacher.value];
     let updatedCourse: Course = new Course(this.data.course.imgSource!,
       formValue.name, this.selectedTeacher, formValue.description, formValue.category, formValue.maxParticipantsNumber)
     if(!this.showDetails) {
       this.modalService.emitModalEvent({course: updatedCourse, courseDetails: null});
     } else {
+      this.selectedLocation = this.locations[this.location.value];
       let updatedCourseDetails: CourseDetails = new CourseDetails(
         formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, this.selectedLocation
       )

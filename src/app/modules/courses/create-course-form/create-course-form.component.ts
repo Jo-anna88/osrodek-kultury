@@ -17,10 +17,8 @@ export class CreateCourseFormComponent implements OnInit {
   protected readonly buttonAction = ButtonAction;
   createCourseForm: FormGroup;
   teachers: UserSimpleData[] = [];
-  selectedTeacher: UserSimpleData = {};
   categories: string[] = Object.values(Category); // e.g., 0:"ART"
   locations: AppLocation[] = [];
-  selectedLocation: AppLocation = {};
   showDetails: boolean = false;
   showDetailsButtonText: string = "Show Course Details";
   constructor(private fb: FormBuilder, private modalService: ModalService,
@@ -29,7 +27,7 @@ export class CreateCourseFormComponent implements OnInit {
       name: ['', Validators.required],
       teacher: [null],
       description: ['', Validators.required],
-      category: ['', Validators.required],
+      category: [null, Validators.required],
       maxParticipantsNumber: ['', Validators.required],
       minAge: [''],
       maxAge: [''],
@@ -40,10 +38,15 @@ export class CreateCourseFormComponent implements OnInit {
     });
   }
 
+  get teacher() {
+    return this.createCourseForm.get('teacher')!;
+  }
+  get location() {
+    return this.createCourseForm.get('location')!;
+  }
+
   ngOnInit() {
     this.loadData();
-    this.trackTeacherControlValue();
-    this.trackLocationControlValue();
   }
 
   loadData() {
@@ -56,24 +59,6 @@ export class CreateCourseFormComponent implements OnInit {
     this.addressService.getLocations().subscribe({
       next: locations => {this.locations = locations}
     });
-  }
-
-  trackTeacherControlValue() {
-    this.createCourseForm.controls['teacher'].valueChanges
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedTeacher = this.teachers[index];
-        }
-      });
-  }
-
-  trackLocationControlValue() {
-    this.createCourseForm.controls['location'].valueChanges
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedLocation = this.locations[index];
-        }
-      });
   }
 
   toggleDetails() {
@@ -91,15 +76,21 @@ export class CreateCourseFormComponent implements OnInit {
     });
   }
 
+  close() {
+    this.modalService.closeModal();
+  }
+
   submit() {
     let formValue = this.createCourseForm.value;
+    let selectedTeacher = this.teachers[this.teacher.value];
     let newCourse: Course = new Course(DEFAULT_ICON_SOURCE,
-      formValue.name, this.selectedTeacher, formValue.description, formValue.category, formValue.maxParticipantsNumber)
+      formValue.name, selectedTeacher, formValue.description, formValue.category, formValue.maxParticipantsNumber)
     if(!this.showDetails) {
       this.modalService.emitModalEvent({course: newCourse, courseDetails: null});
     } else {
+      let selectedLocation = this.locations[this.location.value];
       let newCourseDetails: CourseDetails = new CourseDetails(
-        formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, this.selectedLocation
+        formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, selectedLocation
     )
       this.modalService.emitModalEvent({course: newCourse, courseDetails: newCourseDetails});
     }

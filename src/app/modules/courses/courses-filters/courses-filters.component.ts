@@ -21,12 +21,8 @@ export class CoursesFiltersComponent implements OnInit, OnDestroy {
   protected readonly ButtonAction = ButtonAction;
   filters: FormGroup;
   teachers: UserSimpleData[] = [];
-  selectedTeacher: UserSimpleData = {};
-  teachersSubscription = new Subscription();
   categories: string[] = Object.values(Category); // e.g., 0:"ART"
   locations: AppLocation[] = [];
-  selectedLocation: AppLocation = {};
-  locationsSubscription = new Subscription();
   @Output()
   filtersSubmitEvent: EventEmitter<CourseCriteria> = new EventEmitter<CourseCriteria>();
   @Output()
@@ -46,18 +42,19 @@ export class CoursesFiltersComponent implements OnInit, OnDestroy {
     });
   }
 
+  get teacher() {
+    return this.filters.get('teacher')!;
+  }
+  get location() {
+    return this.filters.get('location')!;
+  }
+
   ngOnInit() {
     this.isFilters$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
       next: (isFilters) => {
-        if (isFilters) {
-          this.loadData();
-          this.trackTeacherControlValue();
-          this.trackLocationControlValue();
-        } else {
-          this.removeTrackers();
-        }
+        if (isFilters) { this.loadData(); }
       }
     });
   }
@@ -78,45 +75,17 @@ export class CoursesFiltersComponent implements OnInit, OnDestroy {
     });
   }
 
-  trackTeacherControlValue() {
-    this.teachersSubscription = this.filters.controls['teacher'].valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedTeacher = this.teachers[index];
-        }
-      });
-  }
-
-  trackLocationControlValue() {
-    this.locationsSubscription = this.filters.controls['location'].valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedLocation = this.locations[index];
-        }
-      });
-  }
-
-  removeTrackers() {
-    this.teachersSubscription?.unsubscribe();
-    this.locationsSubscription?.unsubscribe();
-  }
-
   submitFilters() {
     let courseCriteria: CourseCriteria = this.filters.value;
     let params = this.convertToParams(courseCriteria);
-    //this.filtersSubmitEvent.emit(courseCriteria);
     this.searchService.searchCoursesByParams(params);
   }
 
   convertToParams(courseCriteria: CourseCriteria) {
     let params: any = courseCriteria;
-    console.log(params);
-    if(!courseCriteria.teacher) {params.teacher = ''} else {params.teacher = this.selectedTeacher.id}
+    if(!courseCriteria.teacher) {params.teacher = ''} else {params.teacher = this.teachers[this.teacher.value].id}
     if(!courseCriteria.category) {params.category = ''}
-    if(!courseCriteria.location) {params.location = ''} else {params.location = this.selectedLocation.id}
-    console.log(params);
+    if(!courseCriteria.location) {params.location = ''} else {params.location = this.locations[this.location.value].id}
     return params;
   }
 

@@ -1,77 +1,82 @@
 <form [formGroup]="createCourseForm" class="form-container">
-  <fieldset class="form-group">
+  <div class="form-group-wrapper">
+    <fieldset class="form-group">
+      <div class="form-field">
+        <label>Name:</label>
+        <input formControlName="name" class="form-control" required>
+      </div>
 
-    <div class="form-field">
-      <label>Name:</label>
-      <input formControlName="name">
-      <!--    <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)">-->
-      <!--      Please provide a course name.-->
-      <!--    </div>-->
-    </div>
+      <div class="form-field">
+        <label>Teacher:</label>
+        <select formControlName="teacher" class="form-control-select" required>
+          <option [value]="''" [disabled]="true">--Please choose an option--</option>
+          <option *ngFor="let teacher of teachers; index as i"
+                  [value]=i>{{ teacher.firstName }} {{ teacher.lastName }}
+          </option>
+        </select>
+      </div>
 
-    <div class="form-field">
-      <label>Teacher:</label>
-      <select formControlName="teacher">
-        <option [value]="''" [disabled]="true">--Please choose an option--</option>
-        <option *ngFor="let teacher of teachers; index as i" [value]=i>{{teacher.firstName}} {{teacher.lastName}}</option>
-      </select>
-    </div>
+      <div class="form-field">
+        <label>Description:</label>
+        <input formControlName="description" class="form-control" required>
+      </div>
 
-    <div class="form-field">
-      <label>Description:</label>
-      <input formControlName="description">
-    </div>
+      <div class="form-field">
+        <label>Category:</label>
+        <select formControlName="category" class="form-control-select" required>
+          <option [value]="''" [disabled]="true">--Please choose an option--</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+      </div>
 
-    <div class="form-field">
-      <label>Category:</label>
-      <select formControlName="category">
-        <option [value]="''" [disabled]="true">--Please choose an option--</option>
-        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
-      </select>
-    </div>
+      <div class="form-field">
+        <label>Max Participants Number:</label>
+        <input formControlName="maxParticipantsNumber" class="form-control" required>
+      </div>
 
-    <div class="form-field">
-      <label>Max Participants Number:</label>
-      <input formControlName="maxParticipantsNumber">
-    </div>
+      <div class="form-buttons">
+        <button class="button button-secondary" (click)="toggleDetails()">{{ showDetailsButtonText }}</button>
+      </div>
+    </fieldset>
 
-    <div class="form-buttons">
-      <button class="button button-secondary" (click)="toggleDetails()">{{showDetailsButtonText}}</button>
-    </div>
-
-    <div *ngIf="showDetails">
+    <fieldset *ngIf="showDetails" class="form-group">
       <div class="form-field">
         <label>Min Age:</label>
-        <input formControlName="minAge">
+        <input formControlName="minAge" class="form-control">
       </div>
       <div class="form-field">
         <label>Max Age:</label>
-        <input formControlName="maxAge">
+        <input formControlName="maxAge" class="form-control">
       </div>
       <div class="form-field">
         <label>Price:</label>
-        <input formControlName="price">
+        <input formControlName="price" class="form-control">
       </div>
       <div class="form-field">
         <label>Lesson Duration in Minutes:</label>
-        <input formControlName="lessonDurationMinutes">
+        <input formControlName="lessonDurationMinutes" class="form-control">
       </div>
       <div class="form-field">
         <label>Date in format Mon 13:00-13:45:</label>
-        <input formControlName="date">
+        <input formControlName="date" class="form-control">
       </div>
       <div class="form-field">
         <label>Address:</label>
-        <select formControlName="location">
+        <select formControlName="location" class="form-control-select">
           <option [value]="''" [disabled]="true">--Please choose an option--</option>
-          <option *ngFor="let location of locations; index as i" [value]=i>{{location.location}}</option>
+          <option *ngFor="let location of locations; index as i" [value]=i>{{ location.location }}</option>
         </select>
       </div>
-    </div>
-  </fieldset>
+    </fieldset>
+  </div>
 
   <div class="form-buttons">
+    <button class="button button-secondary"
+            (click)="close()">{{ buttonAction.CANCEL }}
+    </button>
     <button class="button button-primary"
-            (click)="submit()" [disabled]="createCourseForm.untouched || (createCourseForm.dirty && createCourseForm.invalid)">{{buttonAction.CREATE}}</button>
+            (click)="submit()"
+            [disabled]="createCourseForm.untouched || (createCourseForm.dirty && createCourseForm.invalid)">{{ buttonAction.CREATE }}
+    </button>
   </div>
 </form>

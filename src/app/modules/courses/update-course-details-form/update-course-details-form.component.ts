@@ -20,13 +20,15 @@ export class UpdateCourseDetailsFormComponent implements OnInit, OnDestroy {
   locations: AppLocation[] = [];
   selectedLocation: AppLocation = {};
   subscription = new Subscription();
-  constructor(private fb: FormBuilder, private modalService: ModalService, private addressService: AddressService) {
+  constructor(private fb: FormBuilder, private modalService: ModalService, private addressService: AddressService) {}
+
+  get location() {
+    return this.updateCourseDetailsForm.get('location')!;
   }
 
   ngOnInit() {
     this.initConfigData();
     this.loadData();
-    //this.trackLocationControlValue();
   }
 
   initConfigData() {
@@ -46,20 +48,10 @@ export class UpdateCourseDetailsFormComponent implements OnInit, OnDestroy {
       next: locations => {
         this.locations = locations;
         this.populateForm();
-        this.trackLocationControlValue();
       },
       error: (err) => {console.log(err); this.isLoading = false;},
       complete: () => {this.isLoading = false;}
     });
-  }
-
-  trackLocationControlValue() {
-    this.updateCourseDetailsForm.controls['location'].valueChanges
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedLocation = this.locations[index];
-        }
-      });
   }
 
   private populateForm() {
@@ -75,8 +67,13 @@ export class UpdateCourseDetailsFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  close() {
+    this.modalService.closeModal();
+  }
+
   submit() {
     let formValue = this.updateCourseDetailsForm.value;
+    this.selectedLocation = this.locations[this.location.value];
     let updatedCourseDetails: CourseDetails = new CourseDetails(
       formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, this.selectedLocation
     )

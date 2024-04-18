@@ -40,16 +40,7 @@ export class UpdateClientFormComponent implements OnInit {
   }
 
   submit() {
-    //let updatedClient = this.updateClientAccountForm.value;
     let updatedClient = {...this.data.client, ...this.updateClientAccountForm.value};
-    /*
-    this.data.client.firstName = this.updateClientAccountForm.get("firstName")?.value;
-    this.data.client.lastName = this.updateClientAccountForm.get("lastName")?.value;
-    this.data.client.phone = this.updateClientAccountForm.get("phone")?.value;
-    this.data.client.dob = this.updateClientAccountForm.get("dob")?.value;
-     */
-    //updatedChild.id = this.data.child.id;
-    console.log(updatedClient);
     this.modalService.emitModalEvent({client: updatedClient});
   }
   close() {
