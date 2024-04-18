@@ -6,6 +6,7 @@ import {AppLocation} from "../../../shared/models/address.model";
 import {AddressService} from "../../../core/services/address.service";
 import {CourseDetails} from "../course";
 import {maxAgeValidator} from "../../../core/forms/form-validators";
+import {min} from "rxjs";
 
 @Component({
   selector: 'app-create-course-details-form',
@@ -18,6 +19,7 @@ export class CreateCourseDetailsFormComponent implements OnInit{
   locations: AppLocation[] = [];
   selectedLocation: AppLocation = {};
   minAgeControl = new FormControl('', [Validators.required]);
+  isMinAgeValid: boolean = true;
 
   constructor(private fb: FormBuilder, private modalService: ModalService, private addressService: AddressService) {
     this.createCourseDetailsForm = this.fb.group({
@@ -31,16 +33,20 @@ export class CreateCourseDetailsFormComponent implements OnInit{
   }
 
   get minAge() {
-    return this.createCourseDetailsForm.get('minAge');
+    return this.createCourseDetailsForm.get('minAge')!;
   }
 
   get maxAge() {
     return this.createCourseDetailsForm.get('maxAge')!;
   }
 
+  get location() {
+    return this.createCourseDetailsForm.get('location')!;
+  }
+
   ngOnInit() {
     this.loadData();
-    this.trackLocationControlValue();
+    this.trackMinAgeControl(); // to check minAge value when it is typed after maxAge value
   }
 
   loadData() {
@@ -49,17 +55,22 @@ export class CreateCourseDetailsFormComponent implements OnInit{
     });
   }
 
-  trackLocationControlValue() {
-    this.createCourseDetailsForm.controls['location'].valueChanges
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedLocation = this.locations[index];
+  trackMinAgeControl() {
+    this.createCourseDetailsForm.controls['minAge'].valueChanges
+      .subscribe((age: string) => {
+        if (!!age && !!this.maxAge.value) {
+          this.isMinAgeValid = this.validateAgeControls(age, this.maxAge.value);
         }
       });
   }
 
+  validateAgeControls(minAge: string, maxAge: string) {
+    return +minAge < +maxAge; // cast strings to numbers and validate
+  }
+
   submit() {
     let formValue = this.createCourseDetailsForm.value;
+    this.selectedLocation = this.locations[this.location.value];
     this.modalService.emitModalEvent(new CourseDetails(
       formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, this.selectedLocation
     ));

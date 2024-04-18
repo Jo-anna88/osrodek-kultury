@@ -3,6 +3,12 @@
     <div class="form-field">
       <label>Min Age:</label>
       <input formControlName="minAge" class="form-control" required>
+      <div [hidden]="minAge.valid || minAge.pristine">
+        <small class="text-danger" *ngIf="minAge.errors?.['required']">Please provide min age.</small>
+      </div>
+      <div *ngIf="!isMinAgeValid">
+        <small class="text-danger" *ngIf="!isMinAgeValid">Please make sure min age value is lower than max age value.</small>
+      </div>
     </div>
 
     <div class="form-field">
