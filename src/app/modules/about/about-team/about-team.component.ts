@@ -32,7 +32,6 @@ export class AboutTeamComponent implements OnInit {
     ngOnInit() {
       //this.employees = mockEmployee;
       this.loadData();
-      //this.isAuthorized = true; // todo: remove it for deployment
       this.setIsAuthorized();
     }
 

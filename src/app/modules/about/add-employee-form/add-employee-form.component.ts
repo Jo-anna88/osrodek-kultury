@@ -26,9 +26,12 @@ export class AddEmployeeFormComponent {
     })
   }
 
+  close() {
+    this.modalService.closeModal();
+  }
+
   submit() {
     let formValue = this.addEmployeeForm.value;
-    console.log(formValue);
     this.modalService.emitModalEvent({employee: formValue});
   }
 }

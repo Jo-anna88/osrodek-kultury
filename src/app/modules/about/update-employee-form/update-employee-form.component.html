@@ -1,12 +1,10 @@
 <form [formGroup]="updateEmployeeForm" class="form-container">
-  <fieldset class="form-group">
+  <div class="form-groups-wrapper">
 
+  <fieldset class="form-group">
     <div class="form-field">
       <label>First Name:</label>
       <input formControlName="firstName" class="form-control">
-      <!--    <div *ngIf="form.get('firstName').invalid && (form.get('firstName').dirty || form.get('firstName').touched)">-->
-      <!--      Please provide your first name.-->
-      <!--    </div>-->
     </div>
     <div class="form-field">
       <label>Last Name:</label>
@@ -18,8 +16,11 @@
     </div>
     <div class="form-field">
       <label>Date of birth:</label>
-      <input formControlName="dob" placeholder="YYYY-MM-DD" class="form-control">
+      <input type="date" formControlName="dob" placeholder="YYYY-MM-DD" class="form-control">
     </div>
+  </fieldset>
+
+    <fieldset>
     <div class="form-field">
       <label>Role:</label>
       <div class="radio-wrapper">
@@ -39,10 +40,13 @@
       <label>Description:</label>
       <input formControlName="description" class="form-control">
     </div>
-
   </fieldset>
+  </div>
 
   <div class="form-buttons">
+    <button class="button button-secondary"
+            (click)="close()">{{ buttonAction.CANCEL }}
+    </button>
     <button class="button button-primary"
             (click)="submit()" [disabled]="updateEmployeeForm.untouched || (updateEmployeeForm.dirty && updateEmployeeForm.invalid)">{{buttonAction.SAVE}}</button>
   </div>

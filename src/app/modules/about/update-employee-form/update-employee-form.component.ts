@@ -44,6 +44,10 @@ export class UpdateEmployeeFormComponent implements OnInit {
     });
   }
 
+  close() {
+    this.modalService.closeModal();
+  }
+
   submit() {
     let formValue = this.updateEmployeeForm.value;
     this.modalService.emitModalEvent({employee: formValue});
