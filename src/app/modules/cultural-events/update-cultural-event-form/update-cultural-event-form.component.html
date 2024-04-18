@@ -22,7 +22,7 @@
     </div>
     <div class="form-field">
       <label>Address:</label>
-      <select formControlName="location">
+      <select formControlName="location" class="form-control-select">
         <option [value]="''" [disabled]="true">--Please choose an option--</option>
         <option *ngFor="let location of locations; index as i" [value]="i">{{location.location}}</option>
       </select>
@@ -30,6 +30,9 @@
   </fieldset>
 
   <div class="form-buttons">
+    <button class="button button-secondary"
+            (click)="close()">{{ buttonAction.CANCEL }}
+    </button>
     <button class="button button-primary"
             (click)="submit()" [disabled]="updateCulturalEventForm.untouched || (updateCulturalEventForm.dirty && updateCulturalEventForm.invalid)">{{buttonAction.SAVE}}</button>
   </div>

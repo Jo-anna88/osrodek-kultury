@@ -15,7 +15,6 @@ export class CreateCulturalEventFormComponent implements OnInit {
   protected readonly buttonAction = ButtonAction;
   createCulturalEventForm: FormGroup;
   locations: AppLocation[] = [];
-  selectedLocation: AppLocation = {};
 
   constructor(private fb: FormBuilder, private modalService: ModalService, private addressService: AddressService) {
     this.createCulturalEventForm = this.fb.group({
@@ -26,9 +25,13 @@ export class CreateCulturalEventFormComponent implements OnInit {
       location: [null, Validators.required]
     })
   }
+
+  get location() {
+    return this.createCulturalEventForm.get('location')!;
+  }
+
   ngOnInit() {
     this.loadData();
-    this.trackLocationControlValue();
   }
 
   loadData() {
@@ -37,23 +40,19 @@ export class CreateCulturalEventFormComponent implements OnInit {
     });
   }
 
-  trackLocationControlValue() {
-    this.createCulturalEventForm.controls['location'].valueChanges
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedLocation = this.locations[index];
-        }
-      });
+  close() {
+    this.modalService.closeModal();
   }
 
   submit() {
     let formValue = this.createCulturalEventForm.value;
+    let selectedLocation = this.locations[this.location.value];
     let newCulturalEvent: CulturalEvent = {
       imgSource: DEFAULT_IMG_SOURCE,
       name: formValue.name,
       date: formValue.date,
       description: formValue.description,
-      location: this.selectedLocation,
+      location: selectedLocation,
       price: formValue.price
     }
     this.modalService.emitModalEvent(newCulturalEvent);

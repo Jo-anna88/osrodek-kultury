@@ -22,7 +22,10 @@ export class UpdateCulturalEventFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private modalService: ModalService, private addressService: AddressService) {}
 
-  ngOnInit() {
+  get location() {
+    return this.updateCulturalEventForm.get('location')!;
+  }
+    ngOnInit() {
     this.loadData();
   }
 
@@ -36,8 +39,6 @@ export class UpdateCulturalEventFormComponent implements OnInit {
         this.data = config.data;
         this.locations = locations;
         this.populateForm();
-        // track location control
-        this.trackLocationControlValue();
       },
       error: () => {this.isLoading = false;},
       complete: () => {this.isLoading = false;}
@@ -56,17 +57,13 @@ export class UpdateCulturalEventFormComponent implements OnInit {
     })
   }
 
-  trackLocationControlValue() {
-    this.updateCulturalEventForm.controls['location'].valueChanges
-      .subscribe((index: number | null) => {
-        if (index !== null) {
-          this.selectedLocation = this.locations[index];
-        }
-      });
+  close() {
+    this.modalService.closeModal();
   }
 
   submit() {
     let formValue = this.updateCulturalEventForm.value;
+    this.selectedLocation = this.locations[this.location.value];
     let updatedCulturalEvent: CulturalEvent = {
       name: formValue.name,
       date: formValue.date,
