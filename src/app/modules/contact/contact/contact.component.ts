@@ -2,11 +2,11 @@ import {Component, EventEmitter, OnDestroy} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {CONTACT, googleMapUrl} from "../../mocks/mock-contact";
 import {ContactMessage} from "src/app/modules/contact/contact/contactMessage";
-import {EMAIL_PATTERN} from "../../../../assets/constants";
 import {ContactService} from "../contact.service";
 import {AlertService} from "../../alert/alert.service";
 import {NgForm} from "@angular/forms";
 import {Subject, takeUntil} from "rxjs";
+import {EMAIL_PATTERN} from "../../../core/forms/form-validators";
 
 @Component({
   selector: 'app-contact',

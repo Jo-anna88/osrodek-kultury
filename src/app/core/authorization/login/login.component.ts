@@ -8,7 +8,7 @@ import {ModalService} from "../../services/modal.service";
 import {AlertService} from "../../../modules/alert/alert.service";
 import {ModalType} from "../../../shared/components/modal/modal";
 import {StorageService} from "../../services/storage.service";
-import {PASSWORD_REQUIREMENTS} from "../../forms/form-validators";
+import {EMAIL_PATTERN_EXTENDED, PASSWORD_REQUIREMENTS} from "../../forms/form-validators";
 
 @Component({
   selector: 'app-login',
@@ -28,7 +28,7 @@ export class LoginComponent implements OnDestroy {
               private router: Router) {
 
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN_EXTENDED)]],
       password: ['', [Validators.required]]
     });
   }

@@ -13,19 +13,29 @@ and the special characters @$!%*?&
 export const PASSWORD_REGEX: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 export const PASSWORD_REQUIREMENTS: string = "Password needs to be at least 8 characters long and " +
   "be a combination of uppercase letters, lowercase letters, numbers, and symbols: @$!%*?& ."
+export const EMAIL_PATTERN: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+export const EMAIL_PATTERN_EXTENDED: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 export const LETTERS_ONLY: RegExp = /^[A-Za-z]+$/;
 export const PHONE_REGEX: RegExp = /^\d{9}$/;
 
 export function passwordValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    let validPassword: boolean = PASSWORD_REGEX.test(control.value);
-    return !validPassword ? {password: {value: control.value}} : null;
+  return (passwordControl: AbstractControl): ValidationErrors | null => {
+    let validPassword: boolean = PASSWORD_REGEX.test(passwordControl.value);
+    return !validPassword ? {password: {value: passwordControl.value}} : null;
   }
 }
 
 export function confirmPasswordValidator(passwordControl: AbstractControl): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    let validConfirmPassword: boolean = passwordControl.value === control.value;
-    return !validConfirmPassword ? {confirmPassword: {value: control.value}} : null;
+  return (confirmPasswordControl: AbstractControl): ValidationErrors | null => {
+    let validConfirmPassword: boolean = passwordControl.value === confirmPasswordControl.value;
+    return !validConfirmPassword ? {confirmPassword: {value: confirmPasswordControl.value}} : null;
+  }
+}
+
+export function maxAgeValidator(minAgeControl: AbstractControl): ValidatorFn {
+  return (maxAgeControl: AbstractControl): ValidationErrors | null => {
+    if (maxAgeControl.value === '') return null;
+    let validMaxAge: boolean = +minAgeControl.value < +maxAgeControl.value;
+    return !validMaxAge ? {maxAge: {value: maxAgeControl.value}} : null;
   }
 }

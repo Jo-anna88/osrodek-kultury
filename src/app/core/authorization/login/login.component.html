@@ -8,7 +8,7 @@
     </div>
     <div [hidden]="email.valid || email.pristine">
       <small class="text-danger" *ngIf="email.errors?.['required']">Please provide a password.</small>
-      <small class="text-danger" *ngIf="email.errors?.['email']">Please match the requested format: example@example.com </small>
+      <small class="text-danger" *ngIf="email.errors?.['pattern']">Please match the requested format: example@example.com </small>
     </div>
     <div class="form-control">
       <input name="password" formControlName="password"

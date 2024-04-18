@@ -139,15 +139,22 @@ button:disabled {
   display: inherit;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 1.5rem;
+  //padding-bottom: 1.5rem;
   legend {
     padding-bottom: 1rem;
     color: $primary-blue;
   }
 }
 
+.form-group-wrapper { // for more than one form-group (large forms)
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
 .form-field {
   width: 100%;
+  margin: 0.5rem 0;
 }
 
 .form-control {
@@ -161,6 +168,18 @@ button:disabled {
   &.ng-invalid.ng-dirty {
     border-width: 0 0 2px 0;
     border-bottom-color: $primary-rose;}
+}
+
+.form-control-select {
+  height: 3rem;
+  width: 100%;
+  &:focus {
+    outline: none;
+    border-width: 2px;
+    border-color: $primary-yellow}
+  &.ng-invalid.ng-dirty {
+    border-width: 2px;
+    border-color: $primary-rose;}
 }
 
 ::placeholder {
@@ -178,10 +197,15 @@ button:disabled {
   }
 }
 
+.form-validation-errors { // for displaying more than one error at the same time
+  display: flex;
+  flex-direction: column;
+}
+
 .form-buttons {
-  button {
-    margin: 2px;
-  }
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 2rem;
 }
 
 .form-question {

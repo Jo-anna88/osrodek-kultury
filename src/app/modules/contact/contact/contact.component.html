@@ -59,8 +59,10 @@
           </div>
 
         </div>
-<!--        <input type="submit" value="Send Message" class="button-primary" (click)="sendMessage()">-->
-        <button type="button" class="button-primary" (click)="sendMessage(contactForm)" [disabled]="contactForm.untouched || (contactForm.dirty && contactForm.invalid)">Send Message</button>
+
+        <div class="form-buttons">
+          <button type="button" class="button-primary" (click)="sendMessage(contactForm)" [disabled]="contactForm.untouched || (contactForm.dirty && contactForm.invalid)">Send Message</button>
+        </div>
       </form>
     </section>
   </div>
