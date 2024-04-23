@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../services/modal.service";
 import {User} from "../../../shared/models/user.model";
-import {first} from "rxjs";
+import {first, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-update-client-form',
   templateUrl: './update-client-form.component.html',
   styleUrls: ['./update-client-form.component.scss']
 })
-export class UpdateClientFormComponent implements OnInit {
+export class UpdateClientFormComponent implements OnInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
   data: {client: User} = {client: {}}
   protected readonly buttonAction = ButtonAction;
   updateClientAccountForm!: FormGroup;
@@ -21,7 +22,10 @@ export class UpdateClientFormComponent implements OnInit {
   }
 
   loadData() {
-    this.modalService.getConfiguration().pipe(first())
+    this.modalService.getConfiguration().pipe(
+      first(),
+      takeUntil(this.destroy$)
+    )
       .subscribe({
         next: config => {
           this.data = config.data;
@@ -45,5 +49,10 @@ export class UpdateClientFormComponent implements OnInit {
   }
   close() {
     this.modalService.closeModal();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

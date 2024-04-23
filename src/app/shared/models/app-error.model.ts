@@ -1,7 +1,11 @@
+import {HttpErrorInterceptor} from "../../core/interceptors/http-error-interceptor.service";
+import {HttpErrorResponse} from "@angular/common/http";
+
 export interface AppError {
-  status: number,
-  statusTxt: string,
-  description: string
+  status: number;
+  statusTxt: string;
+  description: string;
+  message?: string; // to store message from backend
 }
 
 export const errorStatusToAppErrorMapping = new Map<number, AppError>([
@@ -15,3 +19,17 @@ export const errorStatusToAppErrorMapping = new Map<number, AppError>([
   [501, {status:501, statusTxt: 'Not Implemented', description: 'Sorry, the page you were looking for cannot be accessed as the server does not support the requested method.'}],
   [503, {status:503, statusTxt: 'Service Unavailable', description: 'Sorry for the inconvenience.'}],
 ])
+
+export function createHttpAppError(err: HttpErrorResponse): AppError {
+  let appError: AppError = {status: -1, statusTxt: "", description: ""}
+  if (err.status || err.status === 0) {
+    appError = errorStatusToAppErrorMapping.get(err.status)!;
+    appError.message = err.error;
+  }
+  return appError;
+}
+
+export function createErrorDescription(err: Error): string {
+  console.log(err);
+  return (err.name + " " + err.message);
+}

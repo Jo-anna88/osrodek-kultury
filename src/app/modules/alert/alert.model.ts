@@ -3,10 +3,11 @@ export class Alert {
   id: number;
   severity: Severity;
   description: string;
+
   constructor(severity: Severity, description: string) {
     this.severity = severity;
     this.description = description;
-    this.id = Alert.counter++; //todo: backend
+    this.id = Alert.counter++;
   }
 }
 

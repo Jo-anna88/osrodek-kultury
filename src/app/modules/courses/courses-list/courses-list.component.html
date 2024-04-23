@@ -4,13 +4,13 @@
                   (queryRemoved)="clearResults()"
   ></app-search-bar>
 
-  <app-courses-filters></app-courses-filters>
+  <app-courses-filters *ngIf="!isError"></app-courses-filters>
 
   <div class="buttons-container button-add-wrapper" *ngIf="isAuthorized">
     <button-add (onAddEvent)="openModalCreate()"></button-add>
   </div>
 
-  <ng-container *ngIf="courses.length; else noDataTemplate">
+  <ng-container *ngIf="!!courses.length; else noDataTemplate">
     <ul class="courses-list">
       <li class="course-card" *ngFor="let course of courses">
         <a class="course-icon-container" [routerLink]="['/classes', course.id]">
@@ -43,7 +43,7 @@
 
 <ng-template #noDataTemplate>
   <ng-container *ngIf="isError; else noResultsTemplate">
-    <!--    <app-error [error]=appError></app-error>-->
+<!--        <app-error [error]=appError></app-error>-->
     <p class="no-data-message">Oops! No data available at that moment. Please try again later.</p>
   </ng-container>
 </ng-template>

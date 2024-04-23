@@ -2,6 +2,7 @@
   <p class="error-status h1">{{error.status}}</p>
   <p class="error-status-text h2">{{error.statusTxt}}</p>
   <p class="error-description">{{error.description}}</p>
+  <p class="error-message" *ngIf="error.message">Error: {{error.message}}</p>
   <button class="button-primary"
           routerLink="/home">BACK TO HOME</button>
 </div>

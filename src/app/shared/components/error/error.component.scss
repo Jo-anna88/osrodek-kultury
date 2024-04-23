@@ -9,7 +9,10 @@
   .error-status {
     color: $primary-rose;
   }
-  .error-status-text, .error-description {
+  .error-status-text, .error-description, .error-message {
     color: $primary-blue;
+  }
+  .error-message {
+    font-style: italic;
   }
 }

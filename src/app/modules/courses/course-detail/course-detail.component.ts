@@ -14,7 +14,7 @@ import {UserService} from "../../../core/services/user.service";
   templateUrl: './course-detail.component.html',
   styleUrls: ['./course-detail.component.scss']
 })
-// TODO: unsubscribe subscriptions!
+
 export class CourseDetailComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
   course$! : Observable<Course>; // the exclamation mark acts as a non-null assertion operator
@@ -23,7 +23,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   protected readonly Object = Object;
   isAuthorized: boolean = false;
   isClient: boolean = false;
-  //isLoading: boolean = false;
+  // isLoading: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private coursesService: CoursesService,
@@ -36,11 +36,11 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     this.course$ = this.coursesService.getCourseById(this.courseDetailsId);
     this.loadData();
     this.setIsAuthorized();
-    if(this.modalService.isModalOpen) this.modalService.closeModal(); // because of redirection from update course form
+    if(this.modalService.isModalOpen) { this.modalService.closeModal(); } // because of redirection from update course form
   }
 
   setIsAuthorized() {
-    //this.authService.initAuthStatus(); // for browser refresh
+    // this.authService.initAuthStatus(); // for browser refresh
     this.authService.role$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -52,12 +52,14 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    //this.isLoading = true;
+    // this.isLoading = true;
     this.coursesService.getCourseDetailsById(this.courseDetailsId)
       .subscribe({
-        next: (value: CourseDetails) => {
-          this.courseDetails = value.id !== null ? value : null;
-        }
+        next: (value: CourseDetails) => { // value === {} if courseDetails does not exist
+          this.courseDetails = !!value.id ? value : null;
+          // this.isLoading = false;
+        },
+        //error: (err) => { this.isLoading = false; }
       })
   }
 

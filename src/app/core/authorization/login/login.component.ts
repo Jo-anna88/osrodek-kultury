@@ -8,7 +8,8 @@ import {ModalService} from "../../services/modal.service";
 import {AlertService} from "../../../modules/alert/alert.service";
 import {ModalType} from "../../../shared/components/modal/modal";
 import {StorageService} from "../../services/storage.service";
-import {EMAIL_PATTERN_EXTENDED, PASSWORD_REQUIREMENTS} from "../../forms/form-validators";
+import {EMAIL_PATTERN_EXTENDED} from "../../forms/form-validators";
+import {HttpStatusCode} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -65,11 +66,12 @@ export class LoginComponent implements OnDestroy {
               //url ? this.router.navigateByUrl(url) :
               this.router.navigate(['landing-page']);
             },
-            // error: (err) => { //todo: change this handling errors!
-            //   //if(err.status == '403') this.alertService.error("Sorry, the login or password is incorrect.")
-            //   //else this.alertService.error("error description")
-            //   this.form.reset();
-            // }
+            error: (err) => {
+              if(err.status === HttpStatusCode.Unauthorized) {
+                this.alertService.error("Sorry, the login or password is incorrect.\nPlease try again.");
+              }
+              this.form.reset();
+            }
           }
         )
       this.form.reset();
@@ -86,7 +88,7 @@ export class LoginComponent implements OnDestroy {
           this.authService.signUp(data.user, data.password)
             //.pipe(takeUntil(this.destroy$))
             .subscribe({
-              next: (value) => {} // void
+              complete: () => {this.alertService.success("Account created successfully.\nPlease log in.")}
             })
           //this.subscription.unsubscribe(); // it is needed because without it, it sends request many times from modal (???)
           this.modalService.closeModal();
@@ -99,6 +101,4 @@ export class LoginComponent implements OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-  protected readonly PASSWORD_REQUIREMENTS = PASSWORD_REQUIREMENTS;
 }

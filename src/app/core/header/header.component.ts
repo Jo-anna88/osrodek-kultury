@@ -5,6 +5,7 @@ import {AuthService} from "../authorization/auth.service";
 import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
 import {map} from "rxjs";
 import {StorageService} from "../services/storage.service";
+import {AlertService} from "../../modules/alert/alert.service";
 
 @Component({
   selector: 'app-header',
@@ -30,7 +31,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private storageService: StorageService) {}
+              private storageService: StorageService,
+              private alertService: AlertService) {}
 
   ngOnInit() {
     this.checkIsUser();
@@ -54,18 +56,6 @@ export class HeaderComponent implements OnInit {
   toggleAboutDropdown() {
     this.isAboutDropdown = !this.isAboutDropdown;
   }
-
-  // loadData() {
-  //   this.userService.getUserBasicData().subscribe({
-  //       next: (res: { firstName: string, lastName: string }) => {
-  //         this.profileDropdownTitle = res.firstName + " " + res.lastName;
-  //       },
-  //       error: (err) => {
-  //         console.log(err);
-  //       }
-  //     }
-  //   )
-  // }
 
   selectNavItem() { // select navigation item other than 'about'
     this.isAboutDropdown = false;
@@ -113,6 +103,7 @@ export class HeaderComponent implements OnInit {
         this.storageService.clear();
         this.ngOnInit();
         this.router.navigate(['/login']);
+        this.alertService.success("Logout successful.");
       }
     });
   }

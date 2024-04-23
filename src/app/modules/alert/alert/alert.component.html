@@ -2,7 +2,8 @@
   <i [ngClass]="alertStyle.icon"></i>
   <div class="alert-message">
     <div>{{alert.severity}}</div>
-    <div>{{alert.description}}</div>
+    <pre>{{alert.description}}</pre>
   </div>
   <span class="btn-alert-close" (click)="onClose()">&times;</span>
 </div>
+

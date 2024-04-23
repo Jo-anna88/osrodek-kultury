@@ -6,7 +6,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   styleUrls: ['./about-dropdown.component.scss']
 })
 export class AboutDropdownComponent {
-  items = ["Company", "Team", "Locations"];
+  items: string[] = ["Company", "Team", "Locations"];
 
   @Output()
   navToCompanyEvent: EventEmitter<number> = new EventEmitter();
@@ -34,14 +34,5 @@ export class AboutDropdownComponent {
       }
       default: break;
     }
-  }
-  navigateToCompanyPage() {
-    this.navToCompanyEvent.emit();
-  }
-  navigateToTeamPage() {
-    this.navToTeamEvent.emit();
-  }
-  navigateToLocationsPage() {
-    this.navToLocationsEvent.emit();
   }
 }

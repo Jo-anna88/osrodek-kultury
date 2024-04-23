@@ -29,6 +29,7 @@ import {
 import {
   UpdateCulturalEventFormComponent
 } from "./modules/cultural-events/update-cultural-event-form/update-cultural-event-form.component";
+import {ErrorComponent} from "./shared/components/error/error.component";
 
 const ROUTES: Routes = [
   {path: 'login', component: LoginComponent}, // for PRIMARY_OUTLET (default router with name 'primary')
@@ -49,6 +50,7 @@ const ROUTES: Routes = [
       {path: ModalType.UPDATE_CLIENT_ACCOUNT, component: UpdateClientFormComponent}
     ]
   }, // for named router outlet
+  {path: 'error', component: ErrorComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
@@ -57,7 +59,7 @@ const routerExtraOptions: ExtraOptions = {
   // scrollPositionRestoration: "enabled",
   // anchorScrolling: "enabled",
   // scrollOffset: [0, 64],
-  //enableTracing: true
+  // enableTracing: true
 };
 
 @NgModule({

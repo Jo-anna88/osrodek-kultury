@@ -7,7 +7,6 @@
 
 .alert-content {
   max-width: 100%;
-  //display: none;
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
@@ -16,13 +15,12 @@
   margin-top: 1rem;
   padding: 0.5rem;
   background: $primary-white;
-  //color: yellow;
   border: solid 2px;
   border-radius: 3rem;
 }
 
 .alert-message {
-  @include multiline-ellipsis();
+  //@include multiline-ellipsis();
 }
 
 .btn-alert-close {
@@ -31,19 +29,19 @@
 }
 
 .alert-success {
-  @include alert-theme(rgb(60, 165, 80), green)
+  @include alert-theme(rgb(60, 165, 80), white)
 }
 
 .alert-info {
-  @include alert-theme(rgb(60, 115, 165), $primary-blue)
+  @include alert-theme(rgb(60, 115, 165), white)
 }
 
 .alert-warn {
-  @include alert-theme($primary-yellow, yellow);
+  @include alert-theme($primary-yellow, white);
 }
 
 .alert-error {
-  @include alert-theme($primary-rose, red);
+  @include alert-theme($primary-rose, white);
 }
 
 .alert-clear {

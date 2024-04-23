@@ -27,9 +27,9 @@ export class AlertService {
   }
   error(description: string, appError?: AppError) {
     if(appError) {
-      description = description + "\nError: " + appError.status.toString() + " - " + appError.statusTxt + "\n" + appError.description;
+       description = appError.status.toString() + " - " + appError.statusTxt +
+         "\n" + appError.description + "\n" + appError.message;
     }
-    console.log(description);
     this.addAlert(new Alert(Severity.Error, description));
   }
 

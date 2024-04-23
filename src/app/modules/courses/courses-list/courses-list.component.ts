@@ -42,7 +42,9 @@ export class CoursesListComponent implements OnInit, OnDestroy {
         this.isLoading = true;
         this.searchService.searchCoursesByParams(parameters).subscribe({
           next: (result) => {this.courses = result},
-          error: (err) => {this.isLoading = false; this.isError = true;},
+          error: (err) => {
+            this.isLoading = false; this.isError = true;
+            },
           complete: () => {this.isLoading = false;}
         })
       }
@@ -65,18 +67,15 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   loadData() {
     this.isLoading = true;
     this.coursesService.getCourses()
-      //.pipe(delay(5000))
-      //.pipe(retry(3)) // to deal with slow connection
-      //.pipe(takeUntil(this.destroy$))
+      //.pipe(delay(5000)) // to test delay with server response
       .subscribe({ //Partial<Observer<ICulturalEvent[]>> | ((value: ICulturalEvent[]) => void) | undefined
         next: (value: Course[]) => {
           this.courses = value;
         },
         error: (err) => {
           this.isError = true;
-          //if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
-          //this.alertService.error('An error occurred during loading the courses.');
           this.isLoading = false;
+//          this.appError = createAppError(err);
         },
         complete: () => {
           this.isLoading = false;
@@ -155,8 +154,10 @@ export class CoursesListComponent implements OnInit, OnDestroy {
                 .subscribe({
                   next: () => this.courses.unshift(newCourse), // add course with details to the list (in case of error with details - don't add the course at all)
                   error: (err) => {
-                    if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
-                    this.alertService.error('An error occurred during adding the course details.')
+                    if (err.status || err.status === 0) {
+                      this.appError = errorStatusToAppErrorMapping.get(err.status)!;
+                      this.appError.message = err.error;
+                    }
                   }
                 })
             } else { // add course without the details to the list

@@ -20,6 +20,7 @@ export class SignUpModalFormComponent {
   signUpForm: FormGroup;
   passwordControl = new FormControl('', [Validators.required, Validators.pattern(PASSWORD_REGEX)]);
   protected readonly buttonAction = ButtonAction;
+  protected readonly PASSWORD_REQUIREMENTS = PASSWORD_REQUIREMENTS;
   constructor (private fb: FormBuilder, private modalService: ModalService) {
     this.signUpForm  = this.fb.group({
       firstName: ['', [Validators.required, Validators.maxLength(24), Validators.pattern(LETTERS_ONLY)]],
@@ -72,6 +73,4 @@ export class SignUpModalFormComponent {
   close() {
     this.modalService.closeModal();
   }
-
-  protected readonly PASSWORD_REQUIREMENTS = PASSWORD_REQUIREMENTS;
 }
