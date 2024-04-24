@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Role, User} from "../../../shared/models/user.model";
 import {UserService} from "../../../core/services/user.service";
-import {SIMPLE_TEXT_SHORT} from "../../../../assets/constants";
+import {SIMPLE_TEXT_SHORT, SPINNER_NOTE_DEFAULT} from "../../../../assets/constants";
 import {ADMIN_MOCK, CLIENT_MOCK, EMPLOYEE_MOCK} from "../../mocks/mock-user";
 
 @Component({
@@ -13,7 +13,7 @@ export class ProfileComponent implements OnInit{
   user: User = {};
   isLoading: boolean = false;
   isSpinner: boolean = false;
-  spinnerNote: string = "Please wait...";
+  spinnerNote: string = SPINNER_NOTE_DEFAULT;
   protected readonly Role = Role;
 
   constructor(private userService: UserService){}
