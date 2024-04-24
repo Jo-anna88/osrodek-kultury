@@ -46,7 +46,6 @@ export class JoinConfirmationDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(participantForm: NgForm) {
-    //this.modalService.emitModalEvent(participantForm.value)
     let value: {person: UserSimpleData} = participantForm.value;
     let id = value.person.id!;
     this.modalService.emitModalEvent({isConfirmed: true, id: id});

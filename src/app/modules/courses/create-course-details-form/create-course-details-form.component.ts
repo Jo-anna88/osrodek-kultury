@@ -6,7 +6,7 @@ import {AppLocation} from "../../../shared/models/address.model";
 import {AddressService} from "../../../core/services/address.service";
 import {CourseDetails} from "../course";
 import {maxAgeValidator} from "../../../core/forms/form-validators";
-import {min, Subject, takeUntil} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-create-course-details-form',

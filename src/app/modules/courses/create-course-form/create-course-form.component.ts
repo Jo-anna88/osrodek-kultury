@@ -3,7 +3,7 @@ import {Category, Course, CourseDetails, DEFAULT_ICON_SOURCE} from "../course";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
-import {Address, AppLocation} from "../../../shared/models/address.model";
+import {AppLocation} from "../../../shared/models/address.model";
 import {CoursesService} from "../courses.service";
 import {AddressService} from "../../../core/services/address.service";
 import {UserSimpleData} from "../../../shared/models/user.model";
