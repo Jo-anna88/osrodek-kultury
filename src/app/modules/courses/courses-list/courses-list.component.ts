@@ -11,6 +11,7 @@ import {Role} from "../../../shared/models/user.model";
 import {SearchType} from "../../../shared/models/search-type.model";
 import {ActivatedRoute} from "@angular/router";
 import {SearchService} from "../../../core/services/search.service";
+import {NO_DATA_AVAILABLE, NO_SEARCH_RESULT} from "../../../../assets/constants";
 
 @Component({
   selector: 'app-courses',
@@ -226,4 +227,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
 
+  protected readonly NO_DATA_AVAILABLE = NO_DATA_AVAILABLE;
+  protected readonly NO_SEARCH_RESULT = NO_SEARCH_RESULT;
 }

@@ -30,13 +30,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         retry(retryConfig), // retry request to deal with slow connection
-        // todo: it should happen only in case of error
         tap({
           next: (v) => { // HttpResponse (then succeeds) or other events, e.g. the first one is {type: 0}
             // "The object { type: 0 } is simply the first HttpEvent of type Sent, emitted directly after the request is sent but before the response arrives.", source: stackoverflow
             console.log(v); // log http response object
           },
           error: (err) => {
+            console.log(err);
             this.injector.get(HttpErrorHandlerService).handleError(err); // handle HttpErrorResponse and other Errors
           }
         })

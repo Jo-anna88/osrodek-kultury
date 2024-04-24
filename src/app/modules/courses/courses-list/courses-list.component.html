@@ -44,10 +44,10 @@
 <ng-template #noDataTemplate>
   <ng-container *ngIf="isError; else noResultsTemplate">
 <!--        <app-error [error]=appError></app-error>-->
-    <p class="no-data-message">Oops! No data available at that moment. Please try again later.</p>
+    <p class="no-data-message">{{ NO_DATA_AVAILABLE }}</p>
   </ng-container>
 </ng-template>
 
 <ng-template #noResultsTemplate>
-  <p class="no-data-message">Oops! No results match your search criteria. Please try again.</p>
+  <p class="no-data-message">{{ NO_SEARCH_RESULT }}</p>
 </ng-template>

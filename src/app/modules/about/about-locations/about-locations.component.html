@@ -1,14 +1,24 @@
-<div class="locations-container">
-  <section class="section-location" *ngFor = "let address of addresses; index as i">
-    <img class="location-photo" [src]="'/assets/images/location'+(i+1)+'.jpg'" alt=""/>
-    <section class="address-section">
-      <p>{{address.location}}</p>
-      <p>{{address.street}} {{address.houseNumber}}</p>
-      <p>{{address.zipCode}} {{address.city}}</p>
+<ng-container *ngIf="!isLoading; else spinner">
+  <div class="locations-container" *ngIf="!!addresses.length else noDataTemplate">
+    <section class="section-location" *ngFor="let address of addresses; index as i">
+      <img class="location-photo" [src]="'/assets/images/location'+(i+1)+'.jpg'" alt=""/>
+      <section class="address-section">
+        <p>{{ address.location }}</p>
+        <p>{{ address.street }} {{ address.houseNumber }}</p>
+        <p>{{ address.zipCode }} {{ address.city }}</p>
+      </section>
     </section>
-  </section>
-  <div class="source">
-    Images by <a href="https://www.freepik.com/free-vector/minimal-architecture-covers_9446808.htm#fromView=search&page=1&position=30&uuid=9cc5f73e-68d4-4af9-97db-463dc8364a4c">Freepik</a>
+    <div class="source">
+      Images by <a
+      href="https://www.freepik.com/free-vector/minimal-architecture-covers_9446808.htm#fromView=search&page=1&position=30&uuid=9cc5f73e-68d4-4af9-97db-463dc8364a4c">Freepik</a>
+    </div>
   </div>
-</div>
+</ng-container>
 
+<ng-template #spinner>
+  <app-spinner [note]="spinnerNote"></app-spinner>
+</ng-template>
+
+<ng-template #noDataTemplate>
+  <p class="no-data-message">Oops! No data available at that moment. Please try again later.</p>
+</ng-template>
