@@ -4,6 +4,7 @@ import {EmployeeService} from "../employee.service";
 import {EmployeeProfile} from "../../../shared/components/card-team-member-profile/profile-model";
 import {CoursesService} from "../../courses/courses.service";
 import {CourseBasicInfo} from "../../courses/course";
+import {NO_DATA_AVAILABLE, SPINNER_NOTE_DEFAULT} from "../../../../assets/constants";
 
 @Component({
   selector: 'app-employee-detail',
@@ -13,9 +14,12 @@ import {CourseBasicInfo} from "../../courses/course";
 export class EmployeeDetailComponent implements OnInit {
   employeeId: string = "";
   employeeProfile: EmployeeProfile = {};
-
   coursesBasic: CourseBasicInfo[] = [];
   coursesMenuItems: string[] = [];
+  isLoading: boolean = false;
+  spinnerNote: string = SPINNER_NOTE_DEFAULT;
+  protected readonly NO_DATA_AVAILABLE = NO_DATA_AVAILABLE;
+  protected readonly Object = Object;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -28,6 +32,7 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   loadData() {
+    this.isLoading = true;
     this.employeeService.getEmployeeProfileById(this.employeeId)
       .subscribe({
         next: (profile: EmployeeProfile) => {
@@ -35,11 +40,14 @@ export class EmployeeDetailComponent implements OnInit {
           if (profile.position === 'Teacher') {
             this.getCourses();
           }
-        }
+        },
+        error: (err) => { this.isLoading = false; },
+        complete: () => { this.isLoading = false; }
       })
   }
 
   getCourses() {
+    this.isLoading = true;
     this.coursesService.getCoursesLedByTeacher(this.employeeId)
       .subscribe({
         next: (coursesBasic: CourseBasicInfo[]) => {
@@ -47,7 +55,9 @@ export class EmployeeDetailComponent implements OnInit {
           this.coursesBasic.map((course) => {
             this.coursesMenuItems.push(course.name!);
           })
-        }
+        },
+        error: (err) => { this.isLoading = false; },
+        complete: () => { this.isLoading = false; }
       });
   }
 

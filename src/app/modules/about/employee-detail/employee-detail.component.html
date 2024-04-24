@@ -1,8 +1,18 @@
-<div class = "employee-detail-container">
-  <app-card-team-member-profile [profile] = employeeProfile></app-card-team-member-profile>
-  <app-menu *ngIf="coursesMenuItems.length"
-            [title]="'Classes led by me'"
-            [items]="coursesMenuItems"
-            [menuColor]="'#334075'"
-            (onSelectEvent)="navigateToClass($event)"></app-menu>
-</div>
+<ng-container *ngIf="!isLoading; else spinner">
+  <div class="employee-detail-container" *ngIf="Object.keys(employeeProfile).length else noDataTemplate">
+    <app-card-team-member-profile [profile]=employeeProfile></app-card-team-member-profile>
+    <app-menu *ngIf="coursesMenuItems.length"
+              [title]="'Classes led by me'"
+              [items]="coursesMenuItems"
+              [menuColor]="'#334075'"
+              (onSelectEvent)="navigateToClass($event)"></app-menu>
+  </div>
+</ng-container>
+
+<ng-template #spinner>
+  <app-spinner [note]="spinnerNote"></app-spinner>
+</ng-template>
+
+<ng-template #noDataTemplate>
+  <p class="no-data-message">{{ NO_DATA_AVAILABLE }}</p>
+</ng-template>

@@ -6,9 +6,11 @@
       </div>
       <div class = "profile-cards-container">
         <div class = "profile-card-wrapper" *ngFor="let employee of employees">
+<!--          NAVIGATE TO EMPLOYEE DETAILS: -->
           <app-card-team-member-profile [profile]="employee"
                             [routerLink]="['/about-team/employee', employee.id]"
           ></app-card-team-member-profile>
+<!--          NAVIGATE TO EMPLOYEE DETAILS ONLY IF IT IS A TEACHER: -->
 <!--          <app-card-profile *ngIf="employee.position === 'Teacher'" [profile]="employee"-->
 <!--                            [routerLink]="['/about-team/employee', employee.id]"-->
 <!--          ></app-card-profile>-->
@@ -29,6 +31,5 @@
 </ng-template>
 
 <ng-template #noDataTemplate>
-<!--  <app-error [error]=appError></app-error>-->
-    <p>Oops! No data available at that moment. Please try again later.</p>
+    <p>{{ NO_DATA_AVAILABLE }}</p>
 </ng-template>

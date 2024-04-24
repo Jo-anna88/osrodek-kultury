@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Address} from "../../../shared/models/address.model";
 import {AddressService} from "../../../core/services/address.service";
-import {SPINNER_NOTE_DEFAULT} from "../../../../assets/constants";
+import {NO_DATA_AVAILABLE, SPINNER_NOTE_DEFAULT} from "../../../../assets/constants";
 
 @Component({
   selector: 'app-about-locations',
@@ -12,8 +12,8 @@ export class AboutLocationsComponent implements OnInit {
     addresses: Address[] = [];
     isLoading: boolean = false;
     spinnerNote: string = SPINNER_NOTE_DEFAULT;
-
-    constructor(private addressService: AddressService){}
+    protected readonly NO_DATA_AVAILABLE = NO_DATA_AVAILABLE;
+    constructor(private addressService: AddressService) {}
     ngOnInit() {
       this.loadData();
     }
@@ -22,9 +22,9 @@ export class AboutLocationsComponent implements OnInit {
       this.isLoading = true;
       this.addressService.getAddresses()
         .subscribe({
-          next: (value) => {this.addresses = value;},
-          error: (err) => {this.isLoading = false;},
-          complete: () => {this.isLoading = false;}
+          next: (value) => { this.addresses = value; },
+          error: (err) => { this.isLoading = false; },
+          complete: () => { this.isLoading = false; }
         })
     }
 }

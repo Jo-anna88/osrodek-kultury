@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading; else spinner">
-  <div class="locations-container" *ngIf="!!addresses.length else noDataTemplate">
+  <div class="locations-container" *ngIf="addresses.length else noDataTemplate">
     <section class="section-location" *ngFor="let address of addresses; index as i">
       <img class="location-photo" [src]="'/assets/images/location'+(i+1)+'.jpg'" alt=""/>
       <section class="address-section">
@@ -20,5 +20,5 @@
 </ng-template>
 
 <ng-template #noDataTemplate>
-  <p class="no-data-message">Oops! No data available at that moment. Please try again later.</p>
+  <p class="no-data-message">{{ NO_DATA_AVAILABLE }}</p>
 </ng-template>
