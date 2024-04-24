@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, NgZone} from '@angular/core';
 import {Alert} from "../alert.model";
 import {AlertService} from "../alert.service";
 import {alerts} from "../alert-mock";
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'alerts', //app-alert-list
@@ -11,11 +11,9 @@ import {Observable, Subscription} from "rxjs";
 })
 export class AlertListComponent implements OnInit, OnDestroy {
   alerts: Alert[] = [];
-  //alerts$: Observable<Alert>;
   alertSubscription!: Subscription;
   constructor(private alertService: AlertService,
               private ngZone: NgZone) {
-    //this.alerts$ = this.alertService.getAlert();
   }
 
   ngOnInit(): void {
@@ -26,13 +24,12 @@ export class AlertListComponent implements OnInit, OnDestroy {
             this.alerts.push({id: alerts.length++, description: alert.description, severity: alert.severity});
           } else {
             this.alerts = []
-          } //?
+          }
         })
       })
   }
 
   removeAlert(alert: Alert) {
-    // todo: it should be moved to alert service:
     const index: number = this.alerts.findIndex(
       (_alert) => (_alert.id === alert.id)
     )

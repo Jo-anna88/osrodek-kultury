@@ -40,26 +40,4 @@ export class AlertService {
   getAlert(): Observable<Alert|null|undefined> {
     return this.alert$.asObservable();
   }
-
-  /*
-  alerts: Alert[] = [];
-  add(alert: Alert) {
-    this.alerts.push(alert);
-  }
-  addAll(alerts: Alert[]) {
-    alerts.forEach(
-      (alert) => this.alerts.push(alert)
-    );
-  }
-  clear(alert: Alert) {
-    const index: number = this.alerts.findIndex(
-      (_alert) => (_alert.id === alert.id)
-    )
-    this.alerts.splice(index,1);
-  }
-  clearAll() {
-    this.alerts = [];
-  }
-
-   */
 }
