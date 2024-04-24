@@ -39,6 +39,6 @@ export class ContactComponent {
   }
 
   countMessageLength(value: EventEmitter<string>) {
-    this.currentLength = value ? value.length : 0; // after submitting form value will be null
+    this.currentLength = value ? value.length : 0; // after submitting form value changes to 'null', so here it is set '0'
   }
 }

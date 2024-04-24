@@ -139,8 +139,8 @@ export class AboutTeamComponent implements OnInit {
     return this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
-        next: (result: boolean) => {
-          if (result) { this.deleteEmployee(employeeId); }
+        next: (isConfirmed: boolean) => {
+          if (isConfirmed) { this.deleteEmployee(employeeId); }
           this.modalService.closeModal();
         }
       });

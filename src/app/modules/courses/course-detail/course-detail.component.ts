@@ -5,9 +5,10 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CoursesService} from "../courses.service";
 import {ModalService} from "../../../core/services/modal.service";
 import {ModalType} from "../../../shared/components/modal/modal";
-import {Role} from "../../../shared/models/user.model";
+import {Role, User} from "../../../shared/models/user.model";
 import {AuthService} from "../../../core/authorization/auth.service";
 import {UserService} from "../../../core/services/user.service";
+import {AlertService} from "../../alert/alert.service";
 
 @Component({
   selector: 'app-course-detail',
@@ -17,7 +18,7 @@ import {UserService} from "../../../core/services/user.service";
 
 export class CourseDetailComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
-  course$! : Observable<Course>; // the exclamation mark acts as a non-null assertion operator
+  course$! : Observable<Course>; // an exclamation mark acts as a non-null assertion operator
   courseDetails : CourseDetails | null | undefined = undefined;
   courseDetailsId: string = "-1";
   protected readonly Object = Object;
@@ -29,7 +30,8 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     private coursesService: CoursesService,
     private modalService: ModalService,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private alertService: AlertService
   ) {}
   ngOnInit() {
     this.courseDetailsId = this.route.snapshot.paramMap.get('id')!;
@@ -57,98 +59,116 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (value: CourseDetails) => { // value === {} if courseDetails does not exist
           this.courseDetails = !!value.id ? value : null;
-          // this.isLoading = false;
         },
-        //error: (err) => { this.isLoading = false; }
+        // error: (err) => { this.isLoading = false; },
+        // complete: () => { this.isLoading = false; }
       })
   }
 
-  addDetails() {
+  // CREATE DETAILS //
+  openModalCreate() {
     this.modalService.setConfiguration({title: "Add Course Details"});
-    //this.modalService.openModal(ModalType.CREATE_COURSE_DETAILS);
-    let subscription = this.modalService.getModalEvent()
+    let subscription: Subscription = this.subscribeToAddDetailsModalEvent();
+    this.modalService.openModal(ModalType.CREATE_COURSE_DETAILS, subscription);
+  }
+
+  subscribeToAddDetailsModalEvent(): Subscription {
+    return this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
         next: (courseDetails: CourseDetails) => {
-          courseDetails.id = this.courseDetailsId; //courseId;
-          console.log("Course Details to add: ", courseDetails);
-          this.coursesService.addCourseDetails(courseDetails)
-            //.pipe(takeUntil(this.destroy$))
-            .subscribe({
-              next: (newCourseDetails) => {
-                console.log("Response: ", newCourseDetails);
-                this.courseDetails = newCourseDetails;
-              }
-            });
-          //this.subscription.unsubscribe(); // it is not needed because of first() ?? or maybe there should be take(1)?
+          courseDetails.id = this.courseDetailsId; // courseDetailsId is the same as courseId;
+          this.addDetails(courseDetails);
           this.modalService.closeModal();
         }
       });
-    this.modalService.openModal(ModalType.CREATE_COURSE_DETAILS, subscription);
   }
-  updateDetails() {
+
+  addDetails(courseDetails: CourseDetails) {
+    this.coursesService.addCourseDetails(courseDetails)
+      .subscribe({
+        next: (newCourseDetails) => { this.courseDetails = newCourseDetails; }
+      });
+  }
+
+  // UPDATE DETAILS //
+  openModalUpdate() {
     this.modalService.setConfiguration({title: "Update Course Details", data: this.courseDetails});
-    //this.modalService.openModal(ModalType.UPDATE_COURSE_DETAILS);
-    let subscription = this.modalService.getModalEvent()
+    let subscription = this.subscribeToUpdateDetailsModalEvent();
+    this.modalService.openModal(ModalType.UPDATE_COURSE_DETAILS, subscription);
+  }
+
+  subscribeToUpdateDetailsModalEvent(): Subscription {
+    return this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
         next: (courseDetails: CourseDetails) => {
           courseDetails.id = this.courseDetailsId;
-          this.coursesService.updateCourseDetails(courseDetails)
-            //.pipe(takeUntil(this.destroy$))
-            .subscribe({
-              next: (updatedCourseDetails) => {
-                this.courseDetails = updatedCourseDetails;
-              }
-            });
+          this.updateDetails(courseDetails);
           this.modalService.closeModal();
         }
-      })
-    this.modalService.openModal(ModalType.UPDATE_COURSE_DETAILS, subscription);
-  }
-  deleteDetails(id: string) {
-    this.modalService.setConfiguration({title: "Delete Confirmation", data: "details"});
-    //this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
-    let subscription = this.modalService.getModalEvent()
-      .pipe(first())
-      .subscribe({
-        next: (isConfirmed: boolean) => {
-          if (isConfirmed) {
-            this.coursesService.deleteCourseDetails(id)
-              //.pipe(takeUntil(this.destroy$))
-              .subscribe({
-                next: () => {
-                  this.courseDetails = null;
-                }
-              });
-          }
-        },
-        complete: () => {this.modalService.closeModal();}
       });
+  }
+
+  updateDetails(courseDetails: CourseDetails) {
+    this.coursesService.updateCourseDetails(courseDetails)
+      //.pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (updatedCourseDetails) => { this.courseDetails = updatedCourseDetails; }
+      });
+  }
+
+  // DELETE DETAILS //
+  openModalDelete(courseDetailsId: string) {
+    this.modalService.setConfiguration({title: "Delete Confirmation", data: "details"});
+    let subscription: Subscription = this.subscribeToDeleteDetailsModalEvent(courseDetailsId);
     this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
   }
 
+  subscribeToDeleteDetailsModalEvent(courseDetailsId: string): Subscription {
+    return this.modalService.getModalEvent()
+      .pipe(first())
+      .subscribe({
+        next: (isConfirmed: boolean) => {
+          if (isConfirmed) { this.deleteDetails(courseDetailsId); }
+          this.modalService.closeModal();
+        }
+      });
+  }
+
+  deleteDetails(id: string) {
+    this.coursesService.deleteCourseDetails(id)
+      .subscribe({
+        next: () => { this.courseDetails = null; }
+      });
+  }
+
+  // JOIN COURSE //
   openJoinDialog(courseName: string) {
     this.modalService.setConfiguration({title: "Confirm your choice", data: courseName});
     //this.modalService.openModal(ModalType.JOIN_CONFIRMATION);
-    let subscription = this.modalService.getModalEvent()
+    let subscription = this.subscribeToJoinCourseModalEvent();
+    this.modalService.openModal(ModalType.JOIN_CONFIRMATION, subscription);
+  }
+
+  subscribeToJoinCourseModalEvent(): Subscription {
+    return this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
-        next: (value: {isConfirmed: boolean, id: string}) => {
-          if (value.isConfirmed) {
-           this.userService.joinCourse(this.courseDetailsId, value.id).subscribe({
-             next: (value) => {
-               console.log(value); // null
-               this.course$ = this.coursesService.getCourseById(this.courseDetailsId); // for freeSlots refresh
-             },
-             error: (err) => {console.log(err)},
-             complete: () => {console.log("join course - completed")}
-           });
-          }
-        },
-        complete: () => {this.modalService.closeModal();}
+        next: (value: { isConfirmed: boolean, id: string }) => {
+          if (value.isConfirmed) { this.joinCourse(this.courseDetailsId, value.id); }
+          this.modalService.closeModal();
+        }
       });
-    this.modalService.openModal(ModalType.JOIN_CONFIRMATION, subscription);
+  }
+
+  joinCourse(courseId: string, userId: string) {
+    this.userService.joinCourse(courseId, userId).subscribe({
+      next: (value) => {
+        this.course$ = this.coursesService.getCourseById(this.courseDetailsId); // for freeSlots refresh
+        this.alertService.success("Your join request has been sent and accepted!");
+      }
+    });
   }
 
   ngOnDestroy(): void {

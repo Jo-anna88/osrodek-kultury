@@ -12,7 +12,6 @@
       <li>Minimum participant age: {{courseDetails.minAge}} years</li>
       <li>Maximum participant age: {{courseDetails.maxAge}} years</li>
       <li>Price per month: {{courseDetails.price | currency: 'PLN'}}</li>
-<!--      <li>Participants number: {{course.maxParticipantsNumber}}</li>-->
       <li>Lesson duration: {{courseDetails.lessonDurationMinutes}} minutes</li>
       <li>Class schedule: {{courseDetails.date}}</li>
       <li>Place: {{courseDetails.location?.location}}</li>
@@ -21,9 +20,10 @@
       </li>
     </ul>
     <div class="buttons-container" *ngIf="isAuthorized">
-      <button-edit (onEditEvent)="updateDetails()"></button-edit>
-      <button-delete (onDeleteEvent)="deleteDetails(courseDetails.id!)"></button-delete>
+      <button-edit (onEditEvent)="openModalUpdate()"></button-edit>
+      <button-delete (onDeleteEvent)="openModalDelete(courseDetails.id!)"></button-delete>
     </div>
+<!--    OPCJA 'JOIN' DOSTĘPNA TYLKO WÓWCZA, GDY SĄ 'COURSE DETAILS' -->
     <div class="button-right" *ngIf="isClient && course.freeSlots !== 0">
       <button class="button-primary" (click) = "openJoinDialog(course.name)">JOIN</button>
     </div>
@@ -31,10 +31,10 @@
 
   <div class="no-details-message" *ngIf="courseDetails === null">
     <p>There is no details for now.</p>
-    <button-add *ngIf = "isAuthorized" class="button-small" (onAddEvent)="addDetails()"></button-add>
+    <button-add *ngIf = "isAuthorized" class="button-small" (onAddEvent)="openModalCreate()"></button-add>
   </div>
 
-<!--  todo: czy udostępnić tą opcję, gdy nie ma courseDetails? - czy taki scenariusz jest możliwy?-->
+<!-- OPCJA 'JOIN' DOSTĘPNA NAWET WÓWCZAS, GDY NIE MA 'COURSE DETAILS' -->
 <!--  <div class="button-right">-->
 <!--    <button class="button-primary">JOIN</button>-->
 <!--  </div>-->
@@ -45,6 +45,3 @@
     Sorry, there is no more available slots for this course.
   </li>
 </ng-template>
-<!--<ng-template #noDetails>-->
-<!--  <p>There is no details for now.</p>-->
-<!--</ng-template>-->
