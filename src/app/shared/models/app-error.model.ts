@@ -24,7 +24,9 @@ export function createHttpAppError(err: HttpErrorResponse): AppError {
   let appError: AppError = {status: -1, statusTxt: "", description: ""}
   if (err.status || err.status === 0) {
     appError = errorStatusToAppErrorMapping.get(err.status)!;
-    appError.message = err.error;
+    // error może być obiektem, a nie tekstem i wyglądać np. tak: error: error { target: XMLHttpRequest, isTrusted: true, lengthComputable: false, … }
+    // gdyby nie sprawdzać czy err.error jest obiektem, to wówczas appError.message === '[object ProgressEvent]'
+    appError.message = (typeof err.error !== 'object') ? err.error : "";
   }
   return appError;
 }

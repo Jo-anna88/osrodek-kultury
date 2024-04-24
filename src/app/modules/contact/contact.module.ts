@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { ContactRoutingModule } from './contact-routing.module';
 import { ContactComponent } from './contact/contact.component';
-import {ContactService} from "./contact.service";
+import { ContactService } from "./contact.service";
 
 
 @NgModule({

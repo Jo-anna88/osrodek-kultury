@@ -1,11 +1,10 @@
 import {Component, EventEmitter, OnDestroy} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {CONTACT, googleMapUrl} from "../../mocks/mock-contact";
-import {ContactMessage} from "src/app/modules/contact/contact/contactMessage";
+import {ContactMessage} from "src/app/modules/contact/contactMessage.model";
 import {ContactService} from "../contact.service";
 import {AlertService} from "../../alert/alert.service";
 import {NgForm} from "@angular/forms";
-import {Subject, takeUntil} from "rxjs";
 import {EMAIL_PATTERN} from "../../../core/forms/form-validators";
 
 @Component({
@@ -13,8 +12,7 @@ import {EMAIL_PATTERN} from "../../../core/forms/form-validators";
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent implements OnDestroy{
-  destroy$ = new Subject<void>();
+export class ContactComponent {
   url: SafeResourceUrl = "";
   contactInfo = CONTACT;
   contactMessage: ContactMessage = new ContactMessage();
@@ -29,10 +27,9 @@ export class ContactComponent implements OnDestroy{
 
   sendMessage(contactForm: NgForm) {
     this.contactService.sendMessage(contactForm.value)
-      .pipe(takeUntil(this.destroy$))
       .subscribe({
       next: () => {
-        this.alertService.success('The message has been sent successfully,')
+        this.alertService.success('The message has been sent successfully.')
       },
       error: (err: any) => {
         this.alertService.error('An error has occurred while sending email.');
@@ -43,10 +40,5 @@ export class ContactComponent implements OnDestroy{
 
   countMessageLength(value: EventEmitter<string>) {
     this.currentLength = value ? value.length : 0; // after submitting form value will be null
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
