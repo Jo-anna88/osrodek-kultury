@@ -53,9 +53,9 @@ export class CoursesFiltersComponent implements OnInit, OnDestroy {
     this.isFilters$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-      next: (isFilters) => {
-        if (isFilters) { this.loadData(); }
-      }
+          next: (isFilters) => {
+            if (isFilters) { this.loadData(); }
+          }
     });
   }
 
