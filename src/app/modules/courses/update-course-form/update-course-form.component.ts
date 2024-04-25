@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Category, Course, CourseDetails} from "../course";
-import {ButtonAction, ModalConfiguration} from "../../../shared/components/modal/modal";
+import {ButtonAction} from "../../../shared/components/modal/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {first, forkJoin, Subscription} from "rxjs";
+import {first, forkJoin} from "rxjs";
 import {ModalService} from "../../../core/services/modal.service";
 import {AppLocation} from "../../../shared/models/address.model";
 import {CoursesService} from "../courses.service";
@@ -14,7 +14,7 @@ import {UserSimpleData} from "../../../shared/models/user.model";
   templateUrl: './update-course-form.component.html',
   styleUrls: ['./update-course-form.component.scss']
 })
-export class UpdateCourseFormComponent implements OnInit, OnDestroy {
+export class UpdateCourseFormComponent implements OnInit {
   data: {course: Course, courseDetails: CourseDetails} = {
     course: {name: "", teacher: {}, description: "", category: Category.default},
     courseDetails: {}
@@ -28,7 +28,6 @@ export class UpdateCourseFormComponent implements OnInit, OnDestroy {
   locations: AppLocation[] = [];
   selectedLocation: AppLocation = {};
   showDetails: boolean = false;
-  subscription = new Subscription();
   constructor(private fb: FormBuilder, private modalService: ModalService,
               private courseService: CoursesService, private addressService: AddressService) {
   }
@@ -71,31 +70,39 @@ export class UpdateCourseFormComponent implements OnInit, OnDestroy {
   private populateForm() {
     let originalTeacherIndex = this.teachers.findIndex(teacher => teacher.id === this.data.course.teacher.id);
     this.selectedTeacher = this.teachers[originalTeacherIndex]; // init selected teacher value
-    if(this.showDetails) {
+    if(this.showDetails) { // populate form with data about course and course details
       let originalLocationIndex = this.locations.findIndex(location => location.id = this.data.courseDetails.location?.id);
       this.selectedLocation = this.locations[originalLocationIndex]; // init selected location value
-      this.updateCourseForm = this.fb.group({
-        name: [this.data.course.name, Validators.required],
-        teacher: [originalTeacherIndex, Validators.required],
-        description: [this.data.course.description, Validators.required],
-        category: [this.data.course.category, Validators.required],
-        maxParticipantsNumber: [this.data.course.maxParticipantsNumber, Validators.required],
-        minAge: [this.data.courseDetails.minAge, Validators.required],
-        maxAge: [this.data.courseDetails.maxAge, Validators.required],
-        price: [this.data.courseDetails.price, Validators.required],
-        lessonDurationMinutes: [this.data.courseDetails.lessonDurationMinutes, Validators.required],
-        date: [this.data.courseDetails.date, Validators.required],
-        location: [originalLocationIndex, Validators.required]
-      });
-    } else {
-      this.updateCourseForm = this.fb.group({
-        name: [this.data.course.name, Validators.required],
-        teacher: [originalTeacherIndex, Validators.required],
-        description: [this.data.course.description, Validators.required],
-        category: [this.data.course.category, Validators.required],
-        maxParticipantsNumber: [this.data.course.maxParticipantsNumber, Validators.required],
-      });
+      this.populateFormWithCourseWithDetailsData(originalTeacherIndex, originalLocationIndex);
+    } else { // populate form with data about course (course details does not exist)
+      this.populateFormWithCourseData(originalTeacherIndex);
     }
+  }
+
+  populateFormWithCourseWithDetailsData(originalTeacherIndex: number, originalLocationIndex: number) {
+    this.updateCourseForm = this.fb.group({
+      name: [this.data.course.name, Validators.required],
+      teacher: [originalTeacherIndex, Validators.required],
+      description: [this.data.course.description, Validators.required],
+      category: [this.data.course.category, Validators.required],
+      maxParticipantsNumber: [this.data.course.maxParticipantsNumber, Validators.required],
+      minAge: [this.data.courseDetails.minAge, Validators.required],
+      maxAge: [this.data.courseDetails.maxAge, Validators.required],
+      price: [this.data.courseDetails.price, Validators.required],
+      lessonDurationMinutes: [this.data.courseDetails.lessonDurationMinutes, Validators.required],
+      date: [this.data.courseDetails.date, Validators.required],
+      location: [originalLocationIndex, Validators.required]
+    });
+  }
+
+  populateFormWithCourseData(originalTeacherIndex: number) {
+    this.updateCourseForm = this.fb.group({
+      name: [this.data.course.name, Validators.required],
+      teacher: [originalTeacherIndex, Validators.required],
+      description: [this.data.course.description, Validators.required],
+      category: [this.data.course.category, Validators.required],
+      maxParticipantsNumber: [this.data.course.maxParticipantsNumber, Validators.required],
+    });
   }
 
   close() {
@@ -108,19 +115,20 @@ export class UpdateCourseFormComponent implements OnInit, OnDestroy {
     let updatedCourse: Course = new Course(this.data.course.imgSource!,
       formValue.name, this.selectedTeacher, formValue.description, formValue.category, formValue.maxParticipantsNumber)
     if(!this.showDetails) {
-      this.modalService.emitModalEvent({course: updatedCourse, courseDetails: null});
+      this.submitCourse(updatedCourse);
     } else {
-      this.selectedLocation = this.locations[this.location.value];
-      let updatedCourseDetails: CourseDetails = new CourseDetails(
-        formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, this.selectedLocation
-      )
-      this.modalService.emitModalEvent({course: updatedCourse, courseDetails: updatedCourseDetails});
+      this.submitCourseWithDetails(updatedCourse, formValue);
     }
   }
 
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  submitCourse(updatedCourse: Course){
+    this.modalService.emitModalEvent({course: updatedCourse, courseDetails: null});
+  }
+  submitCourseWithDetails(updatedCourse: Course, formValue: any) {
+    this.selectedLocation = this.locations[this.location.value];
+    let updatedCourseDetails: CourseDetails = new CourseDetails(
+      formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, this.selectedLocation
+    )
+    this.modalService.emitModalEvent({course: updatedCourse, courseDetails: updatedCourseDetails});
   }
 }

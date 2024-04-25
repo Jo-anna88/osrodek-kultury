@@ -85,14 +85,19 @@ export class CreateCourseFormComponent implements OnInit {
     let selectedTeacher = this.teachers[this.teacher.value];
     let newCourse: Course = new Course(DEFAULT_ICON_SOURCE,
       formValue.name, selectedTeacher, formValue.description, formValue.category, formValue.maxParticipantsNumber)
-    if(!this.showDetails) {
-      this.modalService.emitModalEvent({course: newCourse, courseDetails: null});
-    } else {
-      let selectedLocation = this.locations[this.location.value];
-      let newCourseDetails: CourseDetails = new CourseDetails(
-        formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, selectedLocation
+    if(!this.showDetails) { this.submitCourse(newCourse); }
+    else { this.submitCourseWithDetails(newCourse, formValue); }
+  }
+
+  submitCourse(newCourse: Course) {
+    this.modalService.emitModalEvent({course: newCourse, courseDetails: null});
+  }
+
+  submitCourseWithDetails(newCourse: Course, formValue: any) {
+    let selectedLocation = this.locations[this.location.value];
+    let newCourseDetails: CourseDetails = new CourseDetails(
+      formValue.minAge, formValue.maxAge, formValue.price, formValue.lessonDurationMinutes, formValue.date, selectedLocation
     )
-      this.modalService.emitModalEvent({course: newCourse, courseDetails: newCourseDetails});
-    }
+    this.modalService.emitModalEvent({course: newCourse, courseDetails: newCourseDetails});
   }
 }

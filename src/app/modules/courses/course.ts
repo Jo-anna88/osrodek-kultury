@@ -8,9 +8,8 @@ export class Course {
   teacher: UserSimpleData;
   description: string;
   category: Category;
-  //courseDetails? : CourseDetails;
   maxParticipantsNumber?: number;
-  freeSlots?: number; // get from backend
+  freeSlots?: number;
   constructor(imgSource: string, name: string, teacher: UserSimpleData, description: string, category: Category, maxParticipantsNumber: number) {
     this.imgSource = imgSource;
     this.name=name;
@@ -27,12 +26,11 @@ export interface CourseBasicInfo {
 }
 
 export class CourseDetails {
-  id?: string; // Long
+  id?: string;
   minAge?: number;
   maxAge?: number;
-  price?: string; // cena za kurs / semestr
-  //roomId?: number; // nr sali (osobna TABELA Room)
-  lessonDurationMinutes?: number; // czas trwania zajęć
+  price?: string;
+  lessonDurationMinutes?: number;
   date?: string; // termin, e.g., "Mon 13:00 - 13:45" (teoretycznie można tu wykorzystać informację o czasie trwania zajęć)
   location?: AppLocation;
 
