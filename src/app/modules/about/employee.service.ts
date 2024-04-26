@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs";
-import {EmployeeProfile} from "../../shared/components/card-team-member-profile/profile-model";
+import {EmployeeProfile} from "../../shared/models/profile.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {User} from "../../shared/models/user.model";

@@ -30,7 +30,6 @@ export enum ButtonAction {
 
 export interface ModalConfiguration {
   isClosable?: boolean,
-  // isTitle?: boolean, // maybe it is not needed, because we can use: if(this.modalTitle) this.isTitle = true;
   title? : string,
   data?: any, // np. dane inicjalizujące do formularza przy Update, lub słowo-klucz w Delete, które określa item, który użytkownik oznaczył do usunięcia
   question? : string, // a field for custom question in delete/remove confirmation window

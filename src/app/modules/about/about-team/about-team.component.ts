@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EmployeeProfile} from "../../../shared/components/card-team-member-profile/profile-model";
+import {EmployeeProfile} from "../../../shared/models/profile.model";
 import {NO_DATA_AVAILABLE, SIMPLE_TEXT_SHORT} from "../../../../assets/constants";
 import {mockEmployee} from "../../mocks/mock-employee";
 import {ModalService} from "../../../core/services/modal.service";
