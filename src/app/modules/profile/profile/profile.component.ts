@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Role, User} from "../../../shared/models/user.model";
 import {UserService} from "../../../core/services/user.service";
-import {NO_DATA_AVAILABLE, SIMPLE_TEXT_SHORT, SPINNER_NOTE_DEFAULT} from "../../../../assets/constants";
+import {NO_DATA_AVAILABLE, SPINNER_NOTE_DEFAULT} from "../../../../assets/constants";
 import {ADMIN_MOCK, CLIENT_MOCK, EMPLOYEE_MOCK} from "../../mocks/mock-user";
 
 @Component({
@@ -12,7 +12,6 @@ import {ADMIN_MOCK, CLIENT_MOCK, EMPLOYEE_MOCK} from "../../mocks/mock-user";
 export class ProfileComponent implements OnInit{
   user: User = {};
   isLoading: boolean = false;
-  isSpinner: boolean = false;
   spinnerNote: string = SPINNER_NOTE_DEFAULT;
   protected readonly Role = Role;
   protected readonly Object = Object;
@@ -28,25 +27,10 @@ export class ProfileComponent implements OnInit{
 
   loadData() {
     this.isLoading = true;
-    this.toggleSpinner();
     this.userService.getUserProfile().subscribe({
-      next: (user: User) => {
-        this.user = user;
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.toggleSpinner();
-      },
-      complete: () => {
-        this.isLoading = false;
-        this.toggleSpinner();
-      }
+      next: (user: User) => { this.user = user; },
+      error: (err) => { this.isLoading = false; },
+      complete: () => { this.isLoading = false; }
     });
-  }
-
-  toggleSpinner() { // show/hidden spinner after 1 sec.
-    setTimeout(() => {
-      this.isSpinner = !this.isSpinner;
-    }, 1000);
   }
 }

@@ -1,4 +1,4 @@
-<div class="profile-container" *ngIf="!(isLoading || isSpinner); else spinner">
+<div class="profile-container" *ngIf="!isLoading; else spinner">
   <ng-container *ngIf="Object.keys(user).length else noDataTemplate">
     <div *ngIf="user.role === Role.Client">
       <app-client-profile [user]="user"></app-client-profile>
