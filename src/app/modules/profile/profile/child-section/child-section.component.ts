@@ -1,11 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from "../../../../shared/models/user.model";
-import {Course} from "../../../courses/course";
+import {Course} from "../../../courses/course.model";
 import {UserService} from "../../../../core/services/user.service";
 import {Router} from "@angular/router";
 import {ModalService} from "../../../../core/services/modal.service";
 import {first, Subscription} from "rxjs";
 import {ButtonAction, ModalType} from "../../../../shared/components/modal/modal";
+import {AlertService} from "../../../alert/alert.service";
 
 @Component({
   selector: 'app-child-section',
@@ -25,7 +26,8 @@ export class ChildSectionComponent implements OnInit {
 
   constructor(private userService: UserService,
               private modalService: ModalService,
-              private router: Router) {}
+              private router: Router,
+              private alertService: AlertService) {}
 
   ngOnInit() {
     this.userService.getCoursesByUserId(this.child.id!).subscribe({
@@ -51,82 +53,94 @@ export class ChildSectionComponent implements OnInit {
     this.openModalDelete(this.child.id!);
   }
 
+  // UPDATE CHILD //
   openModalUpdate(child: User) {
-            this.modalService.setConfiguration({title: "Update child: " + child.firstName + " " + child.lastName,
-              data: {client: child}})
-            //this.modalService.openModal(ModalType.UPDATE_COURSE);
-            let subscription: Subscription = this.modalService.getModalEvent()
-              .pipe(first())
-              .subscribe({
-                next: (data: {client: User}) => {
-                  this.updateChild(data.client);
-                  this.modalService.closeModal();
-                }
-              })
-            this.modalService.openModal(ModalType.UPDATE_CLIENT_ACCOUNT, subscription);
-          }
+    this.modalService.setConfiguration({
+      title: "Update child: " + child.firstName + " " + child.lastName,
+      data: {client: child}
+    });
+    let subscription: Subscription = this.subscribeToUpdateChildModalEvent();
+    this.modalService.openModal(ModalType.UPDATE_CLIENT_ACCOUNT, subscription);
+  }
 
-updateChild(child: User) {
+  subscribeToUpdateChildModalEvent(): Subscription {
+    return this.modalService.getModalEvent()
+      .pipe(first())
+      .subscribe({
+        next: (data: { client: User }) => {
+          this.updateChild(data.client);
+          this.modalService.closeModal();
+        }
+      });
+  }
+
+  updateChild(child: User) {
     this.userService.updateChild(child)
       .subscribe({
         next: (updatedChild: User) => {
           this.child = updatedChild; // to update data in child-section.html
           this.onChildUpdateEvent.emit(updatedChild);
         }
-      })
-}
+      });
+  }
 
+  // DELETE CHILD //
   openModalDelete(childId: string) {
     this.modalService.setConfiguration({title: "Delete Confirmation", data: "child"});
-    //this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
-    let subscription = this.modalService.getModalEvent()
+    let subscription: Subscription = this.subscribeToDeleteChildModalEvent(childId);
+    this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
+  }
+
+  subscribeToDeleteChildModalEvent(childId: string): Subscription {
+    return this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
         next: (result: boolean) => {
-          if(result) {this.deleteChild(childId);}
+          if (result) { this.deleteChild(childId); }
           this.modalService.closeModal();
         }
       });
-    this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
   }
 
   deleteChild(childId: string) {
     this.userService.deleteChild(childId)
       .subscribe({
-        next: (value) => {
+        next: () => {
           this.onChildDeleteEvent.emit();
         }
-      })
+      });
   }
 
+  // WITHDRAW FROM CLASS //
   openModalDeleteCourse(index: number) {
     this.modalService.setConfiguration({
       title: "Withdraw from Class",
-      question: "Do yo really want do withdraw " + this.child.firstName + " " + this.child.lastName
-                + " from " + this.courses[index].name + " class?",
+      question: "Do you really want to withdraw " + this.child.firstName + " " + this.child.lastName
+        + " from " + this.courses[index].name + " class?",
       action: ButtonAction.WITHDRAW
     });
-    //this.modalService.openModal(ModalType.DELETE_CONFIRMATION);
-    let subscription = this.modalService.getModalEvent()
+    let subscription: Subscription = this.subscribeToWithdrawFromCourseModalEvent(index);
+    this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
+  }
+
+  subscribeToWithdrawFromCourseModalEvent(index: number): Subscription {
+    return this.modalService.getModalEvent()
       .pipe(first())
       .subscribe({
         next: (result: boolean) => {
-          if(result) {this.withdrawFromClass(index);}
+          if (result) { this.withdrawFromClass(index); }
           this.modalService.closeModal();
         }
       });
-    this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
   }
 
   withdrawFromClass(index: number) {
     let courseId = this.courses[index].id!;
     this.userService.removeCourse(courseId, this.child.id!).subscribe({
-      error: (err) => {console.log(err)},
-      complete: () => {
+      next: () => {
         this.coursesMenuItems.splice(index, 1); // remove element from array
-        console.log("Course was removed successfully.")
+        this.alertService.success("You have withdrawn from class successfully.");
       }
     })
   }
-
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Role, User} from "../../../shared/models/user.model";
 import {UserService} from "../../../core/services/user.service";
-import {SIMPLE_TEXT_SHORT, SPINNER_NOTE_DEFAULT} from "../../../../assets/constants";
+import {NO_DATA_AVAILABLE, SIMPLE_TEXT_SHORT, SPINNER_NOTE_DEFAULT} from "../../../../assets/constants";
 import {ADMIN_MOCK, CLIENT_MOCK, EMPLOYEE_MOCK} from "../../mocks/mock-user";
 
 @Component({
@@ -15,7 +15,8 @@ export class ProfileComponent implements OnInit{
   isSpinner: boolean = false;
   spinnerNote: string = SPINNER_NOTE_DEFAULT;
   protected readonly Role = Role;
-
+  protected readonly Object = Object;
+  protected readonly NO_DATA_AVAILABLE = NO_DATA_AVAILABLE;
   constructor(private userService: UserService){}
 
   ngOnInit() {
@@ -43,7 +44,7 @@ export class ProfileComponent implements OnInit{
     });
   }
 
-  toggleSpinner() {
+  toggleSpinner() { // show/hidden spinner after 1 sec.
     setTimeout(() => {
       this.isSpinner = !this.isSpinner;
     }, 1000);

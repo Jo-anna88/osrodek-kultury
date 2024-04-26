@@ -1,12 +1,18 @@
-<div class = "profile-container" *ngIf="!(isLoading || isSpinner); else spinner">
-  <div *ngIf="user.role === Role.Client">
-    <app-client-profile [user]="user"></app-client-profile>
-  </div>
-  <div *ngIf="(user.role === Role.Employee) || (user.role === Role.Admin)">
-    <app-non-client-profile [user]="user"></app-non-client-profile>
-  </div>
+<div class="profile-container" *ngIf="!(isLoading || isSpinner); else spinner">
+  <ng-container *ngIf="Object.keys(user).length else noDataTemplate">
+    <div *ngIf="user.role === Role.Client">
+      <app-client-profile [user]="user"></app-client-profile>
+    </div>
+    <div *ngIf="(user.role === Role.Employee) || (user.role === Role.Admin)">
+      <app-non-client-profile [user]="user"></app-non-client-profile>
+    </div>
+  </ng-container>
 </div>
 
 <ng-template #spinner>
   <app-spinner [note]="spinnerNote"></app-spinner>
+</ng-template>
+
+<ng-template #noDataTemplate>
+  <p class="no-data-message">{{ NO_DATA_AVAILABLE }}</p>
 </ng-template>
