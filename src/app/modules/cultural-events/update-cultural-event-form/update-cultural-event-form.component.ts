@@ -40,8 +40,8 @@ export class UpdateCulturalEventFormComponent implements OnInit {
         this.locations = locations;
         this.populateForm();
       },
-      error: () => {this.isLoading = false;},
-      complete: () => {this.isLoading = false;}
+      error: () => { this.isLoading = false; },
+      complete: () => { this.isLoading = false; }
     });
   }
 

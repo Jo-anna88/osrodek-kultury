@@ -1,11 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CulturalEventService} from "../cultural-event.service";
-import {Subject, Subscription, takeUntil} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Role} from "../../../shared/models/user.model";
-import {AuthService} from "../../../core/authorization/auth.service";
+import {ActivatedRoute} from "@angular/router";
 import {CulturalEvent} from "../cultural-event";
-import {HttpStatusCode} from "@angular/common/http";
+import {NO_DATA_AVAILABLE} from "../../../../assets/constants";
 
 @Component({
   selector: 'app-cultural-event-detail',
@@ -17,9 +14,11 @@ export class CulturalEventDetailComponent implements OnInit {
   culturalEventId: number = -1;
   culturalEvent: CulturalEvent = {name:''}
   spinnerNote: string = "Cultural Event details are loading..."
+  protected readonly NO_DATA_AVAILABLE = NO_DATA_AVAILABLE;
+
   constructor (private culturalEventService: CulturalEventService,
-               private router: Router,
                private route: ActivatedRoute) {}
+
   ngOnInit() {
     this.culturalEventId = +this.route.snapshot.paramMap.get('id')!;
     this.loadData();
@@ -28,10 +27,9 @@ export class CulturalEventDetailComponent implements OnInit {
   loadData() {
     this.isLoading = true;
     this.culturalEventService.getEventById(this.culturalEventId).subscribe({
-      next: (culturalEvent) => {this.culturalEvent = culturalEvent},
+      next: (culturalEvent) => { this.culturalEvent = culturalEvent },
       error: (err) => { this.isLoading = false; },
       complete: () => { this.isLoading = false; }
     })
   }
-
 }

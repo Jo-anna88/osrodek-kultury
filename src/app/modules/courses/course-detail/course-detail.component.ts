@@ -146,7 +146,6 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   // JOIN COURSE //
   openJoinDialog(courseName: string) {
     this.modalService.setConfiguration({title: "Confirm your choice", data: courseName});
-    //this.modalService.openModal(ModalType.JOIN_CONFIRMATION);
     let subscription = this.subscribeToJoinCourseModalEvent();
     this.modalService.openModal(ModalType.JOIN_CONFIRMATION, subscription);
   }
