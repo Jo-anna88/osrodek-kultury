@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {EmployeeService} from "../employee.service";
 import {EmployeeProfile} from "../../../shared/components/card-team-member-profile/profile-model";
 import {CoursesService} from "../../courses/courses.service";
-import {CourseBasicInfo} from "../../courses/course";
+import {CourseBasicInfo} from "../../courses/course.model";
 import {NO_DATA_AVAILABLE, SPINNER_NOTE_DEFAULT} from "../../../../assets/constants";
 
 @Component({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map, Observable, of, retry} from "rxjs";
-import {Course, CourseBasicInfo, CourseDetails} from "./course";
+import {Course, CourseBasicInfo, CourseDetails} from "./course.model";
 import {mockCourses} from "./mock-courses";
 import {environment} from "../../../environments/environment";
 import {UserSimpleData} from "../../shared/models/user.model";

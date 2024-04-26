@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CulturalEventService} from "../cultural-event.service";
 import {ActivatedRoute} from "@angular/router";
-import {CulturalEvent} from "../cultural-event";
+import {CulturalEvent} from "../cultural-event.model";
 import {NO_DATA_AVAILABLE} from "../../../../assets/constants";
 
 @Component({

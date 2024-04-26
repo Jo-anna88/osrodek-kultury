@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {DashboardAction} from "../dashboard-actions-model";
+import {DashboardAction} from "../dashboard-actions.model";
 
 @Component({
   selector: 'app-dashboard-admin',

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CulturalEvent} from "../cultural-event";
+import {CulturalEvent} from "../cultural-event.model";
 import {CulturalEventService} from "../cultural-event.service";
 import {catchError, delay, first, map, of, Subject, Subscription, takeUntil} from "rxjs";
 import {ModalService} from "../../../core/services/modal.service";

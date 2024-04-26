@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Category, Course, CourseDetails} from "../course";
+import {Category, Course, CourseDetails} from "../course.model";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {first, forkJoin} from "rxjs";

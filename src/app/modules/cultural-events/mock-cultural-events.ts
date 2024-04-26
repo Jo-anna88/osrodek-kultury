@@ -1,4 +1,4 @@
-import {CulturalEvent} from "./cultural-event";
+import {CulturalEvent} from "./cultural-event.model";
 import {SIMPLE_TEXT} from "../../../assets/constants";
 import {mock_locations} from "../../shared/models/address.model";
 

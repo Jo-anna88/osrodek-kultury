@@ -4,7 +4,7 @@ import {ButtonAction} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";
 import {AppLocation} from "../../../shared/models/address.model";
 import {AddressService} from "../../../core/services/address.service";
-import {CourseDetails} from "../course";
+import {CourseDetails} from "../course.model";
 import {maxAgeValidator} from "../../../core/forms/form-validators";
 import {Subject, takeUntil} from "rxjs";
 

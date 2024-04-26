@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppLocation} from "../../../shared/models/address.model";
 import {ModalService} from "../../../core/services/modal.service";
 import {AddressService} from "../../../core/services/address.service";
-import {CulturalEvent} from "../cultural-event";
+import {CulturalEvent} from "../cultural-event.model";
 import {first, forkJoin} from "rxjs";
 
 @Component({

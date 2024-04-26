@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ButtonAction, ModalConfiguration} from "../../../shared/components/modal/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ModalService} from "../../../core/services/modal.service";
-import {CourseDetails} from "../course";
+import {CourseDetails} from "../course.model";
 import {first, Subscription} from "rxjs";
 import {AppLocation} from "../../../shared/models/address.model";
 import {AddressService} from "../../../core/services/address.service";

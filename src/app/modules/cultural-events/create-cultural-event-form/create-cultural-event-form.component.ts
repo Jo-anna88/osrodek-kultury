@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ModalService} from "../../../core/services/modal.service";
 import {AppLocation} from "../../../shared/models/address.model";
 import {AddressService} from "../../../core/services/address.service";
-import {CulturalEvent, DEFAULT_IMG_SOURCE} from "../cultural-event";
+import {CulturalEvent, DEFAULT_IMG_SOURCE} from "../cultural-event.model";
 
 @Component({
   selector: 'app-create-cultural-event-form',

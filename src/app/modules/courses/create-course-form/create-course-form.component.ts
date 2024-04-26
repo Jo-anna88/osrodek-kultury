@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Category, Course, CourseDetails, DEFAULT_ICON_SOURCE} from "../course";
+import {Category, Course, CourseDetails, DEFAULT_ICON_SOURCE} from "../course.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {ModalService} from "../../../core/services/modal.service";

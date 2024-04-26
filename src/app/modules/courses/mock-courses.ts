@@ -1,4 +1,4 @@
-import {Category, Course} from "./course";
+import {Category, Course} from "./course.model";
 import {SIMPLE_TEXT} from "../../../assets/constants";
 
 export const mockCourses: Course[] = [

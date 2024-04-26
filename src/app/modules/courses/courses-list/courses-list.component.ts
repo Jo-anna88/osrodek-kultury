@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {first, Subject, Subscription, take, takeUntil} from "rxjs";
-import {Category, Course, CourseDetails} from "../course";
+import {Category, Course, CourseDetails} from "../course.model";
 import {CoursesService} from "../courses.service";
 import {AlertService} from "../../alert/alert.service";
 import {AppError, errorStatusToAppErrorMapping} from "../../../shared/models/app-error.model";

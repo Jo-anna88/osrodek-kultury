@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {Category, Course, CourseCriteria} from "../course";
+import {Category, Course, CourseCriteria} from "../course.model";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserSimpleData} from "../../../shared/models/user.model";

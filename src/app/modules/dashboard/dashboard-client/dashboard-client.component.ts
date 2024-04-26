@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {first, Subscription} from "rxjs";
-import {DashboardAction} from "../dashboard-actions-model";
+import {DashboardAction} from "../dashboard-actions.model";
 import {ModalService} from "../../../core/services/modal.service";
 import {ModalType} from "../../../shared/components/modal/modal";
 import {User} from "../../../shared/models/user.model";

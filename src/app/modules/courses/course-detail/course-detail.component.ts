@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Course, CourseDetails} from "../course";
+import {Course, CourseDetails} from "../course.model";
 import {first, Observable, Subject, Subscription, switchMap, take, takeUntil} from "rxjs";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {CoursesService} from "../courses.service";
