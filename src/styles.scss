@@ -23,7 +23,6 @@ $font-secondary: "Poppins", normal;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $lines;
   overflow-wrap: break-word; /* puts the rest of the word in a new line */
-
 }
 @mixin ellipsis {
   overflow: hidden;

@@ -10,5 +10,5 @@ import { SIMPLE_TEXT } from "../../../../assets/constants";
 export class AboutCompanyComponent {
   ourMission : string = SIMPLE_TEXT;
   ourStory : string = SIMPLE_TEXT;
-  ourHistory : string = SIMPLE_TEXT;
+  ourValues : string = SIMPLE_TEXT;
 }
