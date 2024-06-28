@@ -2,6 +2,7 @@ export enum ModalType {
   SIGNUP = "signup",
   DELETE_CONFIRMATION = "delete",
   JOIN_CONFIRMATION = "joinCourse",
+  BOOKING = "bookTicket",
   CREATE_CULTURAL_EVENT = "createCulturalEvent",
   UPDATE_CULTURAL_EVENT = "updateCulturalEvent",
   CREATE_COURSE = "createCourse",

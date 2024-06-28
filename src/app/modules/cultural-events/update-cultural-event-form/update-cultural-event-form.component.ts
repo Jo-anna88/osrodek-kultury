@@ -53,7 +53,8 @@ export class UpdateCulturalEventFormComponent implements OnInit {
       date: [this.data.culturalEvent.date, Validators.required],
       description: [this.data.culturalEvent.description, Validators.required],
       price: [this.data.culturalEvent.price, Validators.required],
-      location: [originalLocationIndex, Validators.required]
+      location: [originalLocationIndex, Validators.required],
+      maxParticipantsNumber: [this.data.culturalEvent.maxParticipantsNumber, Validators.required]
     })
   }
 
@@ -68,8 +69,9 @@ export class UpdateCulturalEventFormComponent implements OnInit {
       name: formValue.name,
       date: formValue.date,
       description: formValue.description,
+      price: formValue.price,
       location: this.selectedLocation,
-      price: formValue.price
+      maxParticipantsNumber: formValue.maxParticipantsNumber
     }
     this.modalService.emitModalEvent(updatedCulturalEvent);
   }

@@ -10,8 +10,9 @@ export const mockCulturalEvents: Array<CulturalEvent> = [
     date: "2024-09-20",
     //date: new Date(2023, 11, 12),
     description: "Event1 - description. " + SIMPLE_TEXT + " " + SIMPLE_TEXT,
+    price: "25",
     location: mock_locations[0],
-    price: "25"
+    maxParticipantsNumber: 10
   },
   {
     id: 2,
@@ -20,8 +21,9 @@ export const mockCulturalEvents: Array<CulturalEvent> = [
     date: "2024-07-15",
     //date: new Date(2023, 10, 10),
     description: "Event2 - description. " + SIMPLE_TEXT,
+    price: "50",
     location: mock_locations[1],
-    price: "50"
+    maxParticipantsNumber: 100
   },
   {
     id: 3,
@@ -30,8 +32,9 @@ export const mockCulturalEvents: Array<CulturalEvent> = [
     date: "2024-08-05",
     //date: new Date(2023, 10, 5),
     description: "Event3 - description. " + SIMPLE_TEXT,
+    price: "75",
     location: mock_locations[2],
-    price: "75"
+    maxParticipantsNumber: 50
   },
   {
     id: 4,
@@ -39,7 +42,8 @@ export const mockCulturalEvents: Array<CulturalEvent> = [
     name: "Event4",
     date: "2024-10-10",
     description: "Event4 - description. " + SIMPLE_TEXT,
+    price: "100",
     location: mock_locations[3],
-    price: "100"
+    maxParticipantsNumber: 25
   }
 ]

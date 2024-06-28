@@ -23,7 +23,7 @@
       <button-edit (onEditEvent)="openModalUpdate()"></button-edit>
       <button-delete (onDeleteEvent)="openModalDelete(courseDetails.id!)"></button-delete>
     </div>
-<!--    OPCJA 'JOIN' DOSTĘPNA TYLKO WÓWCZA, GDY SĄ 'COURSE DETAILS' -->
+<!--    OPCJA 'JOIN' DOSTĘPNA TYLKO WÓWCZAS, GDY SĄ 'COURSE DETAILS' -->
     <div class="button-right" *ngIf="isClient && course.freeSlots !== 0">
       <button class="button-primary" (click) = "openJoinDialog(course.name)">JOIN</button>
     </div>

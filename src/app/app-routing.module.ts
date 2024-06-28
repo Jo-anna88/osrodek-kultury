@@ -30,6 +30,7 @@ import {
   UpdateCulturalEventFormComponent
 } from "./modules/cultural-events/update-cultural-event-form/update-cultural-event-form.component";
 import {ErrorComponent} from "./shared/components/error/error.component";
+import {TicketsBookingFormComponent} from "./modules/cultural-events/book-ticket-form/tickets-booking-form.component";
 
 const ROUTES: Routes = [
   {path: 'login', component: LoginComponent}, // for PRIMARY_OUTLET (default router with name 'primary')
@@ -38,6 +39,7 @@ const ROUTES: Routes = [
       {path: ModalType.SIGNUP, component: SignUpModalFormComponent},
       {path: ModalType.DELETE_CONFIRMATION, component: DeleteConfirmationDialogComponent},
       {path: ModalType.JOIN_CONFIRMATION, component: JoinConfirmationDialogComponent},
+      {path: ModalType.BOOKING, component: TicketsBookingFormComponent},
       {path: ModalType.CREATE_CULTURAL_EVENT, component: CreateCulturalEventFormComponent},
       {path: ModalType.UPDATE_CULTURAL_EVENT, component: UpdateCulturalEventFormComponent},
       {path: ModalType.CREATE_COURSE, component: CreateCourseFormComponent},

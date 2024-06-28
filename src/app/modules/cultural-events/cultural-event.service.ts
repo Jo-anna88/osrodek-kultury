@@ -4,6 +4,7 @@ import {CulturalEvent} from "./cultural-event.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {mockCulturalEvents} from "./mock-cultural-events";
+import {Booking} from "../../shared/models/booking.model";
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,9 @@ export class CulturalEventService {
 
   deleteCulturalEvent(id: number) {
     return this.http.delete(this.apiUrl + '/' + id);
+  }
+
+  getFreeSlots(id: number): Observable<number> {
+    return this.http.get<number>(this.apiUrl + '/' + id + '/free-slots');
   }
 }

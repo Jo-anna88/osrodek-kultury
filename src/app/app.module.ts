@@ -1,10 +1,10 @@
-import {ErrorHandler, LOCALE_ID, NgModule} from '@angular/core';
+import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {registerLocaleData} from "@angular/common";
+import { registerLocaleData } from "@angular/common";
 import localePl from '@angular/common/locales/pl';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,8 +21,8 @@ import { SharedModule } from "./shared/shared.module";
 import { LandingPageModule } from "./modules/landing-page/landing-page.module";
 import { AlertModule } from "./modules/alert/alert.module";
 import { ProfileModule } from "./modules/profile/profile.module";
-import {HttpErrorHandlerService} from "./core/services/http-error-handler.service";
-import {HttpErrorInterceptor} from "./core/interceptors/http-error-interceptor.service";
+import { HttpErrorHandlerService } from "./core/services/http-error-handler.service";
+import { HttpErrorInterceptor } from "./core/interceptors/http-error-interceptor.service";
 
 
 // Register locale data for Polish
@@ -36,8 +36,6 @@ registerLocaleData(localePl);
     BrowserModule,
     HttpClientModule,
     NgbModule,
-    // FormsModule,
-    // ReactiveFormsModule,
     FontAwesomeModule,
     CoreModule,
     AboutModule,

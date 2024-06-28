@@ -75,10 +75,6 @@ export class UserService {
     return this.http.get<Array<Course>>(this.apiUrl + '/courses/' + id, {withCredentials: true});
   }
 
-  getUserEvents(): Observable<Array<CulturalEvent>> {
-    return of(mockCulturalEvents);
-  }
-
   joinCourse(courseId: string, userId: string) { // user or child id
     return this.http.get(this.apiUrl + '/join-course/' + courseId + '/' + userId, {withCredentials: true});
   }

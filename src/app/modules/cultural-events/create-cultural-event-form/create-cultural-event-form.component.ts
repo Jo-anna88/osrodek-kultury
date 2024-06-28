@@ -22,7 +22,8 @@ export class CreateCulturalEventFormComponent implements OnInit {
       date: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
-      location: [null, Validators.required]
+      location: [null, Validators.required],
+      maxParticipantsNumber: ['', Validators.required]
     })
   }
 
@@ -53,7 +54,8 @@ export class CreateCulturalEventFormComponent implements OnInit {
       date: formValue.date,
       description: formValue.description,
       location: selectedLocation,
-      price: formValue.price
+      price: formValue.price,
+      maxParticipantsNumber: formValue.maxParticipantsNumber
     }
     this.modalService.emitModalEvent(newCulturalEvent);
   }

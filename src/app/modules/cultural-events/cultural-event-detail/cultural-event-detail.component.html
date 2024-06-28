@@ -9,6 +9,10 @@
       <p>{{ culturalEvent.description }}</p>
       <p>Location: {{ culturalEvent.location?.location }}</p>
       <p>Price for ticket: {{ culturalEvent.price | currency: 'PLN' }}</p>
+      <!--    BOOKING TICKETS OPTION AVAILABLE ONLY IF THERE IS ANY 'FREE SLOTS' -->
+      <div class="button-right" *ngIf="isClient && freeSlots !== 0">
+        <button class="button-primary" (click) = "openBookingDialog(culturalEvent.name)">BOOK NOW</button>
+      </div>
     </aside>
   </div>
 </ng-container>

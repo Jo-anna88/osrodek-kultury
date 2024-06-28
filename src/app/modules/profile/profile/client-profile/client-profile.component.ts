@@ -10,6 +10,8 @@ import {ModalService} from "../../../../core/services/modal.service";
 import {ButtonAction, ModalType} from "../../../../shared/components/modal/modal";
 import {StorageService} from "../../../../core/services/storage.service";
 import {AlertService} from "../../../alert/alert.service";
+import {BookingService} from "../../../../core/services/booking.service";
+import {Booking} from "../../../../shared/models/booking.model";
 
 @Component({
   selector: 'app-client-profile',
@@ -21,11 +23,11 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
   user: User = {}
 
   courses: Course[] = [];
-  culturalEvents: CulturalEvent[] = [];
+  bookings: Booking[] = [];
   children: User[] = [];
 
   coursesMenuItems: string[] = [];
-  culturalEventsMenuItems: string[] = [];
+  bookingsMenuItems: string[] = []; // change to bookings' number?
   childrenMenuItems: string[] = [];
 
   isLoading = false;
@@ -39,6 +41,7 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
               private route: ActivatedRoute,
               private viewportScroller: ViewportScroller,
               private userService: UserService,
+              private bookingService: BookingService,
               private modalService: ModalService,
               private storageService: StorageService,
               private alertService: AlertService) {}
@@ -69,18 +72,18 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
 
     forkJoin([
       this.userService.getUserCourses(),
-      this.userService.getUserEvents(),
+      this.bookingService.getUserBookings(),
       this.userService.getChildren()
     ]).subscribe({
-      next: ([courses, culturalEvents, children]) => {
+      next: ([courses, bookings, children]) => {
         this.courses = courses;
         this.courses.map((course) => {
           this.coursesMenuItems.push(course.name);
         })
 
-        this.culturalEvents = culturalEvents;
-        this.culturalEvents.map((culturalEvent) => {
-          this.culturalEventsMenuItems.push(culturalEvent.name);
+        this.bookings = bookings;
+        this.bookings.map((booking) => {
+          this.bookingsMenuItems.push(booking.id!.toString());
         });
 
         this.children = children;
@@ -100,7 +103,7 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
   }
 
   navigateToCulturalEvent(index: number) {
-    let selectedEventId = this.culturalEvents[index].id;
+    let selectedEventId = this.bookings[index].culturalEventId;
     this.router.navigate(['events', selectedEventId]);
     //todo: it could show reservation details, like Date, Place/Venue, Number of Reserved Tickets
   }
@@ -137,11 +140,11 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  // BOOKING CANCELLATION // this functionality is not implemented in backend
+  // BOOKING CANCELLATION //
   openModalDeleteEvent(index: number) {
     this.modalService.setConfiguration({
       title: "Booking Cancellation",
-      question: "Do you really want to cancel your booking for " + this.culturalEvents[index].name + " event?"});
+      question: "Do you really want to cancel your booking with number " + this.bookings[index].id + "?"});
     let subscription: Subscription = this.subscribeToBookingCancellationModalEvent(index);
     this.modalService.openModal(ModalType.DELETE_CONFIRMATION, subscription);
   }
@@ -158,14 +161,14 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
   }
 
   cancelBooking(index: number) { // it is not connected with backend now
-    let culturalEventId = this.culturalEvents[index].id!;
+    let culturalEventId = this.bookings[index].id!;
     console.log(culturalEventId);
-    //this.userService.removeBooking(culturalEventId, '').subscribe({
-    //       next: () => {
-    //         this.culturalEventsItems.splice(index, 1); // remove element from array
-    //         this.alertService.success("You have cancelled your booking successfully.");
-    //       }
-    //     })
+    this.bookingService.cancelBooking(culturalEventId).subscribe({
+      next: () => {
+                this.bookingsMenuItems.splice(index, 1); // remove element from array
+                this.alertService.success("You have cancelled your booking successfully.");
+              }
+    });
   }
 
   // DISPLAY SELECTED CHILD FRAGMENT //

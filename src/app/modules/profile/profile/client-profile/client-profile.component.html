@@ -9,9 +9,9 @@
               [menuColor]="'#BA264A'"
               (onSelectEvent)="navigateToClass($event)"
               (onDeleteEvent)="openModalDeleteCourse($event)"></app-menu>
-    <app-menu *ngIf="culturalEvents.length"
+    <app-menu *ngIf="bookings.length"
               [title]="'My Events'"
-              [items]="culturalEventsMenuItems"
+              [items]="bookingsMenuItems"
               [isItemDeletable] = true
               [menuColor]="'#334075'"
               (onSelectEvent)="navigateToCulturalEvent($event)"

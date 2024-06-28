@@ -6,8 +6,9 @@ export interface CulturalEvent {
   name: string,
   date?: string,
   description?: string,
+  price?: string,
   location?: AppLocation,
-  price?: string
+  maxParticipantsNumber?: number
 }
 
 export const DEFAULT_IMG_SOURCE = "assets/images/cultural-event-default.jpg"

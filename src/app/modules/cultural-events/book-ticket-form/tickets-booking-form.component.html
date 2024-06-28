@@ -1,0 +1,15 @@
+<form #bookingForm="ngForm" class="contact-form">
+  <div class="form-group">
+    <label for="numberOfTickets">Number of Tickets: </label>
+    <input class="form-control"
+           type="number"
+           id="numberOfTickets"
+           name="numberOfTickets"
+           [(ngModel)]="numberOfTickets"
+           required
+    />
+  </div>
+  <div class="form-buttons">
+    <button type="button" class="button-primary" (click)="bookTickets()" [disabled]="!bookingForm.form.valid">BOOK NOW</button>
+  </div>
+</form>
