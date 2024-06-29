@@ -11,7 +11,7 @@ import {Subscription} from "rxjs";
 })
 export class AlertListComponent implements OnInit, OnDestroy {
   alerts: Alert[] = [];
-  alertSubscription!: Subscription;
+  alertSubscription: Subscription = new Subscription();
   constructor(private alertService: AlertService,
               private ngZone: NgZone) {
   }

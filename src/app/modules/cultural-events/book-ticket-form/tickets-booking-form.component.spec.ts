@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TicketsBookingFormComponent } from './tickets-booking-form.component';
+import {ContactComponent} from "../../contact/contact/contact.component";
+import {FormsModule} from "@angular/forms";
 
 describe('BookTicketFormComponent', () => {
   let component: TicketsBookingFormComponent;
@@ -8,7 +10,8 @@ describe('BookTicketFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TicketsBookingFormComponent ]
+      declarations: [ TicketsBookingFormComponent ],
+      imports: [ FormsModule ]
     })
     .compileComponents();
 

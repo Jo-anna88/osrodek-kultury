@@ -39,31 +39,31 @@ export class CoursesService {
   }
 
   addCourse(newCourse: Course): Observable<Course> {
-    return this.http.post<Course>(this.apiUrl, newCourse, {withCredentials: true});
+    return this.http.post<Course>(this.apiUrl, newCourse);
   }
 
   addCourseDetails(newCourseDetails: CourseDetails): Observable<CourseDetails> {
-    return this.http.post<CourseDetails>(this.apiUrl + '/' + newCourseDetails.id + '/details', newCourseDetails, {withCredentials: true});
+    return this.http.post<CourseDetails>(this.apiUrl + '/' + newCourseDetails.id + '/details', newCourseDetails);
   }
 
   updateCourse(updatedCourse: Course): Observable<Course> {
-    return this.http.put<Course>(this.apiUrl, updatedCourse, {withCredentials: true});
+    return this.http.put<Course>(this.apiUrl, updatedCourse);
   }
 
   updateCourseDetails(updatedCourseDetails: CourseDetails): Observable<CourseDetails> {
-    return this.http.put<CourseDetails>(this.apiUrl + '/' + updatedCourseDetails.id + '/details', updatedCourseDetails, {withCredentials: true})
+    return this.http.put<CourseDetails>(this.apiUrl + '/' + updatedCourseDetails.id + '/details', updatedCourseDetails);
   }
 
   deleteCourse(id: string): Observable<Object> {
-    return this.http.delete(this.apiUrl + '/' + id, {withCredentials: true});
+    return this.http.delete(this.apiUrl + '/' + id);
   }
 
   deleteCourseDetails(id: string) {
-    return this.http.delete(this.apiUrl + '/' + id + '/details', {withCredentials: true});
+    return this.http.delete(this.apiUrl + '/' + id + '/details');
   }
 
   getTeachers(): Observable<Array<UserSimpleData>> {
-    return this.http.get<Array<UserSimpleData>>(environment.baseUrl + '/api/user/teachers', {withCredentials: true})
+    return this.http.get<Array<UserSimpleData>>(environment.baseUrl + '/api/user/teachers')
       .pipe(
         map(teachers => teachers.map(teacher => {return {...teacher}}))
       );

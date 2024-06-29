@@ -13,10 +13,10 @@ import {Role} from "./shared/models/user.model";
 export class AppComponent implements OnInit{
   title = 'osrodek-kultury';
   isUser: boolean = false;
-  hasRole: Role | null = null;
+  givenRole: Role | null = null;
 
-  constructor(private ngbModalService: NgbModal,
-              private alertService: AlertService,
+  constructor(//private ngbModalService: NgbModal,
+              //private alertService: AlertService,
               private authService: AuthService) {
   }
 
@@ -39,14 +39,14 @@ export class AppComponent implements OnInit{
     )
     this.authService.role$.subscribe({
         next: (role) => {
-          this.hasRole = role;
+          this.givenRole = role;
         }
       }
     )
   }
 
-  public open(modal: any): void {
-    this.ngbModalService.open(modal); // ng-bootstrap; TODO: is it needed?
-  }
+  // public open(modal: any): void {
+  //   this.ngbModalService.open(modal); // ng-bootstrap; TODO: is it needed?
+  // }
 
 }

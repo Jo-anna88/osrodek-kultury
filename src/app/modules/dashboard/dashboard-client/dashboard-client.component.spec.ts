@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardClientComponent } from './dashboard-client.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {ReactiveFormsModule} from "@angular/forms";
+import {RouterModule} from "@angular/router";
 
 describe('DashboardClientComponent', () => {
   let component: DashboardClientComponent;
@@ -9,8 +11,8 @@ describe('DashboardClientComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [ DashboardClientComponent ]
+      declarations: [ DashboardClientComponent ],
+      imports: [HttpClientTestingModule, ReactiveFormsModule, RouterModule]
     })
     .compileComponents();
 

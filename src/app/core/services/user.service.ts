@@ -34,7 +34,7 @@ export class UserService {
   }
 
   getUserProfile(): Observable<User> {
-    return this.http.get<User>(this.apiUrl +'/profile', {withCredentials: true});
+    return this.http.get<User>(this.apiUrl +'/profile');
   }
 
   updateUserProfile(client: User): Observable<User> {
@@ -43,15 +43,15 @@ export class UserService {
 
   getChildren(): Observable<Array<User>> {
     //return of(mockChildren);
-    return this.http.get<Array<User>>(this.apiUrl + '/children', {withCredentials: true});
+    return this.http.get<Array<User>>(this.apiUrl + '/children');
   }
 
   getUserSimpleData(): Observable<UserSimpleData> {
-    return this.http.get<UserSimpleData>(this.apiUrl + '/user-simple', {withCredentials: true});
+    return this.http.get<UserSimpleData>(this.apiUrl + '/user-simple');
   }
 
   getChildrenSimpleData(): Observable<Array<UserSimpleData>> {
-    return this.http.get<Array<UserSimpleData>>(this.apiUrl + '/children-simple', {withCredentials: true});
+    return this.http.get<Array<UserSimpleData>>(this.apiUrl + '/children-simple');
   }
 
   addChild(child: User): Observable<User> {
@@ -68,15 +68,15 @@ export class UserService {
 
   getUserCourses(): Observable<Array<Course>> {
     //return of(mockCourses);
-    return this.http.get<Array<Course>>(this.apiUrl + '/courses', {withCredentials: true});
+    return this.http.get<Array<Course>>(this.apiUrl + '/courses');
   }
 
   getCoursesByUserId(id: string): Observable<Array<Course>> {
-    return this.http.get<Array<Course>>(this.apiUrl + '/courses/' + id, {withCredentials: true});
+    return this.http.get<Array<Course>>(this.apiUrl + '/courses/' + id);
   }
 
   joinCourse(courseId: string, userId: string) { // user or child id
-    return this.http.get(this.apiUrl + '/join-course/' + courseId + '/' + userId, {withCredentials: true});
+    return this.http.get(this.apiUrl + '/join-course/' + courseId + '/' + userId);
   }
 
   removeCourse(courseId: string, userId: string) {
