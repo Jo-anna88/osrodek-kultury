@@ -26,16 +26,27 @@ export class HttpErrorHandlerService  implements ErrorHandler {
     }
 
     else if (error instanceof HttpErrorResponse) {
-      if (error.status === HttpStatusCode.NotFound) { router.navigateByUrl('/not-found'); }
-      else if (error.status === HttpStatusCode.InternalServerError) {
-        let appError: AppError = createHttpAppError(error);
-        router.navigateByUrl('/error', {
-          state: { appError } // Pass the error object using navigation extras
-        });
-      }
-      else {
-        let appError: AppError = createHttpAppError(error);
-        alertService.error("", appError);
+      switch (error.status) {
+        case HttpStatusCode.NotFound: {
+          router.navigateByUrl('/not-found');
+          break;
+        }
+        case HttpStatusCode.Unauthorized: {
+          alertService.error("Sorry, the login or password is incorrect.\nPlease try again.");
+          break;
+        }
+        case HttpStatusCode.InternalServerError: {
+          let appError: AppError = createHttpAppError(error);
+          router.navigateByUrl('/error', {
+            state: {appError} // Pass the error object using navigation extras
+          });
+          break;
+        }
+        default: {
+          let appError: AppError = createHttpAppError(error);
+          alertService.error("", appError);
+          break;
+        }
       }
     }
 

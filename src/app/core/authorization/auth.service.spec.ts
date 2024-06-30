@@ -57,9 +57,9 @@ fdescribe('AuthService', () => {
     });
   });
 
-  describe('logout', () => {
+  describe('logOut', () => {
     it('should send logout request', () => {
-      service.logout().subscribe(response => {});
+      service.logOut().subscribe(response => {});
 
       const mockReq: TestRequest = httpMock.expectOne(`${apiUrl}/logout`);
       expect(mockReq.request.method).toBe('POST');

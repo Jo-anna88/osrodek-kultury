@@ -96,12 +96,9 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.isProfileDropdown = false;
-    this.authService.logout().subscribe({
+    this.authService.logOut().subscribe({
       next: () => {
-        this.authService.setNotAuthenticated();
-        this.authService.setRoleToNull();
-        this.storageService.clear();
-        this.ngOnInit();
+        this.authService.clearAuthData();
         this.router.navigate(['/login']);
         this.alertService.success("Logout successful.");
       }

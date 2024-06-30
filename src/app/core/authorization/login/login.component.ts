@@ -67,9 +67,6 @@ export class LoginComponent implements OnDestroy {
               this.router.navigate(['landing-page']);
             },
             error: (err) => {
-              if(err.status === HttpStatusCode.Unauthorized) {
-                this.alertService.error("Sorry, the login or password is incorrect.\nPlease try again.");
-              }
               this.form.reset();
             }
           }

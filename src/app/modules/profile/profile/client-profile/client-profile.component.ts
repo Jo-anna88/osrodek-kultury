@@ -12,6 +12,7 @@ import {StorageService} from "../../../../core/services/storage.service";
 import {AlertService} from "../../../alert/alert.service";
 import {BookingService} from "../../../../core/services/booking.service";
 import {Booking} from "../../../../shared/models/booking.model";
+import {AuthService} from "../../../../core/authorization/auth.service";
 
 @Component({
   selector: 'app-client-profile',
@@ -44,6 +45,7 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
               private bookingService: BookingService,
               private modalService: ModalService,
               private storageService: StorageService,
+              private authService: AuthService,
               private alertService: AlertService) {}
 
   ngOnInit() {
@@ -255,10 +257,10 @@ export class ClientProfileComponent implements OnInit, AfterViewChecked {
 
   deleteAccount() {
     this.userService.removeAccount().subscribe({
-      error: (err) => {console.log(err)},
       complete: () => {
-        this.storageService.clear();
-        this.router.navigate(["/"])
+        this.authService.clearAuthData();
+        this.router.navigate(["/"]);
+        this.alertService.success("Account deleted successfully.");
       }
     })
   }

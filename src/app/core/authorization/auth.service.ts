@@ -3,6 +3,7 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {User, Role, Credentials, UserSimpleData} from "../../shared/models/user.model";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {environment} from "../../../environments/environment";
+import {StorageService} from "../services/storage.service";
 //import * as moment from "moment";
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AuthService { // authentication && authorization
   private apiUrl: string = environment.baseUrl + '/api/auth';
   isAuthenticated$ = new BehaviorSubject<boolean | undefined>(undefined); // for auth.guard
   role$ = new BehaviorSubject<Role | null>(null);
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private storageService: StorageService) {}
 
   logIn(credentials: Credentials): Observable<UserSimpleData> { // username (email) and password; to authenticate
     return this.http.post<UserSimpleData>(this.apiUrl +'/login', credentials)
@@ -23,7 +24,7 @@ export class AuthService { // authentication && authorization
     return this.http.post<any>(this.apiUrl +'/signup', fullUser);
   }
 
-  logout():Observable<HttpResponse<any>> {
+  logOut():Observable<HttpResponse<any>> {
     return this.http.post<any>(this.apiUrl + '/logout', {});
   }
 
@@ -62,5 +63,12 @@ export class AuthService { // authentication && authorization
         }
       }
     })
+  }
+
+  // Set of operations that needs to be done after logout or deleting account
+  clearAuthData() {
+    this.setNotAuthenticated();
+    this.setRoleToNull();
+    this.storageService.clear();
   }
 }

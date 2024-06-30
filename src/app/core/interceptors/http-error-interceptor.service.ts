@@ -3,7 +3,7 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor, HttpErrorResponse
+  HttpInterceptor, HttpErrorResponse, HttpStatusCode
 } from '@angular/common/http';
 import {Observable, retry, RetryConfig, tap} from 'rxjs';
 import {HttpErrorHandlerService} from "../services/http-error-handler.service";
@@ -24,7 +24,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
    // handle requests with credentials to not retry them
     if(request.url.includes("login")) {
-      return next.handle(request);
+      return next.handle(request)
+        .pipe(
+          tap({
+            error: (err) => {
+              this.injector.get(HttpErrorHandlerService).handleError(err); // handle HttpErrorResponse and other Errors
+            }
+          })
+        );
     }
 
     return next.handle(request)
