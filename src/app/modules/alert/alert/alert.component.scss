@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 @mixin alert-theme($alert-color, $alert-font-color) {
   background-color: $alert-color;

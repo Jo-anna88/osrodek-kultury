@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 .dropdown-about {
   z-index: 99999;

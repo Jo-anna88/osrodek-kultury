@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 .error-container {
   height: 100%;

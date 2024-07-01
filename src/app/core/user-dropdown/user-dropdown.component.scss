@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 .dropdown-profile {
   z-index: 99999;

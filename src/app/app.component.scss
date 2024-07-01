@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 .app-container {
   min-height: 100vh;  // 100% of viewport height (without this setting, app-container was not on the whole site

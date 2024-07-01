@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 .child-data-section {
   margin: 2rem 20%;
