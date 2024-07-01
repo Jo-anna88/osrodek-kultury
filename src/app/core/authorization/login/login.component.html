@@ -2,7 +2,7 @@
 <form [formGroup]="form" class="form-container">
   <fieldset class="form-group">
     <legend class = "h2">Log in to CCW</legend>
-    <div class="form-control">
+    <div class="">
       <input id="email" name="email" formControlName="email"
              type="email" class="form-control" placeholder="Email" title="example@example.com" required>
     </div>
@@ -10,7 +10,7 @@
       <small class="text-danger" *ngIf="email.errors?.['required']">Please provide a password.</small>
       <small class="text-danger" *ngIf="email.errors?.['pattern']">Please match the requested format: example@example.com </small>
     </div>
-    <div class="form-control">
+    <div class="">
       <input name="password" formControlName="password"
              type="password" class="form-control" placeholder="Password" required>
     </div>
