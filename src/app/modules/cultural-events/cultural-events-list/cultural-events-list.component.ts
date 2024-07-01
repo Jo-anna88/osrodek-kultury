@@ -151,6 +151,7 @@ export class CulturalEventsListComponent implements OnInit, OnDestroy {
             this.culturalEvents.splice(index, 1); // remove element from array
             this.alertService.success("The cultural event was deleted successfully.");
           },
+          // Alternative way of handling errors:
           // error: (err) => {
           //   if (err.status || err.status === 0) this.appError = errorStatusToAppErrorMapping.get(err.status)!;
           //   this.alertService.error("An error occurred during deleting the cultural event.", this.appError);
