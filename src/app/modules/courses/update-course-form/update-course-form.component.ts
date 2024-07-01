@@ -68,21 +68,39 @@ export class UpdateCourseFormComponent implements OnInit {
   }
 
   private populateForm() {
-    let originalTeacherIndex = this.teachers.findIndex(teacher => teacher.id === this.data.course.teacher.id);
-    this.selectedTeacher = this.teachers[originalTeacherIndex]; // init selected teacher value
-    if(this.showDetails) { // populate form with data about course and course details
-      let originalLocationIndex = this.locations.findIndex(location => location.id = this.data.courseDetails.location?.id);
-      this.selectedLocation = this.locations[originalLocationIndex]; // init selected location value
+    // set Teacher if there is a teacher assigned to the course
+    let originalTeacherIndex: number = this.initTeacher();
+    // populate form with data about course and course details
+    if(this.showDetails) {
+      let originalLocationIndex = this.initLocation();
       this.populateFormWithCourseWithDetailsData(originalTeacherIndex, originalLocationIndex);
     } else { // populate form with data about course (course details does not exist)
       this.populateFormWithCourseData(originalTeacherIndex);
     }
   }
 
+  // init Teacher if there is a teacher assigned to the course and returns its index from the teachers array
+  initTeacher(): number {
+    let originalTeacherIndex: number = -1;
+    if(this.data.course.teacher !== null) {
+      originalTeacherIndex = this.teachers.findIndex(teacher => teacher.id === this.data.course.teacher.id);
+      this.selectedTeacher = this.teachers[originalTeacherIndex]; // init selected teacher value
+    }
+    return originalTeacherIndex;
+  }
+
+  // init Location and returns its index from the locations array
+  initLocation(): number {
+    let originalLocationIndex: number = this.locations.findIndex(location => location.id = this.data.courseDetails.location?.id);
+    this.selectedLocation = this.locations[originalLocationIndex]; // init selected location value
+    return originalLocationIndex;
+  }
+
   populateFormWithCourseWithDetailsData(originalTeacherIndex: number, originalLocationIndex: number) {
+    let initValueForTeacher: number|null = originalTeacherIndex >= 0 ? originalTeacherIndex : null;
     this.updateCourseForm = this.fb.group({
       name: [this.data.course.name, Validators.required],
-      teacher: [originalTeacherIndex, Validators.required],
+      teacher: [initValueForTeacher],
       description: [this.data.course.description, Validators.required],
       category: [this.data.course.category, Validators.required],
       maxParticipantsNumber: [this.data.course.maxParticipantsNumber, Validators.required],
@@ -96,9 +114,10 @@ export class UpdateCourseFormComponent implements OnInit {
   }
 
   populateFormWithCourseData(originalTeacherIndex: number) {
+    let initValueForTeacher: number|null = originalTeacherIndex >= 0 ? originalTeacherIndex : null;
     this.updateCourseForm = this.fb.group({
       name: [this.data.course.name, Validators.required],
-      teacher: [originalTeacherIndex, Validators.required],
+      teacher: [initValueForTeacher],
       description: [this.data.course.description, Validators.required],
       category: [this.data.course.category, Validators.required],
       maxParticipantsNumber: [this.data.course.maxParticipantsNumber, Validators.required],
