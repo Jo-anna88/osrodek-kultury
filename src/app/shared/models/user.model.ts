@@ -23,14 +23,6 @@ export enum Role {
   Admin = 'ADMIN' // logged-in user, 'superuser' (can add, update and delete; can add new employees)
 }
 
-export enum Privilege {
-  CREATE = 'CREATE',
-  READ = 'READ',
-  UPDATE = 'UPDATE',
-  DELETE = 'DELETE',
-  // OTHER = 'OTHER'
-}
-
 export interface UserSimpleData { // in backend: UserBasicInfo
     id?: string, // UUID
     firstName?: string,
