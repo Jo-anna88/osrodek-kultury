@@ -43,7 +43,7 @@ export class UserService {
 
   getChildren(): Observable<Array<User>> {
     //return of(mockChildren);
-    return this.http.get<Array<User>>(this.apiUrl + '/children');
+    return this.http.get<Array<User>>(this.apiUrl + '/child');
   }
 
   getUserSimpleData(): Observable<UserSimpleData> {
@@ -51,7 +51,7 @@ export class UserService {
   }
 
   getChildrenSimpleData(): Observable<Array<UserSimpleData>> {
-    return this.http.get<Array<UserSimpleData>>(this.apiUrl + '/children-simple');
+    return this.http.get<Array<UserSimpleData>>(this.apiUrl + '/child-simple');
   }
 
   addChild(child: User): Observable<User> {

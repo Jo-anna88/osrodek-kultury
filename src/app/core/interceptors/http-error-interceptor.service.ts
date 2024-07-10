@@ -15,12 +15,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(request);
-
     // set 'withCredentials' to 'true' to all requests
     request = request.clone({
       withCredentials: true,
     });
+
+    console.log(request);
 
    // handle requests with credentials to not retry them
     if(request.url.includes("login")) {

@@ -14,7 +14,7 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
   getEmployees(): Observable<Array<EmployeeProfile>> {
-    return this.http.get<Array<EmployeeProfile>>(this.apiUrl + 's');
+    return this.http.get<Array<EmployeeProfile>>(this.apiUrl);
   }
 
   getEmployeeById(id: string): Observable<User> {
