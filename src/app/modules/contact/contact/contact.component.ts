@@ -5,7 +5,7 @@ import {ContactMessage} from "src/app/modules/contact/contactMessage.model";
 import {ContactService} from "../contact.service";
 import {AlertService} from "../../alert/alert.service";
 import {NgForm} from "@angular/forms";
-import {EMAIL_PATTERN} from "../../../core/forms/form-validators";
+import {EMAIL_PATTERN_TO_STRING} from "../../../core/forms/form-validators";
 
 @Component({
   selector: 'app-contact',
@@ -16,7 +16,7 @@ export class ContactComponent {
   url: SafeResourceUrl = "";
   contactInfo = CONTACT;
   contactMessage: ContactMessage = new ContactMessage();
-  emailPattern : string = EMAIL_PATTERN;
+  emailPattern : string = EMAIL_PATTERN_TO_STRING;
   currentLength: number = 0;
 
   constructor(private sanitizer: DomSanitizer,

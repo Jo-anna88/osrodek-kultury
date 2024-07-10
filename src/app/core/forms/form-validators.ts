@@ -2,7 +2,7 @@ import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
 
 /**
 PASSWORD REQUIREMENTS:
-- At least 8 characters long
+- At least 14 characters long
 - Contains at least one lowercase letter ((?=.*[a-z]))
 - Contains at least one uppercase letter ((?=.*[A-Z]))
 - Contains at least one digit ((?=.*\d))
@@ -10,11 +10,11 @@ PASSWORD REQUIREMENTS:
 - Allows characters from the following character set: uppercase letters (A-Z), lowercase letters (a-z), digits (0-9),
 and the special characters @$!%*?&
 */
-export const PASSWORD_REGEX: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-export const PASSWORD_REQUIREMENTS: string = "Password needs to be at least 8 characters long and " +
+export const PASSWORD_REGEX: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{14,}$/;
+export const PASSWORD_REQUIREMENTS: string = "Password needs to be at least 14 characters long and " +
   "be a combination of uppercase letters, lowercase letters, numbers, and symbols: @$!%*?& ."
-export const EMAIL_PATTERN: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 export const EMAIL_PATTERN_EXTENDED: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+export const EMAIL_PATTERN_TO_STRING: string = "^[a-zA-Z0-9.!#$%&'*+\\/=?^_`\\{\\|\\}~\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$";
 export const LETTERS_ONLY: RegExp = /^[A-Za-z]+$/;
 export const PHONE_REGEX: RegExp = /^\d{9}$/;
 
