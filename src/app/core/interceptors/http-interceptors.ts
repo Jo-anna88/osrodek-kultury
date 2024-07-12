@@ -1,7 +1,7 @@
 /* "Barrel" of Http Interceptors */
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {HttpErrorInterceptor} from './http-error-interceptor.service';
+import {AppHttpInterceptor} from './app-http-interceptor.service';
 
 export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
 ];

@@ -22,7 +22,7 @@ import { LandingPageModule } from "./modules/landing-page/landing-page.module";
 import { AlertModule } from "./modules/alert/alert.module";
 import { ProfileModule } from "./modules/profile/profile.module";
 import { ErrorHandlerService } from "./core/services/error-handler.service";
-import { HttpErrorInterceptor } from "./core/interceptors/http-error-interceptor.service";
+import { AppHttpInterceptor } from "./core/interceptors/app-http-interceptor.service";
 
 
 // Register locale data for Polish
@@ -50,7 +50,7 @@ registerLocaleData(localePl);
     AppRoutingModule // it should be the last imported module (because there are routing files in other modules)
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     { provide: ErrorHandler, useClass: ErrorHandlerService },
     { provide: LOCALE_ID, useValue: 'pl'}
   ],

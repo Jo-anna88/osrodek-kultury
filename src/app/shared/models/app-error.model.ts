@@ -1,4 +1,4 @@
-import {HttpErrorInterceptor} from "../../core/interceptors/http-error-interceptor.service";
+import {AppHttpInterceptor} from "../../core/interceptors/app-http-interceptor.service";
 import {HttpErrorResponse} from "@angular/common/http";
 
 export interface AppError {

@@ -11,7 +11,7 @@ import {ErrorHandlerService} from "../services/error-handler.service";
 const retryConfig: RetryConfig = {count: 2, delay: 2000, resetOnSuccess: false};
 
 @Injectable()
-export class HttpErrorInterceptor implements HttpInterceptor {
+export class AppHttpInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
