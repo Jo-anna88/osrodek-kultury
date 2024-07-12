@@ -21,7 +21,7 @@ import { SharedModule } from "./shared/shared.module";
 import { LandingPageModule } from "./modules/landing-page/landing-page.module";
 import { AlertModule } from "./modules/alert/alert.module";
 import { ProfileModule } from "./modules/profile/profile.module";
-import { HttpErrorHandlerService } from "./core/services/http-error-handler.service";
+import { ErrorHandlerService } from "./core/services/error-handler.service";
 import { HttpErrorInterceptor } from "./core/interceptors/http-error-interceptor.service";
 
 
@@ -51,7 +51,7 @@ registerLocaleData(localePl);
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: HttpErrorHandlerService },
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
     { provide: LOCALE_ID, useValue: 'pl'}
   ],
   bootstrap: [AppComponent]
