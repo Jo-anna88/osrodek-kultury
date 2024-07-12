@@ -12,12 +12,12 @@ import {
 @Injectable({
   providedIn: 'root'
 })
-export class HttpErrorHandlerService  implements ErrorHandler {
+export class ErrorHandlerService implements ErrorHandler {
   // https://stackoverflow.com/questions/52610218/angular-handle-for-500-server-errors - error interceptor
   constructor(private injector: Injector) {
   }
 
-  handleError(error: Error | HttpErrorResponse) {
+  handleError(error: Error) {
     const alertService: AlertService = this.injector.get(AlertService);
     const router: Router = this.injector.get(Router);
 

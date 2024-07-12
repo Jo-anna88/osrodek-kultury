@@ -6,7 +6,7 @@ import {
   HttpInterceptor, HttpErrorResponse, HttpStatusCode
 } from '@angular/common/http';
 import {Observable, retry, RetryConfig, tap} from 'rxjs';
-import {HttpErrorHandlerService} from "../services/http-error-handler.service";
+import {ErrorHandlerService} from "../services/error-handler.service";
 
 const retryConfig: RetryConfig = {count: 2, delay: 2000, resetOnSuccess: false};
 
@@ -28,7 +28,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         .pipe(
           tap({
             error: (err) => {
-              this.injector.get(HttpErrorHandlerService).handleError(err); // handle HttpErrorResponse and other Errors
+              this.injector.get(ErrorHandlerService).handleError(err); // handle HttpErrorResponse and other Errors
             }
           })
         );
@@ -44,7 +44,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           },
           error: (err) => {
             console.log(err);
-            this.injector.get(HttpErrorHandlerService).handleError(err); // handle HttpErrorResponse and other Errors
+            this.injector.get(ErrorHandlerService).handleError(err); // handle HttpErrorResponse and other Errors
           }
         })
     )
