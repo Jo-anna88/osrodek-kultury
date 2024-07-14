@@ -4,7 +4,7 @@ import {ModalService} from "../../services/modal.service";
 import {User, Role} from "../../../shared/models/user.model";
 import {ButtonAction} from "../../../shared/components/modal/modal";
 import {
-  confirmPasswordValidator,
+  confirmPasswordValidator, EMAIL_PATTERN_EXTENDED,
   LETTERS_ONLY,
   PASSWORD_REGEX,
   PASSWORD_REQUIREMENTS,
@@ -27,7 +27,7 @@ export class SignUpModalFormComponent {
       lastName: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(LETTERS_ONLY)]],
       phone: ['', [Validators.required, Validators.maxLength(9), Validators.pattern(PHONE_REGEX)]],
       dob: [null, Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN_EXTENDED)]],
       password: this.passwordControl,
       confirmPassword: ['', [Validators.required, confirmPasswordValidator(this.passwordControl)]]
     });

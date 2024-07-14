@@ -46,7 +46,7 @@
       <input type="email" formControlName="email" placeholder="example@example.com" class="form-control" required>
       <div [hidden]="email.valid || email.pristine">
         <small class="text-danger" *ngIf="email.errors?.['required']">Please provide your email as a username.</small>
-        <small class="text-danger" *ngIf="email.errors?.['email']">Please match the requested format: example@example.com</small>
+        <small class="text-danger" *ngIf="email.errors?.['pattern']">Please match the requested format: example@example.com</small>
       </div>
     </div>
 
