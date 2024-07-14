@@ -56,8 +56,6 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("Remove event listener")
     removeEventListener('click', this.handleDocumentClick);
-//    if (this.subscription) this.subscription.unsubscribe();
   }
 }

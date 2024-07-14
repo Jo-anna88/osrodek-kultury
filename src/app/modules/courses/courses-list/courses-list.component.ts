@@ -110,7 +110,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   createCourse(course: Course, courseDetails: CourseDetails | null) { // when user click on 'submit' button in modal form
-    // here isModalOpen is false when only course is created and true if a course with courseDetails are created(why?)
     this.coursesService.addCourse(course)
       .subscribe({
           next: (newCourse: Course) => {
