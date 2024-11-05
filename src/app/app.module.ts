@@ -5,7 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { registerLocaleData } from "@angular/common";
-import localePl from '@angular/common/locales/pl';
+import localeEn from '@angular/common/locales/en';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,8 +25,8 @@ import { ErrorHandlerService } from "./core/services/error-handler.service";
 import { AppHttpInterceptor } from "./core/interceptors/app-http-interceptor.service";
 
 
-// Register locale data for Polish
-registerLocaleData(localePl);
+// Register locale data for English
+registerLocaleData(localeEn);
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +52,7 @@ registerLocaleData(localePl);
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     { provide: ErrorHandler, useClass: ErrorHandlerService },
-    { provide: LOCALE_ID, useValue: 'pl'}
+    { provide: LOCALE_ID, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]
 })
